@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Supporting old package
+if [ ! -f /volume1/Plex/plex_upgrade ]
+then
+    if [ ! -f /usr/local/plex_upgrade ]
+    then
+        if [ -f /etc/passwd.orig ]
+        then
+            # Other users may have been created after install
+            rm -rf /etc/passwd.orig
+        fi
+        synouser -del plex
+        # remove library
+        if [ `synoshare --enum | grep Plex | wc -l` -eq 1 ]
+        then
+            synoshare --del TRUE Plex
+        fi
+    fi
+fi
+
+exit 0

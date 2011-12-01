@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ `synouser --enum local | grep plex | wc -l` = 0 ]
+then
+    # create user with random password
+    synouser --add plex `uuidgen | cut -c-8` 'Plex User' '' '' ''
+    mv /etc/passwd /etc/passwd.orig                                                  
+    sed '/plex/s!\(.*:\).*:\(.*\)!\1/volume1/Plex:\2!' /etc/passwd.orig > /etc/passwd
+fi
+# create the user home, and change it
+if [ `synoshare --enum | grep Plex | wc -l` -eq 0 ]
+then
+    # create shared folder + temp transcoding folder inside
+    synoshare -add Plex "Plex Media Library" /volume1/Plex "" "admin plex" "" 0 7
+else
+    # set rights on existing folder for new user
+    synoshare --setuser Plex RW = admin,plex
+fi
+if [ ! -d /volume1/Plex/tmp_transcoding ]
+then
+    mkdir /volume1/Plex/tmp_transcoding
+    chown plex:users /volume1/Plex/tmp_transcoding
+fi
+
+exit 0

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<addon>
+  <name>PLEXMEDIASERVER</name>
+  <friendly_name>PlexMediaServer</friendly_name>
+  <version>PLX_VERSION-x86</version>
+  <detail_url>http://www.plexapp.com/linux/linux-pms-download.php</detail_url>
+  <author>ReadyNAS Xtras</author>
+  <get_url>../addons/PLEXMEDIASERVER/PLEXMEDIASERVER_HANDLER.pl</get_url>
+  <set_url>../addons/PLEXMEDIASERVER/PLEXMEDIASERVER_HANDLER.pl</set_url>
+  <preaction>PLEXMEDIASERVER_preaction</preaction>
+  <onloadaction>PLEXMEDIASERVER_onloadaction</onloadaction>
+  <current_url>http://www.plexapp.com/linux/readynas/xml/PlexMediaServer_CURRENT.xml</current_url>
+  <min_raidiator_version>4.2.15</min_raidiator_version>
+</addon>

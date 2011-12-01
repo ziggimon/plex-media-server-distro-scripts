@@ -1,0 +1,8 @@
+
+DETAIL_URL=http://www.plexapp.com
+CURRENT_URL=http://www.plexapp.com/releases/PLEXMEDIASERVER_CURRENT.xml
+ICON_URL=http://plexapp.com/releases/PLEXMEDIASERVER.png
+REBOOT_REQUIRED=n
+RESTART_APACHE=n
+MIN_RAIDIATOR_VERSION=4.1.3
+

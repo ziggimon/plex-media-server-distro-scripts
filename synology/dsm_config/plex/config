@@ -1,0 +1,12 @@
+{
+   ".url": {
+     "com.plex.mediaserver": {
+       "title": "Plex Media Server",
+       "desc": "Plex Media Manager Web UI",
+       "icon": "Plex-{0}.png",
+       "type": "url",
+       "url": "3rdparty/plex/plex.cgi",
+       "allUsers": true
+      }
+    }
+}

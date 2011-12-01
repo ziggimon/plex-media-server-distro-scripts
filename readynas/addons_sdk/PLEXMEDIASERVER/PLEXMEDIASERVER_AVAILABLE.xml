@@ -1,0 +1,15 @@
+<addon>
+  <name>PLEXMEDIASERVER</name>
+  <friendly_name>Plex Media Server</friendly_name>
+  <version>PLX_VERSION-x86</version>
+  <author>Elan Feingold</author>
+  <description>
+    <en-us>
+      <![CDATA[The Plex Media Server is the ultimate media hub, providing rich metadata for your local media, as well as hundreds of channels of online content, and serving it up to iOS and Android mobile clients, Roku Media Streamers, 2011 LG Smart TVs, and the Plex Media Center.]]>
+    </en-us>
+  </description>
+  <detail_url>http://www.plexapp.com</detail_url>
+  <download_url>http://www.plexapp.com/releases/PlexMediaServer_PLX_VERSION-x86.bin</download_url>
+  <icon>http://plexapp.com/releases/PLEXMEDIASERVER.png</icon>
+  <min_raidiator_version>4.2.15</min_raidiator_version>
+</addon>

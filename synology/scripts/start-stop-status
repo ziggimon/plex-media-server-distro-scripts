@@ -1,0 +1,81 @@
+#!/bin/sh
+
+PLEX_DIR="/var/packages/Plex Media Server/target"
+PMS_SERVICE="/usr/syno/avahi/services/pms.service"
+
+start_plex ()
+{
+    if [ ! -f "/usr/bin/rsync" ]
+    then
+        ln -s /usr/syno/bin/rsync /usr/bin/rsync
+    fi
+    if [ ! -f $PMS_SERVICE ]
+    then
+        more /usr/syno/avahi/services/afp.service | sed 's/_afpovertcp\._tcp/_plexmediasvr\._tcp/g' | sed 's/548/32400/g' > "$PMS_SERVICE"
+        avahi-daemon -r
+    fi
+    su plex -s /bin/sh -c "export LD_LIBRARY_PATH=/var/packages/Plex\ Media\ Server/target;export TMPDIR=/volume1/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
+    counter=20
+    while [ $counter -gt 0 ]
+    do
+        plex_status && break
+        let counter=counter-1
+        sleep 1
+    done
+    # create DSM shortcut
+    if [ ! -f "/usr/syno/synoman/webman/3rdparty/plex" ]
+    then
+        ln -s '/var/packages/Plex Media Server/target/dsm_config/plex' /usr/syno/synoman/webman/3rdparty
+    fi
+    plex_status
+}
+
+stop_plex ()
+{
+    # Kill Plex.
+    kill `ps w | grep Plex | grep -v -E 'stop|grep' | awk '{print $1}'`
+    rm -rf $PMS_SERVICE
+    avahi-daemon -r
+    # remove DSM shortcut
+    rm -rf /usr/syno/synoman/webman/3rdparty/plex
+}
+
+plex_status ()
+{
+    if [ `ps w | grep Plex | grep -v -E 'status|grep' | wc -l` -gt 0 ] 
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+case $1 in
+    start)
+        echo Starting Plex ...
+        start_plex
+        exit $?
+        ;;
+    stop)
+        echo Stopping Plex ...
+        stop_plex
+        exit $?
+        ;;
+    status)
+        if plex_status
+        then
+            echo Plex is running
+            exit 0
+        else
+            echo Plex is not running
+            exit 1
+        fi
+        ;;
+    log)
+        echo "/volume1/Plex/Library/Logs/Plex Media Server.log"
+        exit 0
+        ;;
+    *)
+        exit 1
+        ;;
+esac

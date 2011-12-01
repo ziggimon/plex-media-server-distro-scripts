@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<addon>
+  <version>PLX_VERSION-x86</version>
+  <download_url>http://www.plexapp.com/releases/PlexMediaServer_PLX_VERSION-x86.bin</download_url>
+  <message>
+    <en-us>
+      <![CDATA[New stuff.]]>
+    </en-us>
+  </message>
+  <min_raidiator_version>4.2.15</min_raidiator_version>
+</addon>

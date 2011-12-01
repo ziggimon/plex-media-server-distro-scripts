@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm -rf /volume1/Plex/plex_upgrade
+rm -rf /usr/local/plex_upgrade
+
+exit 0

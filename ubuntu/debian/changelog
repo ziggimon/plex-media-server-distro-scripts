@@ -1,0 +1,42 @@
+plexmediaserver (0.9.5.0-417b653ubuntu1) lucid; urgency=high
+
+  * Build on Lucid instead of Natty 
+  * Fix small cosmetic stuff in amd64 package
+
+ -- Tobias Hieta <tobias@plexapp.com>  Tue, 01 Nov 2011 08:43:41 +0000
+
+plexmediaserver (0.9.5.0-417b653) natty; urgency=low
+
+  * New upstream version 
+
+ -- Tobias Hieta <tobias@plexapp.com>  Sun, 30 Oct 2011 21:34:38 +0000
+
+plexmediaserver (0.9.4.0-dcf553b) natty; urgency=low
+
+  * New upstream verison 
+
+ -- Tobias Hieta <tobias@hieta.se>  Fri, 21 Oct 2011 07:39:36 +0000
+
+plexmediaserver (0.9.3.5ubuntu2) natty; urgency=low
+
+  * Fixed problems on systems not running upstart 
+
+ -- Tobias Hieta <tobias@hieta.se>  Fri, 29 Jul 2011 12:03:40 +0000
+
+plexmediaserver (0.9.3.5ubuntu1) lucid; urgency=low
+
+  * Fixed the transcoder cache directory when using the new environment variable.
+
+ -- Elan Feingold <elan@plexapp.com>  Wed, 28 Jul 2011 17:20:00 -1000
+
+plexmediaserver (0.9.3.4ubuntu1) lucid; urgency=low
+
+  * New upstream release
+
+ -- Tobias Hieta <tobias@hieta.se>  Wed, 27 Jul 2011 09:56:10 +0200
+
+plexmediaserver (0.9.2.8) lucid; urgency=low
+
+  * Initial release.
+
+ -- Tobias Hieta <tobias@hieta.se>  Mon, 25 Jul 2011 13:18:37 +0200

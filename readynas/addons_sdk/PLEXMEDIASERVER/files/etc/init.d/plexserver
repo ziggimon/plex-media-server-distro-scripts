@@ -1,0 +1,88 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          Plex Media Server instance
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts instance of Plex Media Server
+# Description:       starts instance of Plex Media Server using start-stop-daemon
+### END INIT INFO
+
+############### EDIT ME ##################
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+# path to app
+APP_PATH=/c/.plex
+
+# path to python bin
+DAEMON="${APP_PATH}/plexserver"
+
+# startup args
+DAEMON_OPTS=""
+
+# script name
+NAME=plexserver
+
+# app name
+DESC=plexserver
+
+# user
+RUN_AS=root
+
+PID_FILE=/var/run/plexserver.pid
+
+############### END EDIT ME ##################
+
+test -x $DAEMON || exit 0
+set -e
+
+# Set some environment stuff
+SCRIPTPATH="/c/.plex"
+export LD_LIBRARY_PATH="${SCRIPTPATH}"
+export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+export TMP=/c/.plex/tmp
+export TEMP=/c/.plex/temp
+export PLEX_MEDIA_SERVER_TMPDIR=/c/.plex/tmp
+ulimit -s 3000
+
+case "$1" in
+  start)
+        echo "Starting $DESC"
+        start-stop-daemon -d $APP_PATH -c $RUN_AS --umask 777 --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
+	sleep 5
+        ;;
+  stop)
+        echo "Stopping $DESC"
+	# MYPID=`cat ${PIDFILE}`
+	# kill ${MYPID}
+	# sleep 10
+        start-stop-daemon --stop --pidfile $PID_FILE
+	sleep 5
+	rm -f $PID_FILE
+	PLPLUG=`ps ax | grep Plex | grep -v grep | awk '{ print $1 }'`
+	kill ${PLPLUG}
+	exit 0
+        ;;
+
+  restart|force-reload)
+        echo "Restarting $DESC"
+        start-stop-daemon --stop --pidfile $PID_FILE
+	# MYPID=`cat ${PID_FILE}`
+	# kill ${MYPID}
+        sleep 5
+        rm -f $PID_FILE
+        start-stop-daemon -d $APP_PATH -c $RUN_AS --start --umask 777 --background --pidfile $PID_FILE  --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
+	# $DAEMON $DAEMON_OPTS
+	sleep 5
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
