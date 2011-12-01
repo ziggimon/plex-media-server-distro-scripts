@@ -108,7 +108,7 @@ for mydir in /c/.plex_unpack/Plex*; do
     mv -fv $mydir/* /c/.plex/
 done
 cd /c/.plex
-rm -f libavahi*
+# rm -f libavahi*
 rm -f plexserver
 ln -s Plex\ Media\ Server plexserver
 cd -
@@ -142,6 +142,6 @@ friendly_name=`awk -F'!!' '{ print $2 }' $orig_dir/addons.conf`
 
 # Remove the installation files
 cd /
-# rm -rf $orig_dir
+rm -rf $orig_dir
 
 exit 0
