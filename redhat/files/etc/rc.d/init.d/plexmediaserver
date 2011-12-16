@@ -1,0 +1,88 @@
+#! /bin/sh
+#
+# Plexmediaserver: Stops/Starts/Restarts and statuses Plex Media Server
+# chkconfig:   2345 20 80
+# Description: Starts the Plex Media Server
+#
+# Added 1 second delay to prevent startup failure on systemd systems using ssd
+#
+sleep 1
+
+PMS_BIN="Plex Media Server"
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Source Plex Variables
+[ -r /etc/sysconfig/PlexMediaServer ] && . /etc/sysconfig/PlexMediaServer
+
+RETVAL=0
+prog="PlexMediaServer"
+config="/etc/sysconfig/$prog"
+pidfile="/var/lock/subsys/$prog"
+
+start()
+{
+        [ $UID -eq 0 ] || exit 4
+        [ -x "$PLEX_MEDIA_SERVER_HOME/$PMS_BIN" ] || exit 5
+        [ -f "$config" ] || exit 6 
+        echo -n $"Starting $prog: "
+        su -s /bin/sh plex -c ". $config; cd /usr/lib/plexmediaserver; ./'$PMS_BIN'"&
+        sleep 1
+        ps -ef|grep ^plex|grep "$PMS_BIN"|egrep -v -e "sh|Plex Plug"| awk '{print $2}' > $pidfile && success || failure
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] && touch $pidfile
+        return $RETVAL
+}
+
+stop()
+{
+        [ $UID -eq 0 ] || exit 4
+	[ -f "$pidfile" ] || exit 6
+	echo -n $"Stopping $prog: "
+        kill -3 "`cat $pidfile`"&& success || failure
+        if [ -f $pidfile ]; then
+        PLEX=1
+        PID=`cat $pidfile`
+        while [ $PLEX -eq 1 ]; do
+          sleep 3
+          echo
+          if [ `ps -ef|grep $PID|grep -v grep|wc -l` -eq 1 ]; then
+           PLEX=1
+           echo -n $"Waiting for Plex to Stop: "
+           else
+           PLEX=0
+          fi
+        done
+        echo -n $"Stopped $prog" && success || failure
+        fi
+        RETVAL=$?
+        echo
+        rm -f $pidfile
+        return $RETVAL
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	status)
+		status $prog
+		RETVAL=$?
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|status}"
+		RETVAL=2
+		[ "$1" = 'usage' ] && RETVAL=0
+esac
+
+exit $RETVAL
+
