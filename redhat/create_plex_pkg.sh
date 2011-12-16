@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ Linux-redhat6 == Linux-redhat* ]]; then
+if [[ $NODE_NAME == Linux-redhat* ]]; then
 	mkdir redhat_temp
 	cd redhat_temp
 	cp -r ../files/etc ../files/lib ../files/plexmediaserver.spec ../files/usr .
