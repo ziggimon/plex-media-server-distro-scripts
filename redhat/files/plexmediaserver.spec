@@ -71,8 +71,6 @@ fi
 %description
  Stream media everywhere(tm)
 
-(RPM Made by ZiGGiMoN)
-
 %files
 %dir "/etc/"
 %dir "/etc/rc.d/"
