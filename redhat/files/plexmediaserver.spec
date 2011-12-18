@@ -6,7 +6,7 @@ Summary: Plex Media Server for Linux
 License: see /usr/share/doc/plexmediaserver/copyright
 Distribution: Redhat
 Group: Converted/video
-Requires(pre): libstdc++, glibc, avahi, rsync
+Requires(pre): libstdc++, glibc, rsync
 
 %define _rpmdir .
 %define _rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
@@ -31,11 +31,6 @@ if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-6].*$ ]]; then
 else
     systemctl daemon-reload
     systemctl enable plex.service
-fi
-
-# If avahi running restart it, to add Plex service.
-if [ `service avahi-daemon status| grep "is running"|wc -l` -eq 1 ]; then
-service avahi-daemon restart
 fi
 
 # Tell users to go and read readme file, if fw and avahi.
@@ -64,9 +59,6 @@ else
 fi
 
 %postun
-if [ `service avahi-daemon status| grep "is running"|wc -l` -eq 1 ]; then
-service avahi-daemon restart
-fi
 
 %description
  Stream media everywhere(tm)
@@ -78,9 +70,6 @@ fi
 "/etc/rc.d/init.d/plexmediaserver"
 %dir "/etc/sysconfig/"
 %config "/etc/sysconfig/PlexMediaServer"
-%dir "/etc/avahi"
-%dir "/etc/avahi/services"
-"/etc/avahi/services/plex.service"
 %dir "/etc/yum.repos.d"
 "/etc/yum.repos.d/plex.repo"
 %dir "/lib"
