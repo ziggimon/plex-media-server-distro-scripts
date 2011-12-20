@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Ubuntu* ]]; then
+if [[ $NODE_NAME == Linux-Ubuntu-Lucid-* ]]; then
 	mkdir redhat_temp
 	cd redhat_temp
 	cp -r ../files/etc ../files/lib ../files/plexmediaserver.spec ../files/usr .
