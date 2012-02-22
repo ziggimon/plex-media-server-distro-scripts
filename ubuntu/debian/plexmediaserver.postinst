@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+action=$1
+version=$2
+
+if [ "${DEBCONF_RECONFIGURE}" = "1" ]; then
+    action=reconfigure
+fi
+
+if [ "x$version" = "x" ] || [ "$action" = "reconfigure" ]; then
+#    db_get plexmediaserver/user
+#    USER="${RET:-plex}"
+    USER="plex"
+
+    if ! getent passwd "$USER" >/dev/null; then
+	    adduser --quiet --system --shell /bin/bash --home /var/lib/plexmediaserver --no-create-home --group "$USER"
+    fi
+fi
+
+# Automatically added by dh_installinit
+if [ -e "/etc/init/plexmediaserver.conf" ]; then
+	# start fails if already running
+	start plexmediaserver || :
+fi
+# End automatically added section
+
+exit 0
+
