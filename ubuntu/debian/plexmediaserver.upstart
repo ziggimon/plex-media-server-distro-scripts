@@ -16,7 +16,5 @@ respawn
 nice -5
 
 # What to execute
-script
-        su -c /usr/sbin/start_pms plex
-end script
+exec start-stop-daemon --start -c plex --exec /usr/sbin/start_pms
 
