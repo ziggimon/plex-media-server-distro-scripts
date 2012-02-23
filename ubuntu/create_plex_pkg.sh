@@ -6,6 +6,7 @@ then
 	rm -f *.deb *.changes
 	mkdir debian-tmp
 	cd debian-tmp
+    cp ../plexmediamanager.* .
 	ln -s $PLX_SRCDIR src
 	cp -r ../debian .
 	export EMAIL="jenkins@plexapp.com"
