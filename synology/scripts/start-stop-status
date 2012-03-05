@@ -2,6 +2,7 @@
 
 PLEX_DIR="/var/packages/Plex Media Server/target"
 PMS_SERVICE="/usr/syno/avahi/services/pms.service"
+PLEX_LIBRARY_PATH=`cat "$PLEX_DIR/plex_library_path"`
 
 start_plex ()
 {
@@ -14,7 +15,7 @@ start_plex ()
         more /usr/syno/avahi/services/afp.service | sed 's/_afpovertcp\._tcp/_plexmediasvr\._tcp/g' | sed 's/548/32400/g' > "$PMS_SERVICE"
         avahi-daemon -r
     fi
-    su plex -s /bin/sh -c "export LD_LIBRARY_PATH=/var/packages/Plex\ Media\ Server/target;export TMPDIR=/volume1/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
+    su plex -s /bin/sh -c "export LD_LIBRARY_PATH='$PLEX_DIR';export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$PLEX_LIBRARY_PATH';export TMPDIR=/volume1/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
     counter=20
     while [ $counter -gt 0 ]
     do
@@ -25,7 +26,7 @@ start_plex ()
     # create DSM shortcut
     if [ ! -f "/usr/syno/synoman/webman/3rdparty/plex" ]
     then
-        ln -s '/var/packages/Plex Media Server/target/dsm_config/plex' /usr/syno/synoman/webman/3rdparty
+        ln -s "$PLEX_DIR/dsm_config/plex" /usr/syno/synoman/webman/3rdparty
     fi
     plex_status
 }
@@ -72,7 +73,7 @@ case $1 in
         fi
         ;;
     log)
-        echo "/volume1/Plex/Library/Logs/Plex Media Server.log"
+        echo "$PLEX_LIBRARY_PATH/Plex Media Server/Logs/Plex Media Server.log"
         exit 0
         ;;
     *)

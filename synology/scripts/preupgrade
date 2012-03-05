@@ -1,6 +1,5 @@
 #!/bin/sh
 
-touch /volume1/Plex/plex_upgrade
 touch /usr/local/plex_upgrade
 
 exit 0
