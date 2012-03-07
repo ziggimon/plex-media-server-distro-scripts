@@ -2,7 +2,7 @@
 Name=Plex Media Manager
 GenericName=Media Manager
 Comment=Manage your Plex Media
-Exec=gnome-open http://localhost:32400/manage
+Exec=x-www-browser http://localhost:32400/manage
 Icon=plexmediamanager
 Terminal=false
 Type=Application
