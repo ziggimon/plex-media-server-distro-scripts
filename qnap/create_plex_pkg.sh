@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Debian-4.0* ]]
+if [[ $NODE_NAME == Linux-Debian-4.0* ]];
 then
 	echo "build QNAP package"
 	

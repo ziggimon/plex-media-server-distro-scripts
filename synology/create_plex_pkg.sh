@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Synology* ]]
+if [[ $NODE_NAME == Synology* ]];
 then
   echo "building package for synology"
   # create temporary directory
