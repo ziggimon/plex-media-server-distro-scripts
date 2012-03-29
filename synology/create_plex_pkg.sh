@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Synology* ]];
+if [[ $NODE_NAME == Linux-Synology* ]];
 then
   echo "building package for synology"
   # create temporary directory
@@ -11,10 +11,6 @@ then
 
   # copy desktop files
   cp -R dsm_config plex_package
-
-  # for synology we want to use the non-jemalloc binaries
-  cp plex_package/Plex\ Media\ Server-nojemalloc plex_package/Plex\ Media\ Server
-  cp plex_package/Plex\ Media\ Scanner-nojemalloc plex_package/Plex\ Media\ Scanner
 
   cd plex_package
   # tar the full package
