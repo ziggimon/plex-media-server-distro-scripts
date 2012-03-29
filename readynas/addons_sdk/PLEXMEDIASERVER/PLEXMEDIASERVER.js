@@ -6,9 +6,43 @@ self.PLEXMEDIASERVER_onloadaction = function()
 {
   setTimeout(function() {
     $('#BUTTON_PLEXMEDIASERVER_UPDATE').remove();
-    var plexlink = '<a href="http://' + window.location.hostname + ':32400/manage" target="_blank">Manage Plex Media Server</a>';
+    var plexlink = '<button type="button" onclick="window.open(\'http://\' + window.location.hostname + \':32400/manage\', \'_blank\');">Manage Plex Media Server</button>';
     $('#plexmgr').html(plexlink);
   }, 250);
+}
+
+self.PLEXMEDIASERVER_edit_dlna = function(what)
+{
+  $.getJSON('/addons/PLEXMEDIASERVER/plex_functions.pl?action=dlnaread', function(data) {
+    $.each(data, function(key, value) {
+      $('#plexjson').val(value);
+    });
+    $('#plexeditarea').show();
+  });
+}
+
+self.PLEXMEDIASERVER_restore_dlna = function() {
+  $.getJSON('/addons/PLEXMEDIASERVER/plex_functions.pl?action=dlnarestore', function(data) {
+    $.each(data, function(key, value) {
+      alert(value);
+    });
+    self.PLEXMEDIASERVER_editcancel();
+  });
+}
+
+self.PLEXMEDIASERVER_editcancel = function() {
+  $('#plexeditarea').hide();
+  $('#plexjson').val('');
+}
+
+self.PLEXMEDIASERVER_editsave = function() {
+  var editdata = $('#plexjson').val();
+  $.post('/addons/PLEXMEDIASERVER/plex_functions.pl', { action: "dlnasave", data: editdata }, function(data) {
+    $.each(data, function(key, value) {
+      alert(value);
+    });
+    self.PLEXMEDIASERVER_editcancel();
+  }, "json");
 }
 
 self.PLEXMEDIASERVER_enable = function()

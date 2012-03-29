@@ -111,6 +111,9 @@ cd /c/.plex
 # rm -f libavahi*
 rm -f plexserver
 ln -s Plex\ Media\ Server plexserver
+# need to change ownership here to make things accessible
+# from the ReadyNAS web interface
+chown -R admin:admin .
 cd -
 
 #remove the unpack dir
