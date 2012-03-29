@@ -9,7 +9,7 @@ use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use JSON;
 
-our $mydlna = "/c/.plex/Library/Application Support/Plex Media Server/Plug-ins/System.bundle/Contents/Resources/dlnaclientprofiles.xml";
+our $mydlna = "/c/.plex/Library/Application Support/Plex Media Server/dlnaclientprofiles.xml";
 
 do "/frontview/lib/addon.pl";
 print "Content-type: text/html\n\n";
@@ -19,13 +19,17 @@ my $param = $query->Vars;
 my $action = $param->{'action'};
 
 if ( $action eq "dlnaread" ) {
-    open(CF, '<', $mydlna) or die "Open dlnaclientprofiles.xml: $!";
-    my @lines = <CF>;
-    close(CF);
-    
-    $jsonarr = join('', @lines);
     my $jsontxt = {};
-    $jsontxt->{'content'} = $jsonarr;
+    if ( -e $mydlna ) {
+	open(CF, '<', $mydlna) or die "Open dlnaclientprofiles.xml: $!";
+	my @lines = <CF>;
+	close(CF);
+
+	$jsonarr = join('', @lines);
+	$jsontxt->{'content'} = $jsonarr;
+    } else {
+	$jsontxt->{'content'} = '';
+    }
     print to_json($jsontxt);
 } elsif ( $action eq "dlnasave" ) {
     my $data = $query->param('data');
@@ -46,7 +50,9 @@ if ( $action eq "dlnaread" ) {
     print to_json(["New dlnaclientprofiles.xml saved successfully. Plex Media Server will be restarted."]);
 } elsif ( $action eq "dlnarestore" ) {
     my $SPOOL = "\n\n";
-    $SPOOL .= 'cp -p /c/.plex/Resources/Plug-ins/System.bundle/Contents/Resources/dlnaclientprofiles.xml "/c/.plex/Library/Application Support/Plex Media Server/Plug-ins/System.bundle/Contents/Resources/dlnaclientprofiles.xml"';
+    $SPOOL .= 'rm -f "/c/.plex/Library/Application Support/Plex Media Server/dlnaclientprofiles.xml"';
+    $SPOOL .= 'touch "/c/.plex/Library/Application Support/Plex Media Server/dlnaclientprofiles.xml"';
+    $SPOOL .= 'chown admin:admin "/c/.plex/Library/Application Support/Plex Media Server/dlnaclientprofiles.xml"';
     $SPOOL .= "\n\n";
     spool_file('94_PLEX', $SPOOL);
     empty_spool();
