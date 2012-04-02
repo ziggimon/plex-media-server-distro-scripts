@@ -8,6 +8,6 @@ Homepage: http://www.plexapp.com
 
 Package: plexmediaserver
 Architecture: i386 amd64
-Depends: avahi-daemon, avahi-utils
+Depends: avahi-daemon, avahi-utils, plex-archive-keyring
 Description: Plex Media Server for Linux
   Stream media everywhere(tm)
