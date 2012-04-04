@@ -69,14 +69,8 @@ case "$1" in
 
   restart|force-reload)
         echo "Restarting $DESC"
-        start-stop-daemon --stop --pidfile $PID_FILE
-	# MYPID=`cat ${PID_FILE}`
-	# kill ${MYPID}
-        sleep 5
-        rm -f $PID_FILE
-        start-stop-daemon -d $APP_PATH -c $RUN_AS --start --umask 777 --background --pidfile $PID_FILE  --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
-	# $DAEMON $DAEMON_OPTS
-	sleep 5
+	$0 stop
+	$0 start
         ;;
   *)
         N=/etc/init.d/$NAME

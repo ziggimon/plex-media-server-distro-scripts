@@ -94,7 +94,7 @@ cd /c/.plex_unpack
 for myfile in /tmp/rnxtmp/*.tar.bz2; do
     tar xfj $myfile
 done
-cd -
+cd - > /dev/null
 
 # remove our archive dir
 rm -rf /tmp/rnxtmp
@@ -111,14 +111,20 @@ cd /c/.plex
 # rm -f libavahi*
 rm -f plexserver
 ln -s Plex\ Media\ Server plexserver
-cd -
+# need to change ownership here to make things accessible
+# from the ReadyNAS web interface
+if [ ! -f "Library/Application Support/Plex Media Server/dlnaclientprofile.xml" ]; then
+    touch "Library/Application Support/Plex Media Server/dlnaclientprofile.xml"
+fi
+cd - > /dev/null
 
 #remove the unpack dir
 rm -rf /c/.plex_unpack
 
 # fix permission issues
-chown -R root:root /c/.plex
-chmod -R 755 /c/.plex
+chown root:root /c/.plex/lib* /c/.plex/Plex*
+chmod 755 /c/.plex/lib* /c/.plex/Plex*
+chown admin:admin "Library/Application Support/Plex Media Server/dlnaclientprofile.xml"
 
 # clean out some old stuff if it exists
 [ -e "/etc/frontview/addons/PLEXNINESERVER.remove" ] && rm -rf /etc/frontview/addons/PLEXNINESERVER.remove
