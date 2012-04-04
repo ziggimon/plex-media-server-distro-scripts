@@ -122,8 +122,8 @@ cd - > /dev/null
 rm -rf /c/.plex_unpack
 
 # fix permission issues
-chown -R root:root /c/.plex
-chmod -R 755 /c/.plex
+chown root:root /c/.plex/lib* /c/.plex/Plex*
+chmod 755 /c/.plex/lib* /c/.plex/Plex*
 chown admin:admin "Library/Application Support/Plex Media Server/dlnaclientprofile.xml"
 
 # clean out some old stuff if it exists
