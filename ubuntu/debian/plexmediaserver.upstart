@@ -16,5 +16,9 @@ respawn
 nice -5
 
 # What to execute
-exec start-stop-daemon --start -c plex --exec /usr/sbin/start_pms
-
+script
+    if [ -r /etc/default/plexmediaserver ]; then
+        . /etc/default/plexmediaserver
+    fi 
+    start-stop-daemon --start -c $PLEX_MEDIA_SERVER_USER --exec /usr/sbin/start_pms
+end script

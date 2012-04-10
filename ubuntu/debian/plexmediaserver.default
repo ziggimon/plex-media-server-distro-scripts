@@ -11,3 +11,9 @@ PLEX_MEDIA_SERVER_TMPDIR=/tmp
 
 # uncomment to set it to something else
 # PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${HOME}/Library/Application\ Support"
+
+# the user that PMS should run as, defaults to 'plex'
+# note that if you change this you might need to move
+# the Application Support directory to not lose your
+# media library
+PLEX_MEDIA_SERVER_USER=plex
