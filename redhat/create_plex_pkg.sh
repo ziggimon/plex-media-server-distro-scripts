@@ -12,10 +12,11 @@ if [[ $NODE_NAME == Linux-Ubuntu-Lucid-* ]]; then
 	find ./usr/lib/plexmediaserver/ -type f | cut -d. -f2- | sed 's/$/"/' | sed 's/\/usr/"\/usr/g' >> plexmediaserver.spec
 	DIR=`pwd`
 	RPMVERSION=`echo ${PLX_VERSION}| cut -d"-" -f1`
-	cat plexmediaserver.spec | sed "s=^Buildroot:.*$=Buildroot: $DIR=g" | sed "s/^Version:.*$/Version: ${rpmversion}/g" | sed "s/^Release:.*$/Release: ${GIT_VERSION}/g" > ../plexmediaserver-${RPMVERSION}.spec
+    GIT_VERSION=`echo ${PLX_VERSION} | cut -d"-" -f2`
+	cat plexmediaserver.spec | sed "s=^Buildroot:.*$=Buildroot: $DIR=g" | sed "s/^Version:.*$/Version: ${RPMVERSION}/g" | sed "s/^Release:.*$/Release: ${GIT_VERSION}/g" > ../plexmediaserver-${RPMVERSION}.spec
 	rm -f plexmediaserver.spec
 	cd ..
-	rpmbuild -bb --buildroot=${dir} --quiet plexmediaserver-${RPMVERSION}.spec
-	mv *.rpm ${PLX_OUTDIR} 
+	rpmbuild -bb --buildroot=${DIR} --verbose plexmediaserver-${RPMVERSION}.spec
+	mv ../*.rpm ${PLX_OUTDIR} 
 	rm -f *.spec
 fi
