@@ -15,11 +15,15 @@ Group: Converted/video
 # Add Plex user if not allready on system
 if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq 0 ]; then adduser -d /var/lib/plexmediaserver -c "RPM Created PlexUser" --system -s /sbin/nologin plex; fi
 
-if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
-   /etc/init.d/plexmediaserver stop
-else
-   service plex stop
+if [ "$1" = "2" ]; then
+  if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+     /etc/init.d/plexmediaserver stop
+  else
+     service plex stop
+  fi
 fi
+
+exit 0
 
 %post
 # If /etc/init.d/plexmediaserver file not there, then add symlink to real init script.
@@ -46,10 +50,13 @@ echo ""
 echo " Read more here /usr/share/doc/plexmediaserver/README.Redhat"
 echo ""
 %preun
-if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
-   /etc/init.d/plexmediaserver stop
-else
-   service plex stop
+
+if [ "$1" = "0" ]; then
+  if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+     /etc/init.d/plexmediaserver stop
+  else
+     service plex stop
+  fi
 fi
 
 if [ "$1" = "0" ]; then
@@ -79,8 +86,6 @@ fi
 "/etc/rc.d/init.d/plexmediaserver"
 %dir "/etc/sysconfig/"
 %config "/etc/sysconfig/PlexMediaServer"
-%dir "/etc/yum.repos.d"
-"/etc/yum.repos.d/plex.repo"
 %dir "/lib"
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"

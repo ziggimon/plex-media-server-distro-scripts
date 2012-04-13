@@ -1,5 +1,0 @@
-[PlexRepo]
-name=PlexRepo
-baseurl=http://repo.markwalker.dk/$basearch/
-enabled=0
-gpgcheck=0
