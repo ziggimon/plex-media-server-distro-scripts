@@ -84,8 +84,6 @@ fi
 "/etc/rc.d/init.d/plexmediaserver"
 %dir "/etc/sysconfig/"
 %config "/etc/sysconfig/PlexMediaServer"
-%dir "/etc/yum.repos.d"
-"/etc/yum.repos.d/plex.repo"
 %dir "/lib"
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
