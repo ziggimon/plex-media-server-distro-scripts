@@ -15,10 +15,12 @@ Group: Converted/video
 # Add Plex user if not allready on system
 if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq 0 ]; then adduser -d /var/lib/plexmediaserver -c "RPM Created PlexUser" --system -s /sbin/nologin plex; fi
 
-if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
-   /etc/init.d/plexmediaserver stop
-else
-   service plex stop
+if [ "$1" = "2" ]; then
+  if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+     /etc/init.d/plexmediaserver stop
+  else
+     service plex stop
+  fi
 fi
 
 %post
