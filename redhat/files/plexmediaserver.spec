@@ -23,6 +23,8 @@ if [ "$1" = "2" ]; then
   fi
 fi
 
+exit 0
+
 %post
 # If /etc/init.d/plexmediaserver file not there, then add symlink to real init script.
 if [ ! -f /etc/init.d/plexmediaserver ]; then ln -s /etc/rc.d/init.d/plexmediaserver /etc/init.d/plexmediaserver;fi
