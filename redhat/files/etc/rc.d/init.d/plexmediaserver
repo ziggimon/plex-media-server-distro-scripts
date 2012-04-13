@@ -20,7 +20,7 @@ RETVAL=0
 prog="PlexMediaServer"
 config="/etc/sysconfig/$prog"
 pidfile="/var/run/$prog.pid"
-lockfile="/var/lock/subsys/$prod"
+lockfile="/var/lock/subsys/$prog"
 
 start()
 {
