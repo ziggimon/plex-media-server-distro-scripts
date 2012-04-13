@@ -10,11 +10,12 @@ if [[ $NODE_NAME == Linux-Ubuntu-Lucid-* ]]; then
 	cp -r ${PLX_SRCDIR}/* usr/lib/plexmediaserver/.
 	find ./usr/lib/plexmediaserver/ -type d | cut -d. -f2- | sed 's/\/usr/%dir "\/usr/g' | sed 's/$/"/' >> plexmediaserver.spec
 	find ./usr/lib/plexmediaserver/ -type f | cut -d. -f2- | sed 's/$/"/' | sed 's/\/usr/"\/usr/g' >> plexmediaserver.spec
-	dir=`pwd`
-	cat plexmediaserver.spec | sed "s=^Buildroot:.*$=Buildroot: $dir=g" | sed "s/^Version:.*$/Version: ${PLX_VERSION}/g" | sed "s/^Release:.*$/Release: ${BUILD_NUMBER}/g" > ../plexmediaserver-${PLX_VERSION}.spec
+	DIR=`pwd`
+	RPMVERSION=`echo ${PLX_VERSION}| cut -d"-" -f1`
+	cat plexmediaserver.spec | sed "s=^Buildroot:.*$=Buildroot: $DIR=g" | sed "s/^Version:.*$/Version: ${rpmversion}/g" | sed "s/^Release:.*$/Release: ${GIT_VERSION}/g" > ../plexmediaserver-${RPMVERSION}.spec
 	rm -f plexmediaserver.spec
 	cd ..
-	rpmbuild -bb --buildroot=${dir} --quiet plexmediaserver-${PLX_VERSION}.spec
+	rpmbuild -bb --buildroot=${dir} --quiet plexmediaserver-${RPMVERSION}.spec
 	mv *.rpm ${PLX_OUTDIR} 
 	rm -f *.spec
 fi
