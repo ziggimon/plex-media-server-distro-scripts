@@ -1,0 +1,11 @@
+[Unit]
+Description=Plex Media Server for Linux
+After=network.target
+
+[Service]
+ExecStart=/etc/init.d/plexmediaserver start
+Type=forking
+User=root
+
+[Install]
+WantedBy=multi-user.target
