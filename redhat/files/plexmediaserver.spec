@@ -52,11 +52,7 @@ echo ""
 %preun
 
 if [ "$1" = "0" ]; then
-  if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
      /etc/init.d/plexmediaserver stop
-  else
-     service plex stop
-  fi
 fi
 
 if [ "$1" = "0" ]; then
