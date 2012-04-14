@@ -29,7 +29,7 @@ start()
         [ -f "$config" ] || exit 6 
         echo -n $"Starting $prog: "
         su -s /bin/sh plex -c ". $config; cd /usr/lib/plexmediaserver; ./'$PMS_BIN'"&
-        sleep 1
+        sleep 3
         ps -ef|grep ^plex|grep "$PMS_BIN"|egrep -v -e "sh|Plex Plug"| awk '{print $2}' > $pidfile && success || failure
         touch $lockfile
         RETVAL=$?
