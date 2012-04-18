@@ -27,10 +27,24 @@ then
   chmod 1777 files/tmp
   sudo chown -R root:root files/tmp
   
+  # set minimum required RAIDiator version and
+  # make the right set of bzip2/bunzip2 available
+  if [ $NODE_NAME == Linux-Readynas-ARM ];
+  then
+    PLX_RAIDIATOR_VERSION="5.3.3"
+    mv files/bin_ARM files/bin
+    rm -rf files/bin_x86
+  else
+    PLX_RAIDIATOR_VERSION="4.2.18"
+    mv files/bin_x86 files/bin
+    rm -rf files/bin_ARM
+  fi
+
   # Replace version names in files.
-  for f in addons.conf PLEXMEDIASERVER_AVAILABLE.xml PLEXMEDIASERVER_CURRENT.xml PLEXMEDIASERVER.xml
+  for f in addons.conf .PLEXMEDIASERVER_BUILD_SETTINGS PLEXMEDIASERVER_AVAILABLE.xml PLEXMEDIASERVER_CURRENT.xml PLEXMEDIASERVER.xml
   do
     sed -i "s/PLX_VERSION/$PLX_VERSION/" $f
+    sed -i "s/PLX_RAIDIATOR_VERSION/$PLX_RAIDIATOR_VERSION/" $f
   done
   
   # Build the ReadyNAS package.

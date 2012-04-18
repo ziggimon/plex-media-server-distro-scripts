@@ -12,6 +12,17 @@ bye() {
   exit 1
 }
 
+byeok() {
+  . /frontview/bin/functions
+  message=$1
+  cd /
+  rm -rf $orig_dir
+  . /frontview/bin/functions
+  echo -n ": $message"
+  log_status "$message" 1
+  exit 0
+}
+
 orig_dir=`pwd`
 name=`awk -F'!!' '{ print $1 }' addons.conf`
 stop=`awk -F'!!' '{ print $5 }' addons.conf`
@@ -107,12 +118,16 @@ cd - > /dev/null
 rm -rf /tmp/rnxtmp
 
 # remove original binaries for good measure
-rm -f /c/.plex/*
+for rmf in /c/.plex/*; do
+   if [ -f $rmf ]; then
+      rm -f $rmf
+   fi
+done
 rm -rf /c/.plex/Resources
 
 # move the files
 for mydir in /c/.plex_unpack/Plex*; do
-    mv -fv $mydir/* /c/.plex/
+    mv -f $mydir/* /c/.plex/
 done
 cd /c/.plex
 # rm -f libavahi*
@@ -131,7 +146,7 @@ rm -rf /c/.plex_unpack
 # fix permission issues
 chown root:root /c/.plex/lib* /c/.plex/Plex*
 chmod 755 /c/.plex/lib* /c/.plex/Plex*
-chown admin:admin "Library/Application Support/Plex Media Server/dlnaclientprofile.xml"
+chown admin:admin "/c/.plex/Library/Application Support/Plex Media Server/dlnaclientprofile.xml"
 
 # clean out some old stuff if it exists
 [ -e "/etc/frontview/addons/PLEXNINESERVER.remove" ] && rm -rf /etc/frontview/addons/PLEXNINESERVER.remove
@@ -149,12 +164,10 @@ sed -i "/^$OLDSERVICE\!\!/d" /etc/frontview/addons/addons.conf
 
 ######################################################
 
-eval $run
+eval $run > /dev/null
 
 friendly_name=`awk -F'!!' '{ print $2 }' $orig_dir/addons.conf`
 
-# Remove the installation files
-cd /
-rm -rf $orig_dir
+byeok "Successfully installed $friendlyname $version"
 
 exit 0

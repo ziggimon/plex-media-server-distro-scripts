@@ -7,5 +7,5 @@
       <![CDATA[New stuff.]]>
     </en-us>
   </message>
-  <min_raidiator_version>4.2.15</min_raidiator_version>
+  <min_raidiator_version>PLX_RAIDIATOR_VERSION</min_raidiator_version>
 </addon>
