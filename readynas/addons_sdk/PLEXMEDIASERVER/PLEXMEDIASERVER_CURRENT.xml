@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <addon>
-  <version>PLX_VERSION-x86</version>
-  <download_url>http://www.plexapp.com/releases/PlexMediaServer_PLX_VERSION-x86.bin</download_url>
+  <version>PLX_VERSION</version>
+  <download_url>http://www.plexapp.com/releases/PlexMediaServer_PLX_VERSION.bin</download_url>
   <message>
     <en-us>
       <![CDATA[New stuff.]]>

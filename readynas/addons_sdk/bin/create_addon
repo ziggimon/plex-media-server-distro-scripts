@@ -243,7 +243,7 @@ RESTART_APACHE=${RESTART_APACHE}
 MIN_RAIDIATOR_VERSION=${MIN_RAIDIATOR_VERSION}
 " > ${TAG_NAME}/.${TAG_NAME}_BUILD_SETTINGS
 
-for lang in en-us de fr ja ko zh-cn zh-tw; do
+for lang in cs de en-us fr it ja ko nl pl pt-br ru sv zh-cn zh-tw; do
   eval sed -i -e \'s#%DESCRIPTION%#${DESCRIPTION}#g\' \
             -e \'s#%FRIENDLY_NAME%#${FRIENDLY_NAME}#g\' \
             ${TAG_NAME}/language/$lang/${TAG_NAME}.str

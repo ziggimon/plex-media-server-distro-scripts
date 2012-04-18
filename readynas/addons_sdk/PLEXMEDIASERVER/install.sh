@@ -32,11 +32,18 @@ fi
 ###########  Addon specific action go here ###########
 
 raidiator_version=`sed -e 's/.*version=//' -e 's/,.*//' -e 's/-.*//' /var/log/raidiator_version`
+raidiator_version_major=${raidiator_version%.*.*}
 raidiator_version_ver=${raidiator_version%.*}
 raidiator_version_patch=${raidiator_version##*.}
-if [ "$raidiator_version_ver" != "4.2" -o "$raidiator_version_patch" == "" -o $raidiator_version_patch -lt 15 ]; then
-  bye "$LINENO: ERROR: Plex Media Server (x86) can apply on only 4.2.15 or later"
+if [ "$raidiator_version_major" = "4" ]; then
+  echo $raidiator_version_ver $raidiator_version_patch
+  if [ "$raidiator_version_ver" != "4.2" -o "$raidiator_version_patch" == "" -o $raidiator_version_patch -lt 15 ]; then
+    echo "$LINENO: ERROR: Plex Media Server can apply on only 4.2.15 or later"
+  fi
+elif [ $raidiator_version_major -lt 4 ]; then
+  echo "$LINENO: ERROR: Plex Media Server can apply on only 4.2.15 or later"
 fi
+
 
 LIBLINK=`readlink /root/Library`
 if [ "$LIBLINK" = "" ]; then

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Debian-4.0* ]];
+if [ $NODE_NAME == Linux-Debian-4.0* -o  $NODE_NAME == Linux-Readynas-ARM ];
 then
   # Create temporary directory
   rm -rf plex_package
@@ -37,7 +37,7 @@ then
   LD_LIBRARY_PATH=../bin/ ../bin/build_addon
 
   # And finally, move the package out.
-  mv PlexMediaServer_$PLX_VERSION-x86.bin $PLX_OUTDIR/
+  mv PlexMediaServer_$PLX_VERSION.bin $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-`uname -m`.bin
 
   # Clean up.
   cd ../../../
