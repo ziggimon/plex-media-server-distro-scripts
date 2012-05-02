@@ -17,6 +17,6 @@ then
     mv debian-tmp PlexMediaServer-$PLX_VERSION-USC
     zip -r PlexMediaServer-$PLX_VERSION-`uname -m`-USC.zip PlexMediaServer-$PLX_VERSION-USC
 	mv *.deb *.changes *.zip $PLX_OUTDIR
-	rm -rf debian-tmp
+	rm -rf PlexMediaServer-$PLX_VERSION-USC
 fi
 
