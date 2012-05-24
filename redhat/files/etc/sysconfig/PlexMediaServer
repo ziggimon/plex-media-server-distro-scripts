@@ -21,12 +21,16 @@ PLEX_MEDIA_SERVER_MAX_OPEN_FILES=4096
 # where the mediaserver should store the transcodes
 PLEX_MEDIA_SERVER_TMPDIR=/tmp
 
+# where the PID file for Plex is stored
+PLEX_MEDIA_SERVER_PID_FILE=/var/run
+
 # uncomment to set it to alternative support dir, eg. /opt/plex
 # NOTE: Plex user must be able to write to this dir
 #
 # PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/opt/plex/Library/Application Support"
 
 export LD_LIBRARY_PATH="${PLEX_MEDIA_SERVER_HOME}"
+export PLEX_MEDIA_SERVER_PID_FILE
 export TMPDIR="${PLEX_MEDIA_SERVER_TMPDIR}"
 export PLEX_MEDIA_SERVER_HOME=$PLEX_MEDIA_SERVER_HOME
 export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
