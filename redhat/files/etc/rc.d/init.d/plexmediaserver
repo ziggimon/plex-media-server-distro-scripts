@@ -19,7 +19,7 @@ PMS_BIN="Plex Media Server"
 RETVAL=0
 prog="PlexMediaServer"
 config="/etc/sysconfig/$prog"
-pidfile="$PLEX_MEDIA_SERVER_PID_FILE/plexmediaserver.pid"
+pidfile="/var/run/$prog.pid"
 lockfile="/var/lock/subsys/$prog"
 
 start()
@@ -30,6 +30,7 @@ start()
         echo -n $"Starting $prog: "
         su -s /bin/sh plex -c ". $config; cd /usr/lib/plexmediaserver; ./'$PMS_BIN'"&
         sleep 3
+        ps -ef|grep ^plex|grep "$PMS_BIN"|egrep -v -e "sh|Plex Plug"| awk '{print $2}' > $pidfile && success || failure
         touch $lockfile
         RETVAL=$?
         echo
@@ -60,6 +61,7 @@ stop()
         fi
         RETVAL=$?
         echo
+	rm -f $pidfile
         rm -f $lockfile
         return $RETVAL
 }
