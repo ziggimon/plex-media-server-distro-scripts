@@ -30,10 +30,11 @@ start()
         echo -n $"Starting $prog: "
         su -s /bin/sh plex -c ". $config; cd /usr/lib/plexmediaserver; ./'$PMS_BIN'"&
         sleep 3
+        eval "$@" && success || failure
         touch $lockfile
         RETVAL=$?
         echo
-        [ $RETVAL = 0 ] && ln -s ${PLEX_MEDIA_SERVER_HOME}/plexmediaserver.pid $pidfile
+        [ $RETVAL = 0 ] && ln -s "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}/Plex Media Server/plexmediaserver.pid" $pidfile
         return $RETVAL
 }
 
