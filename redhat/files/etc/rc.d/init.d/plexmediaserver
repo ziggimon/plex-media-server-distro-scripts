@@ -28,7 +28,7 @@ start()
         [ -x "$PLEX_MEDIA_SERVER_HOME/$PMS_BIN" ] || exit 5
         [ -f "$config" ] || exit 6 
         echo -n $"Starting $prog: "
-        su -s /bin/sh plex -c ". $config; cd /usr/lib/plexmediaserver; ./'$PMS_BIN'"&
+        su -s /bin/sh plex -c ". $config; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN'"&
         sleep 3
         eval "$@" && success || failure
         touch $lockfile
