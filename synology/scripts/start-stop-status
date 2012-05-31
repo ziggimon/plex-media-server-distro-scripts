@@ -1,9 +1,8 @@
 #!/bin/sh
 
 PLEX_DIR="/var/packages/Plex Media Server/target"
-PMS_SERVICE="/usr/syno/avahi/services/pms.service"
 PLEX_LIBRARY_PATH=`cat "$PLEX_DIR/plex_library_path"`
-PID_FILE="$PLEX_LIBRARY_PATH/plexmediaserver.pid"
+PID_FILE="$PLEX_LIBRARY_PATH/Plex Media Server/plexmediaserver.pid"
 
 start_plex ()
 {
@@ -27,16 +26,20 @@ start_plex ()
 stop_plex ()
 {
     # Kill Plex.
-    if [ -f $PID_FILE ]
+    if [ -f "$PID_FILE" ]
     then
-        kill `cat $PID_FILE`
+        kill `cat "$PID_FILE"`
     fi
     rm -rf /usr/syno/synoman/webman/3rdparty/plex
 }
 
 plex_status ()
 {
-    if [ -d /proc/`cat $PID_FILE` ]
+    if [ ! -f "$PID_FILE" ]
+    then
+        return 1
+    fi
+    if [ -d /proc/`cat "$PID_FILE"` ]
     then
         return 0
     else
