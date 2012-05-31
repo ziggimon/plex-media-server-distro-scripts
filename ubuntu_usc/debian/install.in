@@ -1,0 +1,3 @@
+ARCH/* /opt/plexmediaserver
+debian/start_pms /opt/plexmediaserver
+debian/*.desktop /usr/share/applications

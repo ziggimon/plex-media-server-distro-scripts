@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+VERSION=$(shell head -1 debian/changelog | cut -f2 -d" "| tr -d \(\) | cut -f1 -d "-")
+PACKAGE_NAME=$(shell head -1 debian/changelog | cut -f1 -d" ")
+
+DEB_BUILD_ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+%:
+	dh $@ 
+
+override_dh_install:
+	sed 's/ARCH/$(DEB_BUILD_ARCH)/' debian/install.in > debian/install 
+	dh_install
+	# Create icons for sizes that were not supplied
+	convert -resize 48x48 icons/512x512.png debian/$(PACKAGE_NAME)/usr/share/pixmaps/$(PACKAGE_NAME).xpm;
+	for SIZE in 128x128 64x64 32x32 16x16; do \
+	  convert -resize $$SIZE icons/512x512.png debian/$(PACKAGE_NAME)/usr/share/icons/hicolor/$$SIZE/apps/$(PACKAGE_NAME).png; \
+	done
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(CURDIR)/debian/$(PACKAGE_NAME)/opt/$(PACKAGE_NAME)/ -XResources/Plug-ins
+
+build-orig-source:
+	mkdir -p $(PACKAGE_NAME)-$(VERSION)
+	tar --exclude=debian --exclude=\.pc	\
+		--exclude=$(PACKAGE_NAME)-$(VERSION) -cf - . \
+		| ( cd $(PACKAGE_NAME)-$(VERSION) && tar xf - )
+	tar -czf ../$(PACKAGE_NAME)_$(VERSION).orig.tar.gz $(PACKAGE_NAME)-$(VERSION)
+	$(RM) -r $(PACKAGE_NAME)-$(VERSION)

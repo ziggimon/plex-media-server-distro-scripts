@@ -1,0 +1,7 @@
+plexmediaserver: dir-or-file-in-opt
+plexmediaserver: package-installs-python-bytecode
+plexmediaserver: embedded-library
+plexmediaserver: binary-or-shlib-defines-rpath
+plexmediaserver: extra-license-file
+plexmediaserver: script-not-executable
+plexmediaserver: wrong-path-for-interpreter

@@ -1,0 +1,17 @@
+Source: plexmediaserver
+Section: net
+Priority: extra
+Maintainer: Cleto Martín <cleto.martin@gmail.com>
+Build-Depends: debhelper (>= 8.0.0), imagemagick
+Standards-Version: 3.9.3
+Homepage: http://plexapp.com
+
+Package: plexmediaserver
+Architecture: i386 amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, xdg-utils
+Pre-Depends: adduser
+Description: The solution for your local and online media
+ Plex Media Server makes it possible to stream music, (local and
+ online) videos and photos from your Ubuntu desktop to your TV, Roku
+ box, Android phone, iPhone, Playstation 3, Xbox360 and many more
+ clients.
