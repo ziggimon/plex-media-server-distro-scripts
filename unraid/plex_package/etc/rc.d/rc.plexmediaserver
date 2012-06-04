@@ -1,0 +1,113 @@
+#!/bin/sh
+# Start/stop/restart/enable/disable plex.
+
+DEFAULT_PLEX_MEDIA_SERVER_HOME="/usr/local/plexmediaserver"
+DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/tmp/Library"
+DEFAULT_PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+DEFAULT_PLEX_MAX_STACK_SIZE=3000
+DEFAULT_LC_ALL="en_US.utf8"
+DEFAULT_LANG="en_US.utf8"
+DEFAULT_RUNAS=unraid-plex
+DEFAULT_TMPDIR="/tmp"
+DEFAULT_ENABLED="false"
+
+plex_start() {
+	
+	if [ $DEFAULT_ENABLED != "true" ]; then
+		logger -t pms  "Plex Media Server is not enabled"
+		exit 1
+	fi
+
+	su $DEFAULT_RUNAS -s /bin/bash -c "(cd $DEFAULT_PLEX_MEDIA_SERVER_HOME; export PLEX_MEDIA_SERVER_HOME='$DEFAULT_PLEX_MEDIA_SERVER_HOME'; export LD_LIBRARY_PATH='$DEFAULT_PLEX_MEDIA_SERVER_HOME'; export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support'; export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=$DEFAULT_PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS; export LC_ALL='$DEFAULT_LC_ALL'; export LANG='$DEFAULT_LANG'; export TMPDIR='$DEFAULT_TMPDIR';  ulimit -s $DEFAULT_PLEX_MAX_STACK_SIZE; nohup ./Plex\ Media\ Server &)"
+		
+  	sleep 2
+	for i in {1..5}; do
+		if [ ! -e "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support/Plex Media Server/plexmediaserver.pid" ]; then
+			logger -t pms  "Check $i: Plex has NOT started yet, something is maybe wrong!" 
+    			sleep 3
+  		else	
+			logger -t pms  "Plex Media Server IS running"
+			break
+		fi
+  	done
+}
+
+plex_stop(){
+	logger -t pms  "Stopping Plex..."
+	sleep 0.5
+	if [ -e "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support/Plex Media Server/plexmediaserver.pid" ]; then
+ 		kill -INT $(cat "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support/Plex Media Server/plexmediaserver.pid")
+        fi	
+	
+	pgrep -u unraid-plex -f Plex > /dev/null
+
+	if [ $? -eq 0 ]; then
+		sleep 5
+		pgrep -u unraid-plex -f Plex > /dev/null
+		if [ $? -eq 0 ]; then 
+			plex_forcestop
+		fi
+	fi
+}
+
+plex_forcestop(){
+	logger -t pms "Stopping Plex ... forced!"
+	pkill -9 -u $DEFAULT_RUNAS -f Plex
+	sleep 5
+	rm -f "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support/Plex Media Server/plexmediaserver.pid"
+}
+
+plex_version(){
+	export LD_LIBRARY_PATH=$DEFAULT_PLEX_MEDIA_SERVER_HOME
+	$DEFAULT_PLEX_MEDIA_SERVER_HOME/Plex\ Media\ Server --version
+}
+
+plex_check_dirs(){
+	if [ ! -d $DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR ]; then
+		logger -t pms  "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR doesn't exist creating it"
+		mkdir -p "$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support"
+	fi
+	
+	#Check if current runas user is owner of $DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
+	if [ "$(stat -c %U $DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR)"  != "$DEFAULT_RUNAS" ]; then
+		logger -t pms  "Plex Media Server: changing owner of $DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR to $DEFAULT_RUNAS"
+		chown -R $DEFAULT_RUNAS:users $DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
+	fi
+	
+	if [ ! -d $DEFAULT_TMPDIR ]; then
+		logger -t pms  "$DEFAULT_TMPDIR doesn't exist creating it"
+		mkdir -p $DEFAULT_TMPDIR
+	fi
+	
+	#Check if current runas user is owner of $DEFAULT_TMPDIR
+	if  [ $(readlink -f $DEFAULT_TMPDIR) != "/tmp" ] && [ "$(stat -c %U $DEFAULT_TMPDIR)"  != "$DEFAULT_RUNAS" ]; then
+		logger -t pms  "Plex Media Server: changing owner of $PLEX_TMPDIR to $DEFAULT_RUNAS"
+		chown -R $RUNAS:users $PLEX_TMPDIR
+	fi
+}
+
+# read the configuration files
+test -e /boot/config/plugins/plexmediaserver/plex_settings.cfg && source /boot/config/plugins/plexmediaserver/plex_settings.cfg
+
+case "$1" in
+	'start')
+		plex_check_dirs
+  		plex_start
+  	;;
+	'stop')
+  		plex_stop
+  	;;
+	'forcestop')
+                plex_forcestop
+        ;;
+	'restart')
+  		plex_stop
+  		sleep 1
+  		plex_start
+  	;;
+  	'version')
+  		plex_version
+  	;;
+	*)
+  		echo "usage $0 start|stop|forcestop|restart|version"
+esac
