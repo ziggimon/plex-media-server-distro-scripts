@@ -1,0 +1,6 @@
+Menu="NetworkServices"
+Icon="pms_48px.png"
+Version="0.1"
+Author="spidi"
+Type="php"
+Title="Plex Media Server"
