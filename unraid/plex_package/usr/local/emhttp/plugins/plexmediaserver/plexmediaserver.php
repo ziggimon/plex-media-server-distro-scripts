@@ -1,0 +1,48 @@
+<?PHP
+$plex_cfg = parse_ini_file( "/boot/config/plugins/plexmediaserver/plex_settings.cfg");
+$plex_running = file_exists($plex_cfg['DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']."/Application Support/Plex Media Server/plexmediaserver.pid") ? "yes" : "no";
+$plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
+?>
+<form name="plex_settings" method="POST" action="/plugins/plexmediaserver/plexmediaserverctl.php" target="progressFrame">
+	<input type="hidden" name="RUNAS" value="<?=$plex_cfg['DEFAULT_RUNAS'];?>">
+      <table class="settings">
+         <tr>
+         <td>Enable Plex Media Server:</td>
+         <td><select name="SERVICE" size="1"  onChange="checkPLEX_INSTALLDIR(this.form);">
+            <?=mk_option($plex_cfg['DEFAULT_ENABLED'], "false", "No");?>
+            <?=mk_option($plex_cfg['DEFAULT_ENABLED'], "true", "Yes");?>
+            </select></td>
+         </tr>
+                 <tr>
+         <td>Library directory:</td>
+         <td><input type="text" name="LIBDIR" maxlength="60" value="<?=$plex_cfg['DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR'];?>"></td>
+         </tr>
+         <tr>
+         <td>Temp directory:</td>
+         <td><input type="text" name="TMPDIR" maxlength="60" value="<?=$plex_cfg['DEFAULT_TMPDIR'];?>"></td>
+         </tr>
+         <tr>
+         <td></td>
+	 <td><input type="submit" name="runCmd" value="Save"><button type="button" onClick="done();">Done</button></td>
+         </tr>
+      </table>
+   </form>
+<? if ($plex_running=="yes"): ?>
+<hr>
+     <p class=ContentTitle><a href="http://<?=$var['NAME'];?>:32400/manage" target="_blank">Plex Media Server</a> is running with version <?=$plex_version;?></p>
+<? endif; ?>
+
+<script type="text/javascript">
+function checkPLEX_INSTALLDIR(form)
+{
+   if ("<?=$plex_running;?>" == "yes") {
+      form.LIBDIR.readOnly = true;
+      form.TMPDIR.readOnly = true;
+   }
+   else {
+      form.LIBDIR.readOnly = (form.SERVICE.value == "true");
+      form.TMPDIR.readOnly = (form.SERVICE.value == "true");
+   }
+}
+checkPLEX_INSTALLDIR(document.plex_settings);
+</script>

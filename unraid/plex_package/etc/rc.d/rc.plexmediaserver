@@ -82,7 +82,7 @@ plex_check_dirs(){
 	#Check if current runas user is owner of $DEFAULT_TMPDIR
 	if  [ $(readlink -f $DEFAULT_TMPDIR) != "/tmp" ] && [ "$(stat -c %U $DEFAULT_TMPDIR)"  != "$DEFAULT_RUNAS" ]; then
 		logger -t pms  "Plex Media Server: changing owner of $PLEX_TMPDIR to $DEFAULT_RUNAS"
-		chown -R $RUNAS:users $PLEX_TMPDIR
+		chown -R $DEFAULT_RUNAS:users $DEFAULT_TMPDIR
 	fi
 }
 
