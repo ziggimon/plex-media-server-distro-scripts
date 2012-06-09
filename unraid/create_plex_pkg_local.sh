@@ -15,4 +15,3 @@ makepkg -c y $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
 
 rm -rf usr/local/plexmediaserver/*
 
-chown -R nobody:users ../plex_package
