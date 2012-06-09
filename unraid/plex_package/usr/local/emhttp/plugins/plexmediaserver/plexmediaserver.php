@@ -29,7 +29,7 @@ $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
    </form>
 <? if ($plex_running=="yes"): ?>
 <hr>
-     <p class=ContentTitle><a href="http://<?=$var['NAME'];?>:32400/manage" target="_blank">Plex Media Server</a> is running with version <?=$plex_version;?></p>
+     <p class=ContentTitle><a href="http://<?=$var['IPADDR'];?>:32400/manage" target="_blank">Plex Media Server</a> is running with version <?=$plex_version;?></p>
 <? endif; ?>
 
 <script type="text/javascript">
