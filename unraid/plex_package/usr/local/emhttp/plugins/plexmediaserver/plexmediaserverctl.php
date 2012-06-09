@@ -9,6 +9,17 @@
 	
   	write_config($pms_config_file);
 	
+	switch ($_POST['SERVICE']){
+        case "true":
+                system("/etc/rc.d/rc.plexmediaserver start");
+                break;
+        case "false":
+                exec("/etc/rc.d/rc.plexmediaserver stop");
+                break;
+        default:
+                break;
+	}
+	
 	if (empty($_SERVER['SHELL'])) {
     		echo("<html>");
     		echo("<head><script>var goback=parent.location;</script></head>");
