@@ -4,3 +4,4 @@ maintainer="Plex Team"
 arch="x86 cedarview bromolow"
 adminport=32400
 adminurl=manage
+helpurl="http://www.plexapp.com/"
