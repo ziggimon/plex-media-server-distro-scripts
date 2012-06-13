@@ -9,7 +9,7 @@ fi
 
 # get available volume and create configuration file
 echo "`servicetool --get-alive-volume`/Plex/Library/Application Support" > "/var/packages/Plex Media Server/target/plex_library_path"
-export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex/"
+export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
 
 # create the user home, and change it
 synoshare --get Plex
