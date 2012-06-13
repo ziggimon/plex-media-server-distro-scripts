@@ -9,15 +9,12 @@ then
 	mkdir -p usr/local/plexmediaserver
 
 	#copy source to the right place
+	mkdir -p usr/local/plexmediaserver/
 	cp -R $PLX_SRCDIR/* usr/local/plexmediaserver/
-	sudo chown -R root:root *
-	sudo chmod -R 755 *
-	sudo chmod -R 777 usr/local/plexmediaserver/
 	 
-	makepkg -c n $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
+	makepkg -c y $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
 	
 	#clean 
-	rm -rf usr/local/plexmediaserver/*
-	chown nobody:users ../plex_package
+	rm -rf usr/local/plexmediaserver
 fi
 
