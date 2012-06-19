@@ -26,11 +26,14 @@ $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
 	 <td><input type="submit" name="runCmd" value="Save"><button type="button" onClick="done();">Done</button></td>
          </tr>
       </table>
-   </form>
-<? if ($plex_running=="yes"): ?>
-<hr>
-     <p class=ContentTitle><a href="http://<?=$var['IPADDR'];?>:32400/manage" target="_blank">Plex Media Server</a> is running with version <?=$plex_version;?></p>
-<? endif; ?>
+</form>
+<div id="title"><span class="left">Status:
+	<?if ($plex_running=="yes"):?>
+  		<a href="http://<?=$var['IPADDR'];?>:32400/manage" target="_blank"><span class="green"><b>RUNNING</b></span></a><span> with version: <b><?=$plex_version;?></b></span>
+	<?else:?>
+  		<span class="red"><b>STOPPED</b></span>
+	<?endif;?>
+</span></div>
 
 <script type="text/javascript">
 function checkPLEX_INSTALLDIR(form)
