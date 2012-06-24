@@ -10,6 +10,9 @@ rm -rf usr/local/plexmediaserver/*
 
 #copy source to the right place
 cp -R $PLX_SRCDIR/* usr/local/plexmediaserver/
+
+chown -R root:root *
+chmod -R 750 usr/local/emhttp/plugins/plexmediaserver
  
 makepkg -c y $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
 
