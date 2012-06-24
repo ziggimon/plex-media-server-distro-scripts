@@ -23,7 +23,7 @@ $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
          </tr>
          <tr>
          <td></td>
-	 <td><input type="submit" name="runCmd" value="Save"><button type="button" onClick="done();">Done</button></td>
+	 <td><input type="submit" name="runCmd" value="Apply"><button type="button" onClick="done();">Done</button></td>
          </tr>
       </table>
 </form>
