@@ -29,14 +29,14 @@ start()
         [ -f "$config" ] || exit 6
         if [ ! -f "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" ];
         then
-         su -s /bin/sh plex -c 'mkdir -p "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" > /dev/null 2>&1'
+         su -s /bin/sh $PLEX_USER -c 'mkdir -p "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" > /dev/null 2>&1'
          if [ ! $? -eq 0 ]; then
           echo "WARNING COULDN'T CREATE $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR, MAKE SURE I HAVE PERMISSON TO DO THAT!"
           exit 1
          fi
         fi
         echo -n $"Starting $prog: "
-        su -s /bin/sh plex -c ". $config; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN'"&
+        su -s /bin/sh $PLEX_USER -c ". $config; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN'"&
         sleep 3
         eval "$@" && success || failure
         touch $lockfile
