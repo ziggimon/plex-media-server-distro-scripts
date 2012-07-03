@@ -15,7 +15,7 @@ $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
          </tr>
                  <tr>
          <td>Library directory:</td>
-         <td><input type="text" name="LIBDIR" maxlength="60" value="<?=preg_replace('/Application Support$/', '', $plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']);?>"></td>
+         <td><input type="text" name="LIBDIR" maxlength="60" value="<?=$plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR'];?>"></td>
          </tr>
          <tr>
          <td>Temp directory:</td>

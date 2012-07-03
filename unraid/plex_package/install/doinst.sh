@@ -24,7 +24,7 @@ if [ ! -f $CONFIG_FILE ]; then
         echo "#Set home of Plex Media Server" >> $CONFIG_FILE
         echo "PLEX_MEDIA_SERVER_HOME=\"$PLEX_MEDIA_SERVER_HOME\"" >> $CONFIG_FILE
         echo "#Set home for Plex metadata" >> $CONFIG_FILE
-        echo "PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"/mnt/cache/appdata/plex/Library/Application Support\"" >> $CONFIG_FILE
+        echo "PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"/mnt/cache/appdata/plex/Library"" >> $CONFIG_FILE
         echo "#the number of plugins that can run at the same time" >> $CONFIG_FILE
         echo "PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6" >> $CONFIG_FILE
         echo "#ulimit -s $PLEX_MEDIA_SERVER_MAX_STACK_SIZE" >> $CONFIG_FILE
@@ -44,7 +44,7 @@ if [ -f /boot/config/plugins/plexmediaserver/plex_settings.cfg ];then
         sed -i "/START_CONFIGURATION/,/STOP_CONFIGURATION/ {
                 /ENABLED/ c\ENABLED=\"$DEFAULT_ENABLED\"
                 /PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"$DEFAULT_TMPDIR\"
-                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support\"
+                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR\"
         }
         " $CONFIG_FILE
         rm -f /boot/config/plugins/plexmediaserver/plex_settings.cfg
