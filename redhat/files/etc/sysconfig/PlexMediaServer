@@ -1,10 +1,12 @@
 # Plex Media Server Config file.
 
+# Set Plex User
+PLEX_USER=plex
 # Set home of Plex Media Server 
 PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
 
 # Set home for Plex metadata
-PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="$(echo ~plex)/Library/Application Support"
+PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="`getent passwd $PLEX_USER|awk -F : '{print $6}'`/Library/Application Support"
 
 # the number of plugins that can run at the same time
 PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
