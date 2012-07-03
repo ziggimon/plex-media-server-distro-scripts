@@ -1,5 +1,5 @@
 <?PHP
-	$pms_config_file = "/boot/config/plugins/plexmediaserver/settings.cfg";
+	$pms_config_file = "/boot/config/plugins/plexmediaserver/settings.ini";
 	$logfile = "/var/log/plugins/plexmediaserver";
 	if (empty($_SERVER['SHELL']))
     		$newline = "<br>";
@@ -30,9 +30,12 @@
 
   function edit_config_file(){
         global $pms_config_file;
-        exec_log("sed -i '/ENABLED/ c\ENABLED=\"".$_POST['SERVICE']."\"' ".$pms_config_file);
-        exec_log("sed -i '/PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"".$_POST['TMPDIR']."\"' ".$pms_config_file);
-        exec_log("sed -i '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."/Application Support/\"' ".$pms_config_file);
+        exec_log("sed -i '/START_CONFIGURATION/,/STOP_CONFIGURATION/ {\n
+                /ENABLED/ c\ENABLED=\"".$_POST['SERVICE']."\"\n
+                /PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"".$_POST['TMPDIR']."\"\n
+                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."/Application Support\"\n
+        }\n
+        ' ".$pms_config_file);
   }
 
   function exec_log($cmd) {
