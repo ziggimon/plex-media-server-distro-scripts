@@ -61,9 +61,10 @@ plex_check_dirs(){
 	fi
 	
 	#Check if current runas user is owner of $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
-	if [ "$(stat -c %U '$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR')"  != "$RUNAS" ]; then
-		logger -t pms  "Plex Media Server: changing owner of $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR to $RUNAS"
-		chown -R $RUNAS:users "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
+	LIB_OWNER=stat -c %U "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
+	if [ "$LIB_OWNER" != "$RUNAS" ]; then
+		logger -t pms  "Plex Media Server: changing owner of $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR from $LIB_OWNER to $RUNAS"
+	#	chown -R $RUNAS:users "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
 	fi
 	
 	if [ ! -d $PLEX_MEDIA_SERVER_TMPDIR ]; then
@@ -72,9 +73,10 @@ plex_check_dirs(){
 	fi
 	
 	#Check if current runas user is owner of $PLEX_MEDIA_SERVER_TMPDIR
-	if  [ $(readlink -f '$PLEX_MEDIA_SERVER_TMPDIR') != "/tmp" ] && [ "$(stat -c %U '$PLEX_MEDIA_SERVER_TMPDIR')"  != "$RUNAS" ]; then
-		logger -t pms  "Plex Media Server: changing owner of $PLEX_MEDIA_SERVER_TMPDIR to $RUNAS"
-		chown -R $RUNAS:users "$PLEX_MEDIA_SERVER_TMPDIR"
+	TMP_OWNER=stat -c %U "$PLEX_MEDIA_SERVER_TMPDIR”
+	if  [ $(readlink -f "$PLEX_MEDIA_SERVER_TMPDIR") != "/tmp" ] && [ "$TMP_OWNER" != "$RUNAS" ]; then
+		logger -t pms  "Plex Media Server: changing owner of $PLEX_MEDIA_SERVER_TMPDIR from $TMP_OWNER to $RUNAS"
+	#	chown -R $RUNAS:users "$PLEX_MEDIA_SERVER_TMPDIR"
 	fi
 }
 
