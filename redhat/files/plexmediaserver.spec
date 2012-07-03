@@ -76,6 +76,7 @@ fi
 %dir "/etc/rc.d/"
 %dir "/etc/rc.d/init.d/"
 "/etc/rc.d/init.d/plexmediaserver"
+"/etc/security/limits.d/plex.conf"
 %dir "/etc/sysconfig/"
 %config "/etc/sysconfig/PlexMediaServer"
 %dir "/lib/systemd"
