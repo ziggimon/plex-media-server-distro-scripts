@@ -55,15 +55,15 @@ plex_version(){
 }
 
 plex_check_dirs(){
-	if [ ! -d $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR ]; then
+	if [ ! -d "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" ]; then
 		logger -t pms  "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR doesn't exist creating it"
 		mkdir -p "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
 	fi
 	
 	#Check if current runas user is owner of $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
-	if [ "$(stat -c %U $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR)"  != "$RUNAS" ]; then
+	if [ "$(stat -c %U '$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR')"  != "$RUNAS" ]; then
 		logger -t pms  "Plex Media Server: changing owner of $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR to $RUNAS"
-		chown -R $RUNAS:users $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR
+		chown -R $RUNAS:users "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
 	fi
 	
 	if [ ! -d $PLEX_MEDIA_SERVER_TMPDIR ]; then
