@@ -1,5 +1,6 @@
 <?PHP
-	$pms_config_file = "/boot/config/plugins/plexmediaserver/plex_settings.cfg";
+	$pms_config_file = "/boot/config/plugins/plexmediaserver/settings.cfg";
+	$logfile = "/var/log/plugins/plexmediaserver";
 	if (empty($_SERVER['SHELL']))
     		$newline = "<br>";
   	else
@@ -7,7 +8,7 @@
 	
 	parse_str($argv[1],$_POST);	
 	
-  	write_config($pms_config_file);
+  	edit_config_file();
 	
 	switch ($_POST['SERVICE']){
         case "true":
@@ -27,14 +28,39 @@
     		echo("</html>");
   	}
 
-function write_config($p_file){
-	$fh = fopen($p_file, 'w') or die("can't open file");
-	fwrite($fh, "# plex configuration\n");
-	fwrite($fh, "DEFAULT_ENABLED=\"".$_POST['SERVICE']."\"\n");
-	fwrite($fh, "DEFAULT_RUNAS=\"".$_POST['RUNAS']."\"\n");
-	fwrite($fh, "DEFAULT_TMPDIR=\"".$_POST['TMPDIR']."\"\n");
-	fwrite($fh, "DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."\"\n");
-	fclose($fh);
-}
+  function edit_config_file(){
+        global $pms_config_file;
+        exec_log("sed -i '/ENABLED/ c\ENABLED=\"".$_POST['SERVICE']."\"' ".$pms_config_file);
+        exec_log("sed -i '/PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"".$_POST['TMPDIR']."\"' ".$pms_config_file);
+        exec_log("sed -i '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."/Application Support/\"' ".$pms_config_file);
+  }
+
+  function exec_log($cmd) {
+    $results = exec($cmd);
+    $results = "\nCMD: $cmd \nResults: $results";
+    write_log($results);
+  }
+
+  function write_log($contents) {
+    global $logfile;
+    write_string($logfile, "$contents\n", FALSE);
+  }
+
+  function write_string ($file, $contents, $overwrite) {
+    if (file_exists($file)) {
+      if ($overwrite)
+          unlink($file);
+          touch($file);
+    }
+    else {
+      touch($file);
+    }
+
+    $fp = @fopen($file, 'a');
+    @flock($fp, LOCK_EX);
+    @fwrite($fp, $contents);
+    @flock($fp, LOCK_UN);
+    @fclose($fp);
+  }
 
 ?>
