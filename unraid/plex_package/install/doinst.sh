@@ -24,7 +24,7 @@ if [ ! -f $CONFIG_FILE ]; then
         echo "#Set home of Plex Media Server" >> $CONFIG_FILE
         echo "PLEX_MEDIA_SERVER_HOME=\"$PLEX_MEDIA_SERVER_HOME\"" >> $CONFIG_FILE
         echo "#Set home for Plex metadata" >> $CONFIG_FILE
-        echo "PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"/mnt/cache/appdata/plex/Library"" >> $CONFIG_FILE
+        echo "PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"/mnt/cache/appdata/plex/Library\"" >> $CONFIG_FILE
         echo "#the number of plugins that can run at the same time" >> $CONFIG_FILE
         echo "PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6" >> $CONFIG_FILE
         echo "#ulimit -s $PLEX_MEDIA_SERVER_MAX_STACK_SIZE" >> $CONFIG_FILE
@@ -34,7 +34,7 @@ if [ ! -f $CONFIG_FILE ]; then
         echo "#ulimit -n $PLEX_MEDIA_SERVER_MAX_OPEN_FILES" >> $CONFIG_FILE
         echo "PLEX_MEDIA_SERVER_MAX_OPEN_FILES=4096" >> $CONFIG_FILE
         echo "#where the mediaserver should store the transcodes" >> $CONFIG_FILE
-        echo "PLEX_MEDIA_SERVER_TMPDIR=/tmp" >> $CONFIG_FILE
+        echo "PLEX_MEDIA_SERVER_TMPDIR=\"/tmp\"" >> $CONFIG_FILE
         echo "#STOP_CONFIGURATION" >> $CONFIG_FILE
 fi
 

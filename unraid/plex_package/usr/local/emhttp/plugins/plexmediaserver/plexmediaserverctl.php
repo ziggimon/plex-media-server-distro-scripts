@@ -30,11 +30,11 @@
 
   function edit_config_file(){
         global $pms_config_file;
-        exec_log("sed -i '/START_CONFIGURATION/,/STOP_CONFIGURATION/ {\n
-                /ENABLED/ c\ENABLED=\"".$_POST['SERVICE']."\"\n
-                /PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"".$_POST['TMPDIR']."\"\n
-                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."/Application Support\"\n
-        }\n
+        exec_log("sed -i '/START_CONFIGURATION/,/STOP_CONFIGURATION/ {
+                /ENABLED/ c\ENABLED=\"".$_POST['SERVICE']."\"
+                /PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"".$_POST['TMPDIR']."\"
+                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"".$_POST['LIBDIR']."\"
+        }
         ' ".$pms_config_file);
   }
 
