@@ -44,15 +44,13 @@ if [ -f /boot/config/plugins/plexmediaserver/plex_settings.cfg ];then
         sed -i "/START_CONFIGURATION/,/STOP_CONFIGURATION/ {
                 /ENABLED/ c\ENABLED=\"$DEFAULT_ENABLED\"
                 /PLEX_MEDIA_SERVER_TMPDIR/ c\PLEX_MEDIA_SERVER_TMPDIR=\"$DEFAULT_TMPDIR\"
-                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPP
-ORT_DIR/Application Support\"
+                /PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/ c\PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=\"$DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/Application Support\"
         }
         " $CONFIG_FILE
         rm -f /boot/config/plugins/plexmediaserver/plex_settings.cfg
 fi
 
 #set permissions
-
 chown -R root:root $PLEX_MEDIA_SERVER_HOME
 chmod -R 770 $PLEX_MEDIA_SERVER_HOME
 
@@ -61,8 +59,3 @@ chmod -R 770 $UNRAID_PLEX_GUI
 
 chown -R root:root /etc/rc.d/rc.plexmediaserver
 chmod -R 770 /etc/rc.d/rc.plexmediaserver
-
-
-~
-~
-doinst.sh: unmodified: line 1
