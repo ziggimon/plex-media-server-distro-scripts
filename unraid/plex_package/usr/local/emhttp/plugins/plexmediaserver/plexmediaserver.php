@@ -19,7 +19,7 @@ $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
          </tr>
          <tr>
          <td>Temp directory:</td>
-         <td><input type="text" name="PLEX_MEDIA_SERVER_TMPDIR" maxlength="60" value="<?=$plex_cfg['PLEX_MEDIA_SERVER_TMPDIR'];?>"></td>
+         <td><input type="text" name="TMPDIR" maxlength="60" value="<?=$plex_cfg['PLEX_MEDIA_SERVER_TMPDIR'];?>"></td>
          </tr>
          <tr>
          <td></td>
