@@ -1,6 +1,6 @@
 <?PHP
 $plex_cfg = parse_ini_file( "/boot/config/plugins/plexmediaserver/settings.ini");
-$plex_running = file_exists($plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']."/Plex Media Server/plexmediaserver.pid") ? "yes" : "no";
+$plex_running = file_exists($plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']."/Application Support/Plex Media Server/plexmediaserver.pid") ? "yes" : "no";
 $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
 ?>
 <form name="plex_settings" method="POST" action="/plugins/plexmediaserver/plexmediaserverctl.php" target="progressFrame">
