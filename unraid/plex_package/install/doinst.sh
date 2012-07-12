@@ -50,7 +50,7 @@ if [ -f /boot/config/plugins/plexmediaserver/plex_settings.cfg ];then
         rm -f /boot/config/plugins/plexmediaserver/plex_settings.cfg
         
         #remove old plex_default.cfg if it exists
-        if [ -f /boot/config/plugins/plexmediaserver/plex_default.cfg]
+        if [ -f /boot/config/plugins/plexmediaserver/plex_default.cfg];then
         	rm -f /boot/config/plugins/plexmediaserver/plex_default.cfg
         fi
 fi
