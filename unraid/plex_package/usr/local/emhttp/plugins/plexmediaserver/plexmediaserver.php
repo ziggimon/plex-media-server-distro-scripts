@@ -1,25 +1,25 @@
 <?PHP
-$plex_cfg = parse_ini_file( "/boot/config/plugins/plexmediaserver/plex_settings.cfg");
-$plex_running = file_exists($plex_cfg['DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']."/Application Support/Plex Media Server/plexmediaserver.pid") ? "yes" : "no";
+$plex_cfg = parse_ini_file( "/boot/config/plugins/plexmediaserver/settings.ini");
+$plex_running = file_exists($plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR']."/Application Support/Plex Media Server/plexmediaserver.pid") ? "yes" : "no";
 $plex_version = shell_exec( "/etc/rc.d/rc.plexmediaserver version" );
 ?>
 <form name="plex_settings" method="POST" action="/plugins/plexmediaserver/plexmediaserverctl.php" target="progressFrame">
-	<input type="hidden" name="RUNAS" value="<?=$plex_cfg['DEFAULT_RUNAS'];?>">
+	<input type="hidden" name="RUNAS" value="<?=$plex_cfg['RUNAS'];?>">
       <table class="settings">
          <tr>
          <td>Enable Plex Media Server:</td>
          <td><select name="SERVICE" size="1"  onChange="checkPLEX_INSTALLDIR(this.form);">
-            <?=mk_option($plex_cfg['DEFAULT_ENABLED'], "false", "No");?>
-            <?=mk_option($plex_cfg['DEFAULT_ENABLED'], "true", "Yes");?>
+            <?=mk_option($plex_cfg['ENABLED'], "false", "No");?>
+            <?=mk_option($plex_cfg['ENABLED'], "true", "Yes");?>
             </select></td>
          </tr>
                  <tr>
          <td>Library directory:</td>
-         <td><input type="text" name="LIBDIR" maxlength="60" value="<?=$plex_cfg['DEFAULT_PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR'];?>"></td>
+         <td><input type="text" name="LIBDIR" maxlength="60" value="<?=$plex_cfg['PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR'];?>"></td>
          </tr>
          <tr>
          <td>Temp directory:</td>
-         <td><input type="text" name="TMPDIR" maxlength="60" value="<?=$plex_cfg['DEFAULT_TMPDIR'];?>"></td>
+         <td><input type="text" name="TMPDIR" maxlength="60" value="<?=$plex_cfg['PLEX_MEDIA_SERVER_TMPDIR'];?>"></td>
          </tr>
          <tr>
          <td></td>
