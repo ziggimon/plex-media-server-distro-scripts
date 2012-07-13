@@ -13,7 +13,13 @@ Group: Converted/video
 
 %pre
 # Add Plex user if not allready on system
-if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq 0 ]; then adduser -d /var/lib/plexmediaserver -c "RPM Created PlexUser" --system -s /sbin/nologin plex; fi
+if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq r01 ]; then
+   if [ `getent group plex | wc -l` -eq 0 ]; then
+     adduser -d /var/lib/plexmediaserver -c "RPM Created PlexUser" --system -s /sbin/nologin plex
+   else
+     adduser -d /var/lib/plexmediaserver -c "RPM Created PlexUser" -g plex --system -s /sbin/nologin plex
+   fi
+fi
 
 if [ "$1" = "2" ]; then
      /etc/init.d/plexmediaserver stop
