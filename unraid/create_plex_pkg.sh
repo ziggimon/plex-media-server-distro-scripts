@@ -17,6 +17,6 @@ then
 	sudo makepkg -c y $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
 	
 	#clean 
-	rm -rf usr/local/plexmediaserver
+	sudo rm -rf usr/local/plexmediaserver
 fi
 
