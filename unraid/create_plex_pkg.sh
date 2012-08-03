@@ -19,5 +19,6 @@ then
 	#clean 
 	cd ../
 	sudo rm -rf plex_package
+	git checkout plex_package
 fi
 

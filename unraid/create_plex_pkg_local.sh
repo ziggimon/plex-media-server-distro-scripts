@@ -13,5 +13,7 @@ cp -R $PLX_SRCDIR/* usr/local/plexmediaserver/
  
 makepkg -c n $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
 
-rm -rf usr/local/plexmediaserver
-
+#clean 
+cd ../
+sudo rm -rf plex_package
+git checkout plex_package
