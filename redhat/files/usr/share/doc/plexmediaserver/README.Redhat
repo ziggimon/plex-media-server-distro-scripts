@@ -34,9 +34,6 @@ Also if you run a firewall/iptables solution please remembter to add a port 3240
 Iptables config line (add this to /etc/sysconfig/iptables):
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 32400 -j ACCEPT
 -A INPUT -m state --state NEW -m udp -p udp --dport 32400 -j ACCEPT
--A INPUT -m state --state NEW -m udp -p udp --dport 32410 -j ACCEPT
--A INPUT -m state --state NEW -m udp -p udp --dport 32413 -j ACCEPT
--A INPUT -m state --state NEW -m udp -p udp --dport 32414 -j ACCEPT
 -A INPUT -m state --state NEW -m udp -p udp --dport 32469 -j ACCEPT
 -A INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
 -A OUTPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
@@ -44,9 +41,6 @@ Iptables config line (add this to /etc/sysconfig/iptables):
 To add it non permanently run as root:
 /sbin/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 32400 -j ACCEPT
 /sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32400 -j ACCEPT
-/sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32410 -j ACCEPT
-/sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32413 -j ACCEPT
-/sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32414 -j ACCEPT
 /sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32469 -j ACCEPT
 /sbin/iptables -A INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
 /sbin/iptables -A OUTPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
