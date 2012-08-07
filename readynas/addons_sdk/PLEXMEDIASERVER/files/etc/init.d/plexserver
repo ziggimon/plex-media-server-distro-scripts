@@ -51,7 +51,7 @@ ulimit -s 3000
 case "$1" in
   start)
         echo "Starting $DESC"
-        start-stop-daemon -d $APP_PATH -c $RUN_AS --umask 777 --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
+        start-stop-daemon -d $APP_PATH -c $RUN_AS --umask 0022 --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
 	sleep 5
         ;;
   stop)
