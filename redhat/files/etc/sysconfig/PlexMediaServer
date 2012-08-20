@@ -23,6 +23,10 @@ PLEX_MEDIA_SERVER_MAX_OPEN_FILES=4096
 # where the mediaserver should store the transcodes
 PLEX_MEDIA_SERVER_TMPDIR=/tmp
 
+# Enable syslog for Plex logging.
+# uncomment to enable
+# export PLEX_MEDIA_SERVER_USE_SYSLOG=true
+
 # uncomment to set it to alternative support dir, eg. /opt/plex
 # NOTE: Plex user must be able to write to this dir
 #
