@@ -87,7 +87,7 @@ fi
 %config "/etc/sysconfig/PlexMediaServer"
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
-"/lib/systemd/system/plex.conf"
+"/lib/systemd/system/plex.service"
 %dir "/usr"
 %dir "/usr/local"
 %dir "/usr/local/bin"
