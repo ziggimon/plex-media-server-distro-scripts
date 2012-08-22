@@ -88,6 +88,7 @@ fi
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
 "/lib/systemd/system/plex.service"
+"/lib/systemd/system/plex-mkdir.service"
 %dir "/usr"
 %dir "/usr/local"
 %dir "/usr/local/bin"
@@ -98,3 +99,5 @@ fi
 "/usr/share/doc/plexmediaserver/README.Redhat"
 "/usr/share/doc/plexmediaserver/copyright"
 %dir "/usr/lib/"
+%dir "/usr/lib/plexmediaserver"
+"/usr/lib/plexmediaserver/PlexMediaServer
