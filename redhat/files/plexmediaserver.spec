@@ -100,4 +100,4 @@ fi
 "/usr/share/doc/plexmediaserver/copyright"
 %dir "/usr/lib/"
 %dir "/usr/lib/plexmediaserver"
-"/usr/lib/plexmediaserver/PlexMediaServer
+"/usr/lib/plexmediaserver/PlexMediaServer"
