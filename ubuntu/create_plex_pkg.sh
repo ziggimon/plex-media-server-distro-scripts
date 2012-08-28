@@ -6,7 +6,9 @@ then
 	rm -f *.deb *.changes
 	mkdir PlexMediaServer-$PLX_VERSION
 	cd PlexMediaServer-$PLX_VERSION
-  cp ../plexmediamanager.* .
+    cp ../plexmediamanager.* .
+    cp ../plexmediaserver.list . 
+    cp ../plex-archive-keyring.gpg . 
 	ln -s $PLX_SRCDIR src
 	cp -r ../debian .
 	export EMAIL="jenkins@plexapp.com"
