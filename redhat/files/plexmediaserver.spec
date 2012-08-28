@@ -79,6 +79,8 @@ fi
 
 %files
 %dir "/etc/"
+%dir "/etc/yum.repos.d"
+"/etc/yum.repos.d/plex.repo"
 %dir "/etc/rc.d/"
 %dir "/etc/rc.d/init.d/"
 "/etc/rc.d/init.d/plexmediaserver"
