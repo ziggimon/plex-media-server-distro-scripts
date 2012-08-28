@@ -1,0 +1,6 @@
+[PlexRepo]
+name=PlexRepo
+baseurl=http://plexapp.com/rpmrepo/release/$basearch/
+enabled=1
+gpgkey=https://plexapp.com/plex_pub_key.pub
+gpgcheck=1
