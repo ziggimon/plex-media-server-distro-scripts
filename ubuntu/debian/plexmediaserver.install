@@ -2,3 +2,5 @@ src/* /usr/lib/plexmediaserver
 debian/start_pms /usr/sbin
 plexmediamanager.desktop /usr/share/applications
 plexmediamanager.png /usr/share/pixmaps
+plexmediaserver.list /etc/apt/sources.list.d
+plex-archive-keyring.gpg /usr/lib/plexmediaserver
