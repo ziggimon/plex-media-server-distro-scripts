@@ -86,7 +86,7 @@ fi
 "/etc/rc.d/init.d/plexmediaserver"
 "/etc/security/limits.d/plex.conf"
 %dir "/etc/sysconfig/"
-%config "/etc/sysconfig/PlexMediaServer"
+%config(noreplace) "/etc/sysconfig/PlexMediaServer"
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
 "/lib/systemd/system/plex.service"
