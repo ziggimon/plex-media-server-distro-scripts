@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Ubuntu* ]];
+if [[ $label == build-linux-ubuntu* ]];
 then
 	echo "Building Ubuntu package"
 	rm -f *.deb *.changes

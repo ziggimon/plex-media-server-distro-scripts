@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Slackware* ]];
+if [[ $label == build-linux-slackware* ]];
 then
 	export PATH=$PATH:/sbin:/usr/sbin
 	echo "Building unRAID package"

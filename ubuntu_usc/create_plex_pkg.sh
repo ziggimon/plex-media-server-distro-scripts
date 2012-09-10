@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Ubuntu* ]];
+if [[ $label == build-linux-ubuntu* ]];
 then
   ARCH=`dpkg-architecture -qDEB_BUILD_ARCH`
   DIRNAME=PlexMediaServer-$PLX_VERSION-$ARCH-USC

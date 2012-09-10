@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$NODE_NAME" == "Linux-Debian-4.0-i386" -o "$NODE_NAME" == "Linux-Readynas-ARM" ]
+if [ "$label" == "build-linux-debian-i386" -o "$label" == "build-linux-readynas-arm" ]
 then
   # Create temporary directory
   rm -rf plex_package
