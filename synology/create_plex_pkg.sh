@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Synology* ]];
+if [[ $label == build-linux-synology* ]];
 then
   echo "building package for synology"
   # create temporary directory
@@ -23,6 +23,12 @@ then
   # update version
   cp INFO.in INFO
   echo "version=$PLX_VERSION" >> INFO
+  if [ $label == "build-linux-synology-arm" ]
+  then
+    echo "arch=\"88f6281 88f6282\"" >> INFO
+  else
+    echo "arch=\"x86 cedarview bromolow\"" >> INFO
+  fi
 
   # tar the Synology package
   tar czf $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION.spk INFO PACKAGE_ICON.PNG package.tgz scripts
