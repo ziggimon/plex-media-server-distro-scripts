@@ -43,8 +43,8 @@ then
   # Replace version names in files.
   for f in addons.conf .PLEXMEDIASERVER_BUILD_SETTINGS PLEXMEDIASERVER_AVAILABLE.xml PLEXMEDIASERVER_CURRENT.xml PLEXMEDIASERVER.xml
   do
-    sed -i "s/PLEX_VERSION/$PLX_VERSION/" $f
-    sed -i "s/PLEX_RAIDIATOR_VERSION/$PLX_RAIDIATOR_VERSION/" $f
+    sed -i "s/PLX_VERSION/$PLEX_VERSION/" $f
+    sed -i "s/PLX_RAIDIATOR_VERSION/$PLEX_RAIDIATOR_VERSION/" $f
   done
   
   # Build the ReadyNAS package.

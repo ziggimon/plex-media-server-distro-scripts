@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-amd64 ];
+if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-x86_64 ];
 then
   ARCH=`dpkg-architecture -qDEB_BUILD_ARCH`
   DIRNAME=PlexMediaServer-$PLEX_VERSION-$ARCH-USC
