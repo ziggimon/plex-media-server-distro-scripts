@@ -22,16 +22,19 @@ then
 
   # update version
   cp INFO.in INFO
+  outarch="noarch"
   echo "version=$PLEX_VERSION" >> INFO
   if [ $PLEX_CONFIG == "synology-arm" ]
   then
     echo "arch=\"88f6281 88f6282\"" >> INFO
+    outarch="arm"
   else
     echo "arch=\"x86 cedarview bromolow\"" >> INFO
+    outarch="x86"
   fi
 
   # tar the Synology package
-  tar czf $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION.spk INFO PACKAGE_ICON.PNG package.tgz scripts
+  tar czf $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-$outarch.spk INFO PACKAGE_ICON.PNG package.tgz scripts
   rm -f package.tgz INFO
 fi
 
