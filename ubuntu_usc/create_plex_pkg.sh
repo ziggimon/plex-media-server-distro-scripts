@@ -1,17 +1,17 @@
 #!/bin/sh
 
-if [[ $label == build-linux-ubuntu* ]];
+if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-amd64 ];
 then
   ARCH=`dpkg-architecture -qDEB_BUILD_ARCH`
-  DIRNAME=PlexMediaServer-$PLX_VERSION-$ARCH-USC
+  DIRNAME=PlexMediaServer-$PLEX_VERSION-$ARCH-USC
 	echo "Building Ubuntu USC package"
 	rm -f *.deb *.changes
 	mkdir $DIRNAME
 	cd $DIRNAME
-  ln -s $PLX_SRCDIR $ARCH
+  ln -s $PLEX_SRCDIR $ARCH
   cp -r ../debian ../icons .
   cd ..
-  zip -r $PLX_OUTDIR/$DIRNAME.zip $DIRNAME
+  zip -r $PLEX_OUTDIR/$DIRNAME.zip $DIRNAME
   rm -rf $DIRNAME
 fi
 

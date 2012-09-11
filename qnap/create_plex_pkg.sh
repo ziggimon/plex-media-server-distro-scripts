@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $label == build-linux-debian* ]];
+if [[ $PLEX_CONFIG == debian-i686 ]];
 then
 	echo "build QNAP package"
 	
@@ -20,16 +20,16 @@ then
 
 	rm -rf qnap-chroot/plex/x86
 	mkdir -p qnap-chroot/plex/x86
-	cp -a $PLX_SRCDIR/* qnap-chroot/plex/x86
-    cp -a qnap-chroot/plex/x86_template/* qnap-chroot/plex/x86
+	cp -a $PLEX_SRCDIR/* qnap-chroot/plex/x86
+  cp -a qnap-chroot/plex/x86_template/* qnap-chroot/plex/x86
 	sudo cp qpkg.cfg.in qnap-chroot/plex/qpkg.cfg
-	echo "QPKG_VER=\"$PLX_VERSION\"" | sudo tee -a qnap-chroot/plex/qpkg.cfg
+	echo "QPKG_VER=\"$PLEX_VERSION\"" | sudo tee -a qnap-chroot/plex/qpkg.cfg
 	sudo chroot qnap-chroot /build-pkg.sh
-	sudo mv qnap-chroot/plex/build/* $PLX_OUTDIR
-	sudo chown -R plex.plex $PLX_OUTDIR
+	sudo mv qnap-chroot/plex/build/* $PLEX_OUTDIR
+	sudo chown -R plex.plex $PLEX_OUTDIR
 
-    sudo umount qnap-chroot/dev
-    sudo umount qnap-chroot/proc
+  sudo umount qnap-chroot/dev
+  sudo umount qnap-chroot/proc
 
 fi
 
