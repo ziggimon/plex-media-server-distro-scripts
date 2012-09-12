@@ -1,0 +1,58 @@
+{
+  "app":{
+	"package":"plexmediaserver",
+	"name":"Plex Media Server",
+	"version":"0.9.6.8.115",
+	"visibility":true,
+	"priority":"optional",
+	"depends":[],
+	"conflicts":[],
+	"suggests":[],
+	"maintainer":"Plex Inc",
+	"email":"support@plexapp.com",
+	"website":"http://www.plexapp.com/",
+	"architecture":"x86-64",
+	"firmware":"0.6.0",
+	"description":"Plex Media Server allows you to stream media to a wide range of devices.",
+	"changes":"This is the change log.",
+	"tags":["video", "streaming", "media", "video", "music", "pictures", "dlna"]
+  },
+  "desktop":{
+	"icon":{
+	  "type":"custom",
+	  "title":"Plex Media Manager",
+	  "protocol":"http",
+	  "port":32400,
+	  "url":"/manage"
+	},
+	"privilege":{
+	  "accessible":"administrators",
+	  "customizable":true
+	}
+  },
+  "install":{
+	"link":{
+	  "/bin":[],
+	  "/lib":[]
+	},
+	"share":[
+	  {
+		"name":"Plex",
+		"description":"Default location for Plex library."
+	  }
+	],
+	"service-reg":{
+	  "priority":{
+		"service-start":80,
+		"service-stop":20
+	  },
+	  "port":[
+		32400
+	  ]
+	},
+	"dep-service":{
+	  "start":[],
+	  "restart":[]
+	}
+  }
+}

@@ -11,7 +11,7 @@ then
   ln -s $PLEX_SRCDIR $ARCH
   cp -r ../debian ../icons .
   cd ..
-  zip -r $PLEX_OUTDIR/$DIRNAME.zip $DIRNAME
+  zip -qr $PLEX_OUTDIR/$DIRNAME.zip $DIRNAME
   rm -rf $DIRNAME
 fi
 
