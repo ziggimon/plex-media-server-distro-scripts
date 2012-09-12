@@ -50,11 +50,15 @@ then
   # Build the ReadyNAS package.
   LD_LIBRARY_PATH=../bin/ ../bin/build_addon
 
+  export PLEX_ADDON_FILE=$PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-`uname -m`.bin
+
   # And finally, move the package out.
-  mv PlexMediaServer_$PLEX_VERSION.bin $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-`uname -m`.bin
+  mv PlexMediaServer_$PLEX_VERSION.bin $PLEX_ADDON_FILE
 
   # Clean up.
   cd ../../../
   sudo rm -rf plex_package
+  
+  appstore/create_appstore_pkg.sh
 fi
 
