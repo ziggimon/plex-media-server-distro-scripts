@@ -5,8 +5,8 @@ Before=plex.service
 [Service]
 Type=oneshot
 Environment=PLEX_USER_HOME_DIR=%h
-ConditionPathIsDirectory=!$PLEX_USER_HOME_DIR/Library/Application Support
-ExecStart=mkdir -p $PLEX_USER_HOME_DIR/Library/Application Support
+ConditionPathIsDirectory=!"$PLEX_USER_HOME_DIR/Library/Application Support"
+ExecStart=mkdir -p "$PLEX_USER_HOME_DIR/Library/Application Support"
 RefuseManualStart=true
 StopWhenUnneeded=true
 ReloadPropogatedFrom=plex.service
