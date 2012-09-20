@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ $NODE_NAME == Linux-Slackware* ]];
+if [ $PLEX_CONFIG == slackware-i686 ];
 then
 	export PATH=$PATH:/sbin:/usr/sbin
 	echo "Building unRAID package"
@@ -10,11 +10,11 @@ then
 
 	#copy source to the right place
 	mkdir -p usr/local/plexmediaserver/
-	cp -R $PLX_SRCDIR/* usr/local/plexmediaserver/
+	cp -R $PLEX_SRCDIR/* usr/local/plexmediaserver/
 	
 	#chown -R root:root *
 	#chmod -R 750 usr/local/emhttp/plugins/plexmediaserver
-	sudo makepkg -c y $PLX_OUTDIR/PlexMediaServer-$PLX_VERSION-unRAID.txz
+	sudo makepkg -c y $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-unRAID.txz
 	
 	#clean 
 	cd ../
