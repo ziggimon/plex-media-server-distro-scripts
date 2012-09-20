@@ -90,7 +90,6 @@ fi
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
 "/lib/systemd/system/plex.service"
-"/lib/systemd/system/plex-mkdir.service"
 %dir "/usr"
 %dir "/usr/local"
 %dir "/usr/local/bin"
