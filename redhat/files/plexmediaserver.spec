@@ -99,6 +99,3 @@ fi
 %dir "/usr/share/doc/plexmediaserver/"
 "/usr/share/doc/plexmediaserver/README.Redhat"
 "/usr/share/doc/plexmediaserver/copyright"
-%dir "/usr/lib/"
-%dir "/usr/lib/plexmediaserver"
-"/usr/lib/plexmediaserver/PlexMediaServer"
