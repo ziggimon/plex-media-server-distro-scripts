@@ -1,0 +1,96 @@
+#  README
+#  Created on June 28th, 2012
+#   
+#  Copyright (c) 2012, NETGEAR, Inc.
+#  350 East Plumeria, San Jose California, 95134, U.S.A.
+#  All rights reserved.
+# 
+#  This software is the confidential and proprietary information of
+#  NETGEAR, Inc. ("Confidential Information").  You shall not
+#  disclose such Confidential Information and shall use it only in
+#  accordance with the terms of the license agreement you entered into
+#  with NETGEAR.
+
+Contents
+-------------------------------------------
+
+I. Setup
+II. Create Genie App using ant command line
+III. Create Genie App using ant property file
+
+I. Setup 
+-------------------------------------------
+	Extract the package in directory.
+	Place your addon within the directory
+	Edit gadget directory per your needs, but typically, you'd just drop your logo.png in there.
+	Also, add your logo.png in application directory.
+	Modify application/policy.properties per your needs
+	Modify application/provision.xml per your needs
+	Edit description.txt and provide your Genie application description (within CDATA block)
+	Edit release.txt and add the release notes (within CDATA block)
+
+
+II. Create Genie App using ant command line
+-------------------------------------------
+Run the ant script
+	
+i.e.
+	ant -Daddon=ReadyNASReplicate-arm.bin -Dprefix=ntgr -Dversion="1.2.3" -DdivUrl="/installed/installed.html?addon=REPLICATE&locale=auto" -DserviceUrl="http://localhost:9090/REPLICATE" -Dcategory="APP_CAT_STORAGE" -Dappid="ntgr_readynasreplicate" -Ddeveloper=NETGEAR -Dfile-release="release.txt" -Dfile-desc="description.txt" -Dlogo=logo.png -Dgadget="gadget.html"
+
+	
+Argument List
+
+	addon	(required) : Add-on bin file
+	prefix	(required) : Developer namespace
+	version (required) : Genie application version (MAJOR.MINOR.BUILDNO)
+	category (required) : Genie application category which can be one of the following:
+		
+		APP_CAT_BUSINESS
+		APP_CAT_ENERGY
+		APP_CAT_GAMING
+		APP_CAT_HEALTH
+		APP_CAT_HOME_CONTROL
+		APP_CAT_MEDIA
+		APP_CAT_NETWORK_MANAGE
+		APP_CAT_OTHER
+		APP_CAT_PRODUCTIVITY
+		APP_CAT_SECURITY_HOME
+		APP_CAT_SECURITY_NETWORK
+		APP_CAT_STORAGE
+		APP_CAT_SUPPORT_TECH
+	
+	appid (required) : The Genie application id provided by NETGEAR
+	developer (required) : Developer Name
+	file-release (required) : Filename of the notes for this release
+	file-desc (required) : Filename that has the description notes of the application
+	logo (required) : Genie Marketplace and Cloud Genie My Apps thumbnail. Preferred size is 100x100 PNG format.
+	gadget (required) : Cloud Genie My Apps UI placeholder, which is the HTML service url in gadget directory
+	divUrl (required) : The initial page user sees to manage the application (add-on)
+	serviceUrl (optional) : The service page, if available, that the user sees to interact with the application (add-on) 
+	skipReboot (optional) : Use the ReadyNAS skipReboot add-on property
+	restartApache (optional) : Use the ReadyNAS restartApache add-on property
+
+III. Create Genie App using ant property file
+---------------------------------------------
+
+Create the build.properties file
+Add the following configuration in the build.properties file
+	
+	addon=ReadyNASReplicate-arm.bin 
+	prefix=ntgr
+	version=1.2.3
+	divUrl=/installed/installed.html?addon=REPLICATE&locale=auto
+	serviceUrl=http://localhost:9090/REPLICATE
+	category=APP_CAT_STORAGE 
+	appid=ntgr_readynasreplicate
+	developer=NETGEAR
+	file-release=release.txt
+	file-desc=description.txt
+	logo=logo.png
+	gadget=gadget.html
+	skipReboot=1
+	restartApache=0
+
+Run the build command:
+
+	ant -propertyfile build.properties

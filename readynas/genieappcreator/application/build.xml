@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Copyright (c) 2011 NETGEAR, Inc.
+	All rights reserved.
+	
+	ANT build configuration for GadgetApp.war
+	-->
+<project name="appcreator" default="build" basedir=".">
+ <!-- <property file="build.properties" /> -->
+  <property name="output.file" value="${env.output.file}" />
+  <path id="project.class.path">
+    <!-- Add any additional non-server libs (such as JUnit) -->
+  </path>
+
+  <target name="build" description="Copy gadget and canvas to zip">
+	  
+  	<mkdir dir="zip"  />
+  	<mkdir dir="zip/ui" />
+  	
+
+	<zip destfile="zip/ui/gadget.zip">
+		<fileset dir="../gadget"/>
+	</zip>
+<!--	  
+  	<copy todir="zip/ui" file="../gadget/gadget.zip" />
+  	-->
+	<copy todir="zip" >
+		<fileset dir="../services" />
+	</copy>
+  	<copy todir="zip" file="./policy.properties" />
+  	<copy todir="zip" file="./logo.png" />
+  	<copy todir="zip" file="./info.xml" />
+  	<copy todir="zip" file="./provision.xml" />
+  	<echo message="Output file: ../${output.file}"/>
+    	<zip destfile="../${output.file}" basedir="./zip"/>
+
+</target>
+
+  <target name="clean" description="Cleans this project">
+	<delete dir="zip" failonerror="false" />
+  	<delete file="../${output.file}" failonerror="false" />
+  </target>
+
+</project>

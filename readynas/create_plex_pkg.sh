@@ -29,7 +29,7 @@ then
   
   # set minimum required RAIDiator version and
   # make the right set of bzip2/bunzip2 available
-  if [ $NODE_NAME == Linux-Readynas-ARM ];
+  if [ $NODE_NAME == Linux-Readynas-ARM ]
   then
     PLEX_RAIDIATOR_VERSION="5.3.3"
     mv files/bin_ARM files/bin
@@ -58,7 +58,5 @@ then
   # Clean up.
   cd ../../../
   sudo rm -rf plex_package
-  
-  appstore/create_appstore_pkg.sh
 fi
 

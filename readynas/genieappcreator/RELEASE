@@ -1,0 +1,74 @@
+#
+# RELEASE
+# Created on July 11, 2012
+#
+# Copyright (c) 2012, NETGEAR, Inc.
+# 350 East Plumeria, San Jose California, 95134, U.S.A.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of 
+# NETGEAR, Inc. ("Confidential Information").  You shall not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with NETGEAR. 
+#
+
+---------------------------------------------------------------------
+VERSION 1.0.9
+
+* skipReboot and restartApache are now optional properties in
+  build.properties file.
+
+---------------------------------------------------------------------
+VERSION 1.0.8
+
+* Fixed bug where conflator was always using hard-coded bundle
+  symbolic name.
+
+---------------------------------------------------------------------
+VERSION 1.0.7
+
+* Added skipReboot and restartApache when creating the jar if the
+  addon requires it.
+
+---------------------------------------------------------------------
+VERSION 1.0.6
+
+* Fixed default gadget.css to be within the constraint of the genie+
+  gadget area in 'My Apps'
+
+---------------------------------------------------------------------
+VERSION 1.0.5
+
+* Handle unsupported JDK version
+
+---------------------------------------------------------------------
+VERSION 1.0.4
+
+* Removed required metadata argument
+* Added optional divUrl argument
+* Added optional serviceUrl argument
+
+---------------------------------------------------------------------
+VERSION 1.0.3
+
+* Fixed ant -propertyfile in README
+* Fixed destination folder for the application zip file
+
+---------------------------------------------------------------------
+VERSION 1.0.2
+
+* Added build.properties
+
+---------------------------------------------------------------------
+VERSION 1.0.1
+
+* Added this RELEASE note
+* Modified README
+* Replaced gadget/logo.jpg with gadget/logo.png
+* Added missing gadget/gadget.css
+
+---------------------------------------------------------------------
+VERSION 1.0.0
+
+* Package created

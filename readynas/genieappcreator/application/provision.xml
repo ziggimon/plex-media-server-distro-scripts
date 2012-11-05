@@ -1,0 +1,6 @@
+<categories>
+    <category name="Network">
+       <operation name="ntgr_trafficmeter.get" mode="read"/>
+       <operation name="ntgr_trafficmeter.set" mode="write"/>
+    </category>
+</categories>

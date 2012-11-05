@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  build.xml
+  
+  Updated on June 28, 2012
+   
+  Copyright (c) 2012, NETGEAR, Inc.
+  350 East Plumeria, San Jose California, 95134, U.S.A.
+  All rights reserved.
+ 
+  This software is the confidential and proprietary information of
+  NETGEAR, Inc. ("Confidential Information").  You shall not
+  disclose such Confidential Information and shall use it only in
+  accordance with the terms of the license agreement you entered into
+  with NETGEAR.
+	-->
+<project name="createapp" default="build" basedir=".">
+
+  <!-- Target creates the OSGi service jar from the add-on bin file -->
+  <target name="makejar" depends="" description="Create jar">
+	  
+	<echo message="Command: ./conflatebin.sh ${props.addon} ${props.prefix} ${_version} ${_version.value} ${_divUrl} ${_divUrl.value} ${_serviceUrl} ${_serviceUrl.value} ${_skipReboot} ${_skipReboot.value} ${_restartApache} ${_restartApache.value}"/>
+
+	<exec dir="." executable="./conflatebin.sh" failonerror="true">
+		<arg value="${props.addon}"/>
+		<arg value="${props.prefix}"/>
+		<arg value="${_version}"/>
+		<arg value="${_version.value}"/>
+		<arg value="${_divUrl}"/>
+		<arg value="${_divUrl.value}"/>
+		<arg value="${_serviceUrl}"/>
+		<arg value="${_serviceUrl.value}"/>
+		<arg value="${_skipReboot}"/>
+		<arg value="${_skipReboot.value}"/>
+		<arg value="${_restartApache}"/>
+		<arg value="${_restartApache.value}"/>
+	</exec>	  
+  </target>
+
+	<target name="parseaddon">
+	  <property file="addon.properties"/>	  
+	  <fail unless="APPNAME" message="APPNAME invalid. Did you conflate your addon?"/>
+	  <fail unless="FRIENDLY_NAME" message="FRIENDLY_NAME invalid. Did you conflate your addon?"/>
+	  <fail unless="VERSION" message="VERSION invalid. Did you conflate your addon?"/>
+	  <antcall target="makeinfo">
+		<param name="addon.appname" value="${APPNAME}" />
+		<param name="addon.name" value="${FRIENDLY_NAME}" />
+		<param name="addon.version" value="${VERSION}" />
+		<param name="addon.skipReboot" value="${SKIPREBOOT}" />
+		<param name="addon.restartApache" value="${RESTARTAPACHE}" />
+	  </antcall>
+	  
+	</target>
+
+  <!-- Create application info.xml from add-on metadata and info.properties -->
+  <target name="makeinfo" depends="" description="Creates info.xml">
+
+	  <property name="props.appname" value="${addon.appname}" />
+	  <property name="props.name" value="${addon.name}" />
+	  <property name="props.version" value="${addon.version}" />
+	  
+	  <property name="props.category" value="${category}" />
+	  <property name="props.appid" value="${appid}" />
+	  <property name="props.release" location="${file-release}" />
+	  <property name="props.developer" value="${developer}" />
+	  <property name="props.details" location="${file-desc}" />
+	  <property name="props.logo" value="${logo}" />
+	  <property name="props.canvas" value="${canvas}"/>
+	  <property name="props.gadget" value="${gadget}"/>
+	<condition property="_canvas" value="${canvas}" else="">
+	  <isset property="canvas"/>
+	</condition>
+
+	  <fail unless="addon.appname" message="Target makeinfo must not be called directly"/>
+	  <fail unless="addon.name" message="Target makeinfo must not be called directly"/>
+	  <fail unless="category" message="Missing category."/>
+	  <fail unless="appid" message="Missing appid"/>
+	  <fail unless="file-release" message="Missing release notes"/>
+	  <fail unless="developer" message="Missing developer name"/>
+	  <fail unless="file-desc" message="Missing Genie application description"/>
+	  <fail unless="logo" message="Missing logo"/>
+	  <fail message="Logo ${logo} missing in local directory.">
+		<condition>
+			<not>
+				<resourcecount count="1">
+					<fileset id="fs" dir="./application" includes="${logo}"/>
+				</resourcecount>
+			</not>
+		</condition>
+	  </fail>
+	  <fail unless="gadget" message="Missing gadget page"/>
+
+<!--
+	<condition property="_description" value="${file-desc}" else="">
+	  <isset property="file-desc"/>
+	</condition>
+-->
+ <loadfile
+      property="_description"
+      srcFile="${file-desc}"
+      failonerror="true"/>
+
+ <loadfile
+      property="_release"
+      srcFile="${file-release}"
+      failonerror="true"/>
+			
+			
+		<echoxml file="application/info.xml">
+			<app>
+				<appid>${props.appid}</appid>
+				<version>${props.version}</version>
+				<name>${props.name}</name>
+				<developer>${props.developer}</developer>
+				<description>${_description}</description>
+				<release-note>${_release}</release-note>
+				<gadgetUrl>${props.gadget}</gadgetUrl>
+				<uiUrl>${_canvas}</uiUrl>
+				<thumbnail>${props.logo}</thumbnail>
+				<category>${props.category}</category>
+			</app>			
+		</echoxml>
+		
+		<mkdir dir="services"  />	  
+		<move file="${props.prefix}_${props.appname}.jar" todir="./services/"/>
+
+		
+  </target>
+  
+  <target name="set-props">
+	  <property name="props.addon" value="${addon}" />
+	  <property name="props.prefix" value="${prefix}"/>
+	  <property name="props.version" value="${version}"/>
+		<condition property="_version" value="-v" else="">
+			<isset property="version"/>
+		</condition>
+		<condition property="_version.value" value="${props.version}" else="">
+			<isset property="version"/>
+		</condition>
+<!-- 		<property name="props.metadata" value="${metadata}"/> -->
+		<property name="props.serviceUrl" value="${serviceUrl}"/>
+		<property name="props.divUrl" value="${divUrl}"/>
+		
+		<property name="props.skipReboot" value="${skipReboot}"/>
+		<property name="props.restartApache" value="${restartApache}"/>
+	  <!-- Required Data -->
+	  <fail unless="addon" message="Addon file is missing. Specify 'addon' property."/>
+	  <fail message="Addon file missing in local directory.">
+		<condition>
+			<not>
+				<resourcecount count="1">
+					<fileset id="fs" dir="." includes="${addon}"/>
+				</resourcecount>
+			</not>
+		</condition>
+	  </fail>
+	  <fail unless="prefix" message="Developer namespace is required. Specify 'prefix' property."/>
+	  <fail unless="version" message="Genie Application version is missing. Specify 'version' property."/>
+	  <condition property="version.validation">
+		<matches pattern="[^.0-9]" string="${version}" casesensitive="false" />
+	  </condition>
+	  <fail message="Version contains invalid data" if="version.validation"/>
+<!-- 	  <fail unless="metadata" message="Missing divUrl and serviceUrl properties. Specify them in 'metadata' property."/> -->
+
+	  <condition property="_divUrl" value="-m" else="">
+			<isset property="divUrl"/>
+	  </condition>
+	  <condition property="_divUrl.value" value="divUrl:${props.divUrl}" else="">
+	      <isset property="divUrl"/>
+	  </condition>
+
+	  <condition property="_serviceUrl" value="-m" else="">
+			<isset property="serviceUrl"/>
+	  </condition>
+	  <condition property="_serviceUrl.value" value="serviceUrl:${props.serviceUrl}" else="">
+			<isset property="serviceUrl"/>
+	  </condition>
+<!-- 	  <condition property="_metadata" value="${props.metadata}" else=""> -->
+<!-- 			<isset property="metadata"/> -->
+<!-- 	  </condition> -->
+
+	  <condition property="_skipReboot" value="-m" else="">
+			<isset property="skipReboot"/>
+	  </condition>
+	  <condition property="_skipReboot.value" value="skipReboot:${props.skipReboot}" else="">
+			<isset property="skipReboot"/>
+	  </condition>
+
+	  <condition property="_restartApache" value="-m" else="">
+			<isset property="restartApache"/>
+	  </condition>
+	  <condition property="_restartApache.value" value="restartApache:${props.restartApache}" else="">
+			<isset property="restartApache"/>
+	  </condition>
+	  	  
+  </target>
+
+  <target name="build" depends="set-props,makejar,parseaddon" description="Create app">
+	  
+
+<!-- 	<echo message="Command: ./conflatebin.sh ${props.addon} ${props.prefix} ${_version} ${_metadata}"/> -->
+	
+	<ant antfile="build.xml" dir="application">
+		<property name="env.output.file" value="${appid}_${props.version}.zip"/>
+	</ant>	
+  </target>
+
+  <target name="clean" description="Cleans this project">
+	<delete file="./addon.properties" failonerror="true"/>
+	<delete dir="services" failonerror="true" />
+	<delete file="application/info.xml" failonerror="true"/>
+	<ant antfile="build.xml" dir="application" target="clean">
+		<property name="env.output.file" value="${appid}_${props.version}.zip"/>
+	</ant>	
+  </target>
+
+</project>

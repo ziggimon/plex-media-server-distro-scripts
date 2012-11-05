@@ -1,0 +1,13 @@
+.body {
+
+	margin: 0px auto;
+	height: 225px;
+	width: 285px;
+	overflow:hidden;
+	/*			background-repeat: no-repeat;*/
+	font-family:Verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+	text-align:center;
+	vertical-align:middle;
+}
+
