@@ -46,7 +46,7 @@ export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 export TMP=/c/.plex/tmp
 export TEMP=/c/.plex/temp
 export PLEX_MEDIA_SERVER_TMPDIR=/c/.plex/tmp
-export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/c/.plex/Library/Application Support/Plex Media Server"
+export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/c/.plex/Library/Application Support"
 ulimit -s 3000
 
 case "$1" in
