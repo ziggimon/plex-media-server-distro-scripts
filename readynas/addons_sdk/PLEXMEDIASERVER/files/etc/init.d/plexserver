@@ -39,10 +39,17 @@ PID_FILE=/var/run/plexserver.pid
 test -x $DAEMON || exit 0
 set -e
 
+ARCH=$(uname -m)
+
 # Set some environment stuff
 SCRIPTPATH="/c/.plex"
 export LD_LIBRARY_PATH="${SCRIPTPATH}"
-export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+if echo ${ARCH} | grep -q i.86; then
+  export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+else
+  export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=2
+  ulimit -s 4096
+fi
 export TMP=/c/.plex/tmp
 export TEMP=/c/.plex/temp
 export PLEX_MEDIA_SERVER_TMPDIR=/c/.plex/tmp
