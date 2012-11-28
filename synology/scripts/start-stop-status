@@ -8,7 +8,7 @@ ARCH=$(uname -m)
 if echo $ARCH | grep -q i.86; then
   PROCS=6
 else
-  PROCS=2
+  PROCS=3
 fi
 
 start_plex ()
