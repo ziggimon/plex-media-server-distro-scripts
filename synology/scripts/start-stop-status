@@ -3,10 +3,17 @@
 PLEX_DIR="/var/packages/Plex Media Server/target"
 PLEX_LIBRARY_PATH=`cat "$PLEX_DIR/plex_library_path"`
 PID_FILE="$PLEX_LIBRARY_PATH/Plex Media Server/plexmediaserver.pid"
+ARCH=$(uname -m)
+
+if echo $ARCH | grep -q i.86; then
+  PROCS=6
+else
+  PROCS=2
+fi
 
 start_plex ()
 {
-    su plex -s /bin/sh -c "export LD_LIBRARY_PATH='$PLEX_DIR';export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$PLEX_LIBRARY_PATH';export TMPDIR=/volume1/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
+    su plex -s /bin/sh -c "export LD_LIBRARY_PATH='$PLEX_DIR';export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=$PROCS; export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$PLEX_LIBRARY_PATH';export TMPDIR=/volume1/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
 
     counter=20
     while [ $counter -gt 0 ]
