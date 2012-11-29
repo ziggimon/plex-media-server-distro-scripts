@@ -1,6 +1,6 @@
 [PlexRepo]
 name=PlexRepo
-baseurl=http://plexapp.com/rpmrepo/release/$basearch/
+baseurl=http://plex.r.worldssl.net/PlexMediaServer/fedora-repo/release/$basearch/
 enabled=1
 gpgkey=https://plexapp.com/plex_pub_key.pub
 gpgcheck=1
