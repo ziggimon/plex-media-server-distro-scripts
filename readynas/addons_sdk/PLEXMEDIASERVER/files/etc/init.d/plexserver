@@ -47,7 +47,7 @@ export LD_LIBRARY_PATH="${SCRIPTPATH}"
 if echo ${ARCH} | grep -q i.86; then
   export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 else
-  export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=3
+  export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
   ulimit -s 4096
 fi
 export TMP=/c/.plex/tmp
