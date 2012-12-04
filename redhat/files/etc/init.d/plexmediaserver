@@ -1,0 +1,122 @@
+#! /bin/sh
+#
+# Plexmediaserver: Stops/Starts/Restarts and statuses Plex Media Server
+# chkconfig:   2345 20 80
+# Description: Starts the Plex Media Server
+#
+### BEGIN INIT INFO
+# Provides: Plex Media Server
+# Required-Start: $network
+# Should-Start: Plex Media Server
+# Required-Stop:
+# Default-Start: 3 4 5
+# Default-Stop: 0 1 2 6
+# Short-Description: Plex Media Server
+# Description: PlexInc developed super duper media server. Totally awsome!
+### END INIT INFO
+#
+#
+# Added 1 second delay to prevent startup failure on systemd systems using ssd
+#
+sleep 1
+
+PMS_BIN="Plex Media Server"
+
+# Source function library
+if [ -f /etc/rc.status ]; then
+. /etc/rc.status
+elif [ -f /etc/rc.d/init.d/functions ]; then
+. /etc/rc.d/init.d/functions
+fi
+
+# Source Plex Variables
+[ -r /etc/sysconfig/PlexMediaServer ] && . /etc/sysconfig/PlexMediaServer
+
+RETVAL=0
+prog="PlexMediaServer"
+config="/etc/sysconfig/$prog"
+pidfile="/var/run/$prog.pid"
+
+# Set lockfile differently if on SuSE
+
+if [ -f /etc/SuSE-release ]; then
+  lockfile="/var/lock/$prog"
+else
+  lockfile="/var/lock/subsys/$prog"
+fi
+
+start()
+{
+        [ $UID -eq 0 ] || exit 4
+        [ -x "$PLEX_MEDIA_SERVER_HOME/$PMS_BIN" ] || exit 5
+        [ -f "$config" ] || exit 6
+        if [ ! -f "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" ];
+        then
+         su -s /bin/sh $PLEX_USER -c 'mkdir -p "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" > /dev/null 2>&1'
+         if [ ! $? -eq 0 ]; then
+          echo "WARNING COULDN'T CREATE $PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR, MAKE SURE I HAVE PERMISSON TO DO THAT!"
+          exit 1
+         fi
+        fi
+        echo -n $"Starting $prog: "
+        su -s /bin/sh $PLEX_USER -c ". $config; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN'"&
+        sleep 3
+        eval "$@" && success || failure
+        touch $lockfile
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] && ln -s "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}/Plex Media Server/plexmediaserver.pid" $pidfile
+        return $RETVAL
+}
+
+stop()
+{
+        [ $UID -eq 0 ] || exit 4
+	[ -f "$pidfile" ] || exit 0
+        PID=`cat $pidfile`
+	echo -n $"Stopping $prog: "
+        kill -3 "`cat $pidfile`"&& success || failure
+        if [ -f $pidfile ]; then
+        PLEX=1
+        while [ $PLEX -eq 1 ]; do
+          sleep 3
+          echo
+          if [ `ps -ef|grep $PID|grep -v grep|wc -l` -eq 1 ]; then
+           PLEX=1
+           echo -n $"Waiting for Plex to Stop: "
+           else
+           PLEX=0
+          fi
+        done
+        echo -n $"Stopped $prog" && success || failure
+        fi
+        RETVAL=$?
+        echo
+	rm -f $pidfile
+        rm -f $lockfile
+        return $RETVAL
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	status)
+		status $prog
+		RETVAL=$?
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|status}"
+		RETVAL=2
+		[ "$1" = 'usage' ] && RETVAL=0
+esac
+
+exit $RETVAL
+
