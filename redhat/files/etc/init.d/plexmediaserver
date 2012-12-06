@@ -4,6 +4,18 @@
 # chkconfig:   2345 20 80
 # Description: Starts the Plex Media Server
 #
+### BEGIN INIT INFO
+# Provides: Plex Media Server
+# Required-Start: $network
+# Should-Start: Plex Media Server
+# Required-Stop:
+# Default-Start: 3 4 5
+# Default-Stop: 0 1 2 6
+# Short-Description: Plex Media Server
+# Description: PlexInc developed super duper media server. Totally awsome!
+### END INIT INFO
+#
+#
 # Added 1 second delay to prevent startup failure on systemd systems using ssd
 #
 sleep 1
@@ -11,7 +23,11 @@ sleep 1
 PMS_BIN="Plex Media Server"
 
 # Source function library
+if [ -f /etc/rc.status ]; then
+. /etc/rc.status
+elif [ -f /etc/rc.d/init.d/functions ]; then
 . /etc/rc.d/init.d/functions
+fi
 
 # Source Plex Variables
 [ -r /etc/sysconfig/PlexMediaServer ] && . /etc/sysconfig/PlexMediaServer
@@ -20,7 +36,14 @@ RETVAL=0
 prog="PlexMediaServer"
 config="/etc/sysconfig/$prog"
 pidfile="/var/run/$prog.pid"
-lockfile="/var/lock/subsys/$prog"
+
+# Set lockfile differently if on SuSE
+
+if [ -f /etc/SuSE-release ]; then
+  lockfile="/var/lock/$prog"
+else
+  lockfile="/var/lock/subsys/$prog"
+fi
 
 start()
 {
