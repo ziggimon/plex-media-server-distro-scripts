@@ -44,7 +44,7 @@ fi
 # Check if release is systemd based and add plex service accordingly.
 if [ -f /etc/SuSE-release ]; then
   chkconfig --add plexmediaserver
-  systemctl --system daemon-reload
+  [ -x /bin/systemctl ] && systemctl --system daemon-reload
 elif [ -f /etc/redhat-release ]; then
   if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       chkconfig --add plexmediaserver
@@ -78,7 +78,7 @@ fi
 if [ "$1" = "0" ]; then
   if [ -f /etc/SuSE-release ]; then
     chkconfig --del plexmediaserver
-    systemctl --system daemon-reload
+    [ -x /bin/systemctl ] && systemctl --system daemon-reload
   elif [ -f /etc/redhat-release ]; then
     if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       chkconfig --del plexmediaserver
@@ -90,7 +90,7 @@ if [ "$1" = "0" ]; then
 else
   if [ -f /etc/SuSE-release ]; then
     chkconfig --del plexmediaserver
-    systemctl --system daemon-reload
+    [ -x /bin/systemctl ] && systemctl --system daemon-reload
   elif [ -f /etc/redhat-release]; then
     if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       systemctl daemon-reload
