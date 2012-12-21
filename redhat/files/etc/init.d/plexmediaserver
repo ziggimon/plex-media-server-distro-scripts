@@ -119,7 +119,7 @@ check_status ()
 {
 #        echo -n "Checking for service Plex Media Server: "
         if [ -f /etc/SuSE-release ]; then 
-           /sbin/checkproc "$PLEX_BIN"
+           /sbin/checkproc "$PLEX_MEDIA_SERVER_HOME/$PMS_BIN"
            rc_status -v
         else
            status $PROG
@@ -136,6 +136,7 @@ case "$1" in
 		;;
 	restart)
 		stop
+                sleep 1
 		start
 		;;
 	status)
