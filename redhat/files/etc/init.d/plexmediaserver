@@ -71,7 +71,7 @@ start()
            rc_status -v
         else
            echo -n $"Starting $PROG: "
-           su -s /bin/sh $PLEX_USER -c ". $CONFIG; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN'"&
+           su -s /bin/sh $PLEX_USER -c ". $CONFIG; cd $PLEX_MEDIA_SERVER_HOME; ./'$PMS_BIN' > /dev/null 2>&1" &
            sleep 3
            eval "$@" && success || failure
            touch $LOCKFILE
