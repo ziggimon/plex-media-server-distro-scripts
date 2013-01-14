@@ -91,7 +91,7 @@ else
   if [ -f /etc/SuSE-release ]; then
     chkconfig --del plexmediaserver
     [ -x /bin/systemctl ] && systemctl --system daemon-reload
-  elif [ -f /etc/redhat-release]; then
+  elif [ -f /etc/redhat-release ]; then
     if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       systemctl daemon-reload
     fi
