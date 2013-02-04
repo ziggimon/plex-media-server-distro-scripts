@@ -1,0 +1,12 @@
+[Unit]
+Description=Plex Media Server
+After=network.target
+
+[Service]
+EnvironmentFile=/apps/plexmediaserver/plexmediaserver_environment
+ExecStart=/apps/plexmediaserver/start.sh
+Type=forking
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

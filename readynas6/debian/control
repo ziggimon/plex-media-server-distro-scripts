@@ -1,0 +1,13 @@
+Source: plexmediaserver
+Section: video
+Priority: extra
+Maintainer: Plex, inc. <linux@plexapp.com>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Homepage: http://www.plexapp.com
+
+Package: plexmediaserver
+Architecture: amd64
+Depends: ${misc:Depends}
+Description: Plex Media Server for ReadyNAS OS 6
+  Stream media everywhere(tm)
