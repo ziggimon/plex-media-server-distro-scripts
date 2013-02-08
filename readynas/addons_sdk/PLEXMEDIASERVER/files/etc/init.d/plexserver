@@ -71,7 +71,9 @@ case "$1" in
 	sleep 5
 	rm -f $PID_FILE
 	PLPLUG=`ps ax | grep Plex | grep -v grep | awk '{ print $1 }'`
-	kill ${PLPLUG}
+        if [ X"" != X"$PLPLUG" ]; then
+	  kill ${PLPLUG}
+        fi
 	exit 0
         ;;
 
