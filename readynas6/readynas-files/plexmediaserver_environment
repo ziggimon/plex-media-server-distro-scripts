@@ -13,4 +13,4 @@ export PLEX_MEDIA_SERVER_TMPDIR=/tmp
 export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/apps/plexmediaserver/MediaLibrary"
 
 # We need to catch our libraries
-export LD_LIBRARY_PATH="/apps/plexmediaserver/Binaries"
+export LD_LIBRARY_PATH="/apps/plexmediaserver/Binaries:$LD_LIBRARY_PATH"

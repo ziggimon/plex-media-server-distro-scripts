@@ -17,8 +17,8 @@ set -e
 
 case "$1" in
     remove|upgrade|deconfigure)
-        systemctl stop fvapp-plexhometheater.service
-        systemctl disable fvapp-plexhometheater.service || true
+        systemctl stop fvapp-plexmediaserver.service || true
+        systemctl disable fvapp-plexmediaserver.service || true
         ;;
     failed-upgrade)
         ;;
