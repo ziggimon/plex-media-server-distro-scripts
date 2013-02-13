@@ -2,13 +2,13 @@
   <AppID>NETGEAR_GENIEAPP_000006</AppID>
   <Category>APP_CAT_MEDIA</Category>
   <release-notes>http://plexapp.com/appcast/mac/releasenotes.html</release-notes>
-  <Version>0.9.7.13</Version>
+  <Version>##VERSION##</Version>
   <Name>Plex Media Server</Name>
   <Author>Plex, Inc.</Author>
   <RequireReboot>0</RequireReboot>
   <LaunchURL>http://localhost:32400/web</LaunchURL>
   <ConfigURL>http://localhost:32400/web</ConfigURL>
-  <DebianPackage>plexmediaserver</DebianPackage>
+  <DebianPackage>plexmediaserver-ros6</DebianPackage>
   <ServiceName>fvapp-plexmediaserver.service</ServiceName>
   <Description lang="en-us">Plex Media Server is a powerful media streaming service.</Description>
 </Application>

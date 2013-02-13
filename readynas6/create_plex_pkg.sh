@@ -10,6 +10,7 @@ then
     cp -r readynas-files/* $DIRECTORY
     cp -r debian PlexMediaServer-$PLEX_VERSION
 	cp -r $PLEX_SRCDIR $DIRECTORY/Binaries
+    cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g > $DIRECTORY/config.xml
     cd PlexMediaServer-$PLEX_VERSION
 	export EMAIL="jenkins@plexapp.com"
 	export NAME="Plex CI Team"
