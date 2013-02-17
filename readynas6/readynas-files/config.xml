@@ -7,7 +7,7 @@
   <Author>Plex, Inc.</Author>
   <RequireReboot>0</RequireReboot>
   <LaunchURL>http://localhost:32400/web</LaunchURL>
-  <ConfigURL>http://localhost:32400/web</ConfigURL>
+  <ConfigURL>http://localhost:32400/web/index.html#!/settings</ConfigURL>
   <DebianPackage>plexmediaserver-ros6</DebianPackage>
   <ServiceName>fvapp-plexmediaserver.service</ServiceName>
   <Description lang="en-us">Plex Media Server is a powerful media streaming service.</Description>
