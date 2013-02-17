@@ -14,6 +14,6 @@ Description: Plex Media Server for ReadyNAS OS 6
 
 Package: plexmediaserver-ros6-binaries
 Architecture: amd64
-Depends: ${misc:Depends}, plexmediaserver-ros6
+Depends: ${misc:Depends}, plexmediaserver-ros6 (= ${binary:Version})
 Description: Plex Media Server for ReadyNAS OS 6
   Stream media everywhere(tm)
