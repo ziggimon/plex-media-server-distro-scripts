@@ -27,7 +27,19 @@ if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq 0 ]; then
 fi
 
 if [ "$1" = "2" ]; then
-     /etc/init.d/plexmediaserver stop
+  if [ -f /etc/redhat-release ]; then
+    if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+      if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
+        service plexmediaserver stop
+      else
+        service plex stop
+      fi
+    else
+      /etc/init.d/plexmediaserver stop
+    fi
+  else
+    /etc/init.d/plexmediaserver stop
+  fi
 fi
 
 exit 0
