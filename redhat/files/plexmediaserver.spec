@@ -27,7 +27,19 @@ if [ `cat /etc/passwd|grep ^plex:|wc -l` -eq 0 ]; then
 fi
 
 if [ "$1" = "2" ]; then
-     /etc/init.d/plexmediaserver stop
+  if [ -f /etc/redhat-release ]; then
+    if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+      if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
+        service plexmediaserver stop
+      else
+        service plex stop
+      fi
+    else
+      /etc/init.d/plexmediaserver stop
+    fi
+  else
+    /etc/init.d/plexmediaserver stop
+  fi
 fi
 
 exit 0
@@ -49,8 +61,12 @@ elif [ -f /etc/redhat-release ]; then
   if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       chkconfig --add plexmediaserver
   else
+      if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
+	systemctl enable plexmediaserver.service
+      else
+	systemctl enable plex.service
+      fi
       systemctl daemon-reload
-      systemctl enable plex.service
   fi
 fi
 
@@ -66,7 +82,11 @@ echo ""
 if [ "$1" = "0" ]; then
   if [ -f /etc/redhat-release ]; then
     if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
-      service plex stop
+      if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
+        service plexmediaserver stop
+      else
+        service plex stop
+      fi
     else
       /etc/init.d/plexmediaserver stop
     fi
@@ -83,7 +103,11 @@ if [ "$1" = "0" ]; then
     if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
       chkconfig --del plexmediaserver
     else
-      systemctl disable plex.service
+      if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
+        systemctl disable plexmediaserver.service
+      else
+	systemctl disable plex.service
+      fi
       systemctl daemon-reload
     fi
   fi
@@ -118,7 +142,7 @@ fi
 %config(noreplace) "/etc/sysconfig/PlexMediaServer"
 %dir "/lib/systemd"
 %dir "/lib/systemd/system"
-%config(noreplace) "/lib/systemd/system/plex.service"
+%config(noreplace) "/lib/systemd/system/plexmediaserver.service"
 %dir "/usr"
 %dir "/usr/local"
 %dir "/usr/local/bin"
