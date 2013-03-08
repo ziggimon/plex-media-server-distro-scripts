@@ -21,6 +21,11 @@ set -e
 case "$1" in
     configure)
     chown -R admin:admin /apps/plexmediaserver
+    if systemctl restart apache2.service; then
+        event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="PlexMediaServer" success="1"/></add-s>' 0 0
+    else
+        event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="PlexMediaServer" success="0"/></add-s>' 0 0
+    fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
