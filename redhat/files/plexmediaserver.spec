@@ -68,6 +68,8 @@ elif [ -f /etc/redhat-release ]; then
       fi
       systemctl daemon-reload
   fi
+  # Add SELinux rsync policy file on CentOS/Fedora
+  semodule -i /usr/lib/plexmediaserver/plexrsync.pp
 fi
 
 # Tell users to go and read readme file, if fw.
@@ -123,6 +125,11 @@ else
 fi
 
 %postun
+
+if [ -f /etc/redhat-release ]; then
+  # Remove SELinux rsync policy file on CentOS/Fedora
+  semodule -r plexrsync
+fi
 
 %description
  Stream media everywhere(tm)
