@@ -130,7 +130,7 @@ fi
 if [ "$1" = "0" ]; then
   if [ -f /etc/redhat-release ]; then
     # Remove SELinux rsync policy file on CentOS/Fedora
-    if [ `semodule -l |grep plexrsync| wc -l´-gt 0 ]; then
+    if [ `semodule -l |grep plexrsync| wc -l` -gt 0 ]; then
       semodule -r plexrsync
     fi
   fi
