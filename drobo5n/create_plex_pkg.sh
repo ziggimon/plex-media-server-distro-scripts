@@ -22,7 +22,7 @@ then
   # Finalize package.
   cd plex
   rm ../plex.tgz
-  tar cfvz ../plex.tgz .
+  tar cfvz $PLEX_OUTDIR/plex.tgz .
 
   # Clean up.
   cd ..
