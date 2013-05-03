@@ -7,21 +7,25 @@ then
   # Make the structure.
   cd plex
   mkdir Application
+  mkdir Library
 
   # Copy application files over.
   cp -R $PLEX_SRCDIR/* Application/
   
   # Tweak version.
-  sed -i '/s/--VERSION--/$PLEX_VERSION/g' service.sh
+  sed -i "s/##VERSION##/$PLEX_VERSION/g" service.sh
   
   # Fix permissions.
-  chown -R root:root plex
+  cd ..
+  sudo chown -R root:root plex
 
   # Finalize package.
-  
+  cd plex
+  rm ../plex.tgz
+  tar cfvz ../plex.tgz .
 
   # Clean up.
-  cd ../
+  cd ..
   sudo rm -rf plex
   git checkout plex
 fi

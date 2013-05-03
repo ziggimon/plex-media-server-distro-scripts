@@ -2,19 +2,20 @@
 . /etc/service.subr
 
 SCRIPTPATH=`dirname \`realpath $0\``
-export LD_LIBRARY_PATH="${SCRIPTPATH}"
-export PLEX_MEDIA_SERVER_HOME="${SCRIPTPATH}"
+export LD_LIBRARY_PATH="${SCRIPTPATH}/Application"
+export PLEX_MEDIA_SERVER_HOME="${SCRIPTPATH}/Application"
 export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+export PLEX_MEDIA_SERVER_PIDFILE="/tmp/DroboApps/plex/pid.txt"
+export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${SCRIPTPATH}/Library/"
 export LC_ALL="C"
 export LANG="C"
 ulimit -s 3000
 
 name="Plex Media Server"
-version="--VERSION--"
-description="The best solution for your local and online media."
-
-framework_version="2.0"
+version="##VERSION##"
 pidfile=/tmp/DroboApps/plex/pid.txt
+description="The best solution for your local and online media."
+framework_version="2.0"
 
 start()
 {
@@ -22,7 +23,6 @@ start()
         touch /var/log/lastlog
 
         ${SCRIPTPATH}/Application/Plex\ Media\ Server &
-        echo $! > ${pidfile}
 }
 
 case "$1" in
@@ -41,8 +41,7 @@ case "$1" in
                 exit $?
                 ;;
         status)
-                cat ${logfile}
-                exit $?
+                status
                 ;;
         *)
                 echo "Usage: $0 [start|stop|restart|status]"
