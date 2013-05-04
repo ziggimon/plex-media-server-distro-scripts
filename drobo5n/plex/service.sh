@@ -23,6 +23,9 @@ start()
         # if this file doesn't exist, client connections get some ugly warnings.
         touch /var/log/lastlog
 
+        # make sure temp directory exists.
+        mkdir -p ${TMPDIR} > /dev/null 2>&1
+
         ${SCRIPTPATH}/Application/Plex\ Media\ Server &
 }
 
@@ -32,12 +35,8 @@ case "$1" in
                 exit $?
                 ;;
         stop)
-                stop_service
-                
-                # Make sure we kill the other Plex processes, since we're brutally murdering the server.
-                kill `ps | grep "Plex Plug-in" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
-                kill `ps | grep "Plex DLNA" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
-                kill `ps | grep "Plex Media Scanner" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
+                pid=`cat $pidfile`
+                kill -INT $pid
                 exit $?
                 ;;
         restart)
