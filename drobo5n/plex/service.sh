@@ -35,8 +35,10 @@ case "$1" in
                 exit $?
                 ;;
         stop)
-                pid=`cat $pidfile`
-                kill -INT $pid
+		if [ -f $pidfile ]; then
+                  pid=`cat $pidfile`
+                  kill -INT $pid
+		fi
                 exit $?
                 ;;
         restart)
