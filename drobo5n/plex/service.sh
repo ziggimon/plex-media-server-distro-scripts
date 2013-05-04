@@ -6,7 +6,8 @@ export LD_LIBRARY_PATH="${SCRIPTPATH}/Application"
 export PLEX_MEDIA_SERVER_HOME="${SCRIPTPATH}/Application"
 export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 export PLEX_MEDIA_SERVER_PIDFILE="/tmp/DroboApps/plex/pid.txt"
-export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${SCRIPTPATH}/Library/"
+export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${SCRIPTPATH}/Library"
+export TMPDIR="${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}/tmp"
 export LC_ALL="C"
 export LANG="C"
 ulimit -s 3000
@@ -32,6 +33,11 @@ case "$1" in
                 ;;
         stop)
                 stop_service
+                
+                # Make sure we kill the other Plex processes, since we're brutally murdering the server.
+                kill `ps | grep "Plex Plug-in" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
+                kill `ps | grep "Plex DLNA" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
+                kill `ps | grep "Plex Media Scanner" | grep -v grep | sed -e "s/ .*//"` > /dev/null 2>&1
                 exit $?
                 ;;
         restart)
