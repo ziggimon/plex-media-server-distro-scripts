@@ -11,8 +11,14 @@ then
 	mkdir -p $DIRECTORY_BIN
     cp -r readynas-files/* $DIRECTORY_META
     cp -r debian PlexMediaServer-$PLEX_VERSION
-	cp -r $PLEX_SRCDIR $DIRECTORY_BIN/Binaries
     cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g > $DIRECTORY_META/config.xml
+
+    # copy files to binary directory
+	cp -r $PLEX_SRCDIR $DIRECTORY_BIN/Binaries
+    cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g > $DIRECTORY_BIN/Binaries/config.xml
+    cp readynas-files/plexmediaserver_environment $DIRECTORY_BIN/Binaries
+    cp readynas-files/start.sh $DIRECTORY_BIN/Binaries
+
     cd PlexMediaServer-$PLEX_VERSION
 	export EMAIL="jenkins@plexapp.com"
 	export NAME="Plex CI Team"

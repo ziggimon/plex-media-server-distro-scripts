@@ -1,9 +1,18 @@
 #!/bin/sh
 
+#!/bin/sh -e
+
 if [ ! -e /apps/plexmediaserver/Binaries/Plex\ Media\ Server ]
 then
+    event_push app readynasd '<command-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp cmdname="apt-get" status="start" appname="Plex Media Ser ver"/></command-s>' 0 0
+    systemd-notify STATUS="Run apt-get update ..."
     apt-get update
-    apt-get -y install plexmediaserver-ros6-binaries
+    systemd-notify STATUS="Installing Plex binaries ..."
+    if apt-get -y install plexmediaserver-ros6-binaries; then
+        event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="Plex Media Server" success="1"/></add-s>' 0 0
+    else
+        event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="Plex Media Server" success="0"/></add-s>' 0 0
+    fi
 fi
 
 . /apps/plexmediaserver/plexmediaserver_environment
@@ -14,5 +23,6 @@ then
     mkdir -p $TMPDIR
 fi
 
-/apps/plexmediaserver/Binaries/Plex\ Media\ Server &
+systemd-notify READY=1
+/apps/plexmediaserver/Binaries/Plex\ Media\ Server
 
