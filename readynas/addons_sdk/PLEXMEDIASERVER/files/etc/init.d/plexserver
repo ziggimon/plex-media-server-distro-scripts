@@ -32,8 +32,6 @@ DESC=plexserver
 # user
 RUN_AS=root
 
-PID_FILE=/var/run/plexserver.pid
-
 ############### END EDIT ME ##################
 
 test -x $DAEMON || exit 0
@@ -56,10 +54,12 @@ export PLEX_MEDIA_SERVER_TMPDIR=/c/.plex/tmp
 export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/c/.plex/Library/Application Support"
 ulimit -s 3000
 
+PID_FILE="${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}/Plex Media Server/plexmediaserver.pid"
+
 case "$1" in
   start)
         echo "Starting $DESC"
-        start-stop-daemon -d $APP_PATH -c $RUN_AS --umask 0022 --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
+        start-stop-daemon -d $APP_PATH -c $RUN_AS --umask 0022 --start --background --pidfile "$PID_FILE" --exec $DAEMON -- $DAEMON_OPTS
 	sleep 5
         ;;
   stop)
@@ -67,9 +67,9 @@ case "$1" in
 	# MYPID=`cat ${PIDFILE}`
 	# kill ${MYPID}
 	# sleep 10
-        start-stop-daemon --stop --pidfile $PID_FILE
+        start-stop-daemon --stop --pidfile "$PID_FILE"
 	sleep 5
-	rm -f $PID_FILE
+	rm -f "$PID_FILE"
 	PLPLUG=`ps ax | grep Plex | grep -v grep | awk '{ print $1 }'`
         if [ X"" != X"$PLPLUG" ]; then
 	  kill ${PLPLUG}
