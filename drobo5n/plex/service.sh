@@ -12,7 +12,7 @@ export LC_ALL="C"
 export LANG="C"
 ulimit -s 3000
 
-name="Plex Media Server"
+name="plex"
 version="##VERSION##"
 pidfile=/tmp/DroboApps/plex/pid.txt
 description="The best solution for your local and online media."
@@ -35,10 +35,11 @@ case "$1" in
                 exit $?
                 ;;
         stop)
-		if [ -f $pidfile ]; then
+                set_enabled ${name} "NO"
+                if [ -f $pidfile ]; then
                   pid=`cat $pidfile`
                   kill -INT $pid
-		fi
+                fi
                 exit $?
                 ;;
         restart)
