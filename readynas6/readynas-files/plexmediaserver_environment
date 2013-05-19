@@ -1,16 +1,16 @@
 # default script for Plex Media Server
 
 # the number of plugins that can run at the same time
-export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 
 # ulimit -s $PLEX_MEDIA_SERVER_MAX_STACK_SIZE
-export PLEX_MEDIA_SERVER_MAX_STACK_SIZE=3000
+PLEX_MEDIA_SERVER_MAX_STACK_SIZE=3000
 
 # uncomment to set it to something else
-export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/apps/plexmediaserver/MediaLibrary"
+PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/apps/plexmediaserver/MediaLibrary"
 
 # let's set the tmp dir to something useful.
-export TMPDIR="$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/temp"
+TMPDIR="/apps/plexmediaserver/temp"
 
 # We need to catch our libraries
-export LD_LIBRARY_PATH="/apps/plexmediaserver/Binaries:$LD_LIBRARY_PATH"
+LD_LIBRARY_PATH="/apps/plexmediaserver/Binaries:$LD_LIBRARY_PATH"

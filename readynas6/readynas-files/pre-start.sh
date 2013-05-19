@@ -22,7 +22,3 @@ if [ ! -d $TMPDIR ]
 then
     mkdir -p $TMPDIR
 fi
-
-systemd-notify READY=1
-/apps/plexmediaserver/Binaries/Plex\ Media\ Server
-

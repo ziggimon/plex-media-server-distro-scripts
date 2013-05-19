@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 EnvironmentFile=/apps/plexmediaserver/plexmediaserver_environment
-ExecStart=/apps/plexmediaserver/start.sh
-Type=forking
-KillMode=process
+ExecStartPre=/apps/plexmediaserver/pre-start.sh
+ExecStart=/bin/sh -c '/apps/plexmediaserver/Binaries/Plex\ Media\ Server'
+Type=simple
 
 [Install]
 WantedBy=multi-user.target

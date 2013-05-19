@@ -21,6 +21,7 @@ set -e
 case "$1" in
     configure)
     chown -R admin:admin /apps/plexmediaserver
+    chattr +C /apps/plexmediaserver
     for file in config.xml plexmediaserver_environment start.sh
     do
         dpkg-divert --add --package plexmediaserver-ros6-binaries --rename --divert /apps/plexmediaserver/$file.orig /apps/plexmediaserver/$file
