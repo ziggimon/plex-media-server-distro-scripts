@@ -25,16 +25,17 @@ then
   
   # Make sure permissions are right.
   chmod 1777 files/tmp
-  sudo chown -R root:root files/tmp
   
   # set minimum required RAIDiator version and
   # make the right set of bzip2/bunzip2 available
   if [ "$PLEX_CONFIG" == "ubuntu-arm" ]
   then
+    chown -R root:root files/tmp
     PLEX_RAIDIATOR_VERSION="5.3.3"
     mv files/bin_ARM files/bin
     rm -rf files/bin_x86
   else
+    sudo chown -R root:root files/tmp
     PLEX_RAIDIATOR_VERSION="4.2.18"
     mv files/bin_x86 files/bin
     rm -rf files/bin_ARM
@@ -57,6 +58,11 @@ then
 
   # Clean up.
   cd ../../../
-  sudo rm -rf plex_package
+  if [ "$PLEX_CONFIG" == "ubuntu-arm" ]
+  then
+    rm -rf plex_package
+  else
+    sudo rm -rf plex_package
+  fi
 fi
 
