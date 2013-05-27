@@ -14,11 +14,11 @@ then
 	
 	#chown -R root:root *
 	#chmod -R 750 usr/local/emhttp/plugins/plexmediaserver
-	sudo makepkg -c y $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-unRAID.txz
+	makepkg -c y $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-unRAID.txz
 	
 	#clean 
 	cd ../
-	sudo rm -rf plex_package
+	rm -rf plex_package
 	git checkout plex_package
 fi
 
