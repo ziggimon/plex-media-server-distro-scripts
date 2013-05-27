@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# disable it for now
+exit 0
+
 if [[ $PLEX_CONFIG == debian-i686 ]];
 then
 	echo "build QNAP package"
