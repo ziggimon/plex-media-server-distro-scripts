@@ -29,7 +29,7 @@ then
   
   # set minimum required RAIDiator version and
   # make the right set of bzip2/bunzip2 available
-  if [ $NODE_NAME == Linux-Readynas-ARM ]
+  if [ "$PLEX_CONFIG" == "ubuntu-arm" ]
   then
     PLEX_RAIDIATOR_VERSION="5.3.3"
     mv files/bin_ARM files/bin
