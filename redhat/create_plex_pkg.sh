@@ -8,8 +8,6 @@ if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-x86_64 ]; then
     mkdir -p usr/lib/plexmediaserver
     cp -r ../files/etc ../files/lib ../files/plexmediaserver.spec ../files/usr .
     cp -r ${PLEX_SRCDIR}/* usr/lib/plexmediaserver/.
-    find ./usr/lib/plexmediaserver/ -type d | cut -d. -f2- | sed 's/\/usr/%dir "\/usr/g' | sed 's/$/"/' >> plexmediaserver.spec
-    find ./usr/lib/plexmediaserver/ -type f | cut -d. -f2- | sed 's/$/"/' | sed 's/\/usr/"\/usr/g' >> plexmediaserver.spec
     DIR=`pwd`
     RPMVERSION=`echo ${PLEX_VERSION}| cut -d"-" -f1`
     GIT_VERSION=`echo ${PLEX_VERSION} | cut -d"-" -f2`
