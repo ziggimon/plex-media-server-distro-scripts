@@ -72,13 +72,6 @@ elif [ -f /etc/redhat-release ]; then
   semodule -i /usr/lib/plexmediaserver/plexrsync.pp
 fi
 
-# Tell users to go and read readme file, if fw.
-echo ""
-echo " Note: To edit plex Library home settings edit /etc/sysconfig/PlexMediaServer"
-echo " And remember if you run a firewall/iptables add a rule for that."
-echo ""
-echo " Read more here /usr/share/doc/plexmediaserver/README.Redhat"
-echo ""
 %preun
 
 if [ "$1" = "0" ]; then
