@@ -4,45 +4,18 @@ Readme for Plex Media Server
 This is the Readme for the Plex Media Server RPM.
 
 The RPM included startup files for both systemd and chkconfig.
-Also it addded itself to avahi to enable bonjour connection to your
-local Plex clients.
 
-CONFIG:
-To change config settings for Plex please edit /etc/sysconfig/PlexMediaServer
+To start/stop Plex Media Server on SystemV systems use:
 
-Eg. to change where Plex places its metadata files comment out in /etc/sysconfig/PlexMediaServer:
+sudo /etc/init.d/plexmediaserver start
+sudo /etc/init.d/plexmediaserver stop
+sudo /etc/init.d/plexmediaserver restart
 
-# PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/opt/plex/Library/Application\ Support" line.
+To start/stop Plex Media Server on Systemd systems use:
 
-The Library/Application\ Support does not have to exist, but the /opt/plex dir does, and
-it has to be writable by plex. So remember to chown plex on the dir you choose.
+sudo service plexmediaserver start
+sudo service plexmediaserver stop
 
-HELPER SCRIPT:
-Also added to the RPM is a script to move the library to /var/lib/plexmediaserver. This is to help
-users that previously installed Plex using RPM's to move from /usr/lib/plexmediaserver to
-/var/lib/plexmediaserver. This is a more sensible directory/partition in reference to FHS and LSB.
+To get help with Plex Media Server go to http://forums.plexapp.com, http://wiki.plexapp.com or http://www.plexapp.com/help/ and click "Chat With Us".
 
-Before you run this script if your upgrading, please ensure that the config file reflects your
-library's current location.
-
-To move all the metadata to /var/lib/plexmediaserver simply as root run:
-/usr/lib/plexmedaiserver/MovePlexSupportDir.sh
-
-IPTABLES:
-Also if you run a firewall/iptables solution please remembter to add a port 32400 and 5353 mapping.
-
-Iptables config line (add this to /etc/sysconfig/iptables):
--A INPUT -m state --state NEW -m tcp -p tcp --dport 32400 -j ACCEPT
--A INPUT -m state --state NEW -m udp -p udp --dport 32400 -j ACCEPT
--A INPUT -m state --state NEW -m udp -p udp --dport 32469 -j ACCEPT
--A INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
--A OUTPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
-
-To add it non permanently run as root:
-/sbin/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 32400 -j ACCEPT
-/sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32400 -j ACCEPT
-/sbin/iptables -A INPUT -m state --state NEW -m udp -p udp --dport 32469 -j ACCEPT
-/sbin/iptables -A INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
-/sbin/iptables -A OUTPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
-
-ZiGGiMoN <ziggimon@foo.bar>  Wed, 23 Nov 2011 18:35:22 +0100
+ZiGGiMoN <ziggimon@foo.bar>  Sat, 23 May 2013 12:17:33 +0100
