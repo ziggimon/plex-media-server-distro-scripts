@@ -136,11 +136,12 @@ fi
 
 %files
 "/usr/lib/plexmediaserver"
-"/etc/yum.repos.d"
-"/etc/zypp"
+"/etc/zypp/repos.d/plex.repo"
+"/etc/yum.repos.d/plex.repo"
 "/etc/init.d/plexmediaserver"
 "/etc/security/limits.d/plex.conf"
 %config(noreplace) "/etc/sysconfig/PlexMediaServer"
 %config(noreplace) "/lib/systemd/system/plexmediaserver.service"
 "/usr/local/bin/python"
-"/usr/share/doc
+"/usr/share/doc/plexmediaserver/README.Redhat"
+"/usr/share/doc/plexmediaserver/copyright"
