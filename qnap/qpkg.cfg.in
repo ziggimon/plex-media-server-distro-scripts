@@ -1,30 +1,59 @@
 # Name of the packaged application.
 QPKG_NAME="PlexMediaServer"
+# Version of the packaged application. 
+QPKG_VER="@PLEX_VERSION@"
 # Author or maintainer of the package
-QPKG_AUTHOR="Cristian"
+QPKG_AUTHOR="dane22, Mr.Tom"
 # License for the packaged application
 #QPKG_LICENSE=""
 # One-line description of the packaged application
-#QPKG_SUMMARY=""
+QPKG_SUMMARY="Plex Media Server for QNAP"
 
 # Preferred number in start/stop sequence.
-QPKG_RC_NUM="146"
+QPKG_RC_NUM="101"
 # Init-script used to control the start and stop of the installed application.
 QPKG_SERVICE_PROGRAM="plex.sh"
 
 # Specifies any packages required for the current package to operate.
-# QPKG_REQUIRE="Avahi >= 0.6.30_b3"
+#QPKG_REQUIRE="Python >= 2.7, Optware | opkg, OPT/openssh"
 # Specifies what packages cannot be installed if the current package
 # is to operate properly.
 #QPKG_CONFLICT="Python, OPT/sed"
 # Name of configuration file (multiple definitions are allowed).
 #QPKG_CONFIG="myApp.conf"
-#QPKG_CONFIG="/etc/config/myApp.conf"
 # Port number used by service program.
 #QPKG_SERVICE_PORT=""
 # Location of file with running service's PID
 #QPKG_SERVICE_PIDFILE=""
 # Relative path to web interface
-QPKG_WEBUI="/manage"
+QPKG_WEBUI="/web"
 # Port number for the web interface.
 QPKG_WEB_PORT="32400"
+
+# Location of the chroot environment (only TS-x09)
+#QPKG_ROOTFS=""
+# Init-script used to controls the start and stop of the
+# installed application (only TS-x09)
+#QPKG_SERVICE_PROGRAM_CHROOT=""
+
+# Location of icons for the packaged application.
+#QDK_DATA_DIR_ICONS="icons"
+# Location of files specific to arm-x09 packages.
+#QDK_DATA_DIR_X09="arm-x09"
+# Location of files specific to arm-x19 packages.
+#QDK_DATA_DIR_X19="/home/tm/plex/arm-x19"
+# Location of files specific to x86 packages.
+QDK_DATA_DIR_X86="@PLEX_SRCDIR@"
+# Location of files specific to x86 (64-bit) packages.
+#QDK_DATA_DIR_X86_64="x86_64"
+# Location of files common to all architectures.
+#QDK_DATA_DIR_SHARED="shared"
+# Location of configuration files.
+#QDK_DATA_DIR_CONFIG="config"
+# Name of local data package.
+#QDK_DATA_FILE=""
+# Name of extra package (multiple definitions are allowed).
+#QDK_EXTRA_FILE=""
+# This is the Post Build Script that runs after a successfull build. Can be used to like publish the output etc
+QDK_POST_BUILD="$(pwd)/postbuild.sh"
+

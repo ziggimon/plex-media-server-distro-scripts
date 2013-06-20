@@ -1,39 +1,12 @@
 #!/bin/sh
 
-# disable it for now
-exit 0
-
 if [[ $PLEX_CONFIG == debian-i686 ]];
 then
-	echo "build QNAP package"
-	
-	if test -d qnap-chroot
-	then
-		cd qnap-chroot
-		git fetch
-		git reset --hard origin/master
-		sudo rm -rf plex/build
-		cd ..
-	else
-		git clone git@github.com:plexinc/qnap-chroot
-		mkdir -p qnap-chroot/dev qnap-chroot/proc
-	fi
-	test -e qnap-chroot/dev/null || sudo mount -o bind /dev qnap-chroot/dev
-	test -e qnap-chroot/proc/1 || sudo mount -o bind /proc qnap-chroot/proc
-
-	rm -rf qnap-chroot/plex/x86
-	mkdir -p qnap-chroot/plex/x86
-	cp -a $PLEX_SRCDIR/* qnap-chroot/plex/x86
-  cp -a qnap-chroot/plex/x86_template/* qnap-chroot/plex/x86
-	sudo cp qpkg.cfg.in qnap-chroot/plex/qpkg.cfg
-	echo "QPKG_VER=\"$PLEX_VERSION\"" | sudo tee -a qnap-chroot/plex/qpkg.cfg
-	sudo chroot qnap-chroot /build-pkg.sh
-	sudo mv qnap-chroot/plex/build/* $PLEX_OUTDIR
-	sudo chown -R plex.plex $PLEX_OUTDIR
-
-  sudo umount qnap-chroot/dev
-  sudo umount qnap-chroot/proc
-
+  echo "build QNAP package"
+  PLEX_SHORT_VERSION=${PLEX_VERSION:0:10}
+  cat qpkg.cfg.in |sed "s|@PLEX_VERSION@|$PLEX_SHORT_VERSION|g;s|@PLEX_SRCDIR@|$PLEX_SRCDIR|g" > qnap-files/qpkg.cfg
+  pushd qnap-files
+  /QNAP/QDK_2.2/bin/qbuild -q --build-arch x86
+  popd
+  mv qnap-files/build/PlexMediaServer_${PLEX_SHORT_VERSION}_x86.qpkg $PLEX_OUTDIR/PlexMediaServer_${PLEX_VERSION}_x86.qpkg
 fi
-
-
