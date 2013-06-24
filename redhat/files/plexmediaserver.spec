@@ -55,7 +55,7 @@ fi
 
 # Check if release is systemd based and add plex service accordingly.
 if [ -f /etc/SuSE-release ]; then
-   if [ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]; then
+   if [[ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]]; then
       systemctl enable plexmediaserver
    else
       chkconfig --add plexmediaserver
@@ -96,7 +96,7 @@ fi
 
 if [ "$1" = "0" ]; then
   if [ -f /etc/SuSE-release ]; then
-    if [ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]; then
+    if [[ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]]; then
        systemctl disable plexmediaserver
     else
        chkconfig --del plexmediaserver
@@ -116,7 +116,7 @@ if [ "$1" = "0" ]; then
   fi
 else
   if [ -f /etc/SuSE-release ]; then
-   if [ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]; then
+   if [[ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]]; then
         systemctl disable plexmediaserver
    else
       chkconfig --del plexmediaserver
