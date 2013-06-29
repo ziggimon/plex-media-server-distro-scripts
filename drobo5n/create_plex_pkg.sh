@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $PLEX_CONFIG == droboarm ];
+if [ $PLEX_CONFIG == drobo-arm ];
 then
   echo "Building Drobo package"
   
