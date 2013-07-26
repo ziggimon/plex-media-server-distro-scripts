@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ $BUILD_TYPE == freebsd-x86_64 ]; then
     echo "build BSD tar.bz2"
