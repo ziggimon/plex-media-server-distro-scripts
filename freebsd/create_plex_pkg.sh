@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $PLEX_CONFIG == freebsd-x86_64 ]; then
+if [ $BUILD_TYPE == freebsd-x86_64 ]; then
     echo "build BSD tar.bz2"
     rm -rf freebsd_temp
     mkdir freebsd_temp
