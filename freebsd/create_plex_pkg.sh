@@ -10,5 +10,5 @@ if [ $BUILD_TAG == freebsd-x86_64 ]; then
     mkdir -p PlexMediaServer-${RELEASE}-${GIT_VERSION}
     cp -r ${PLEX_SRCDIR}/* PlexMediaServer-${RELEASE}-${GIT_VERSION}
     tar cjf PlexMediaServer-${RELEASE}-${GIT_VERSION}.tar.bz2 PlexMediaServer-${RELEASE}-${GIT_VERSION}
-    mv PlexMediaServer-${RELEASE}-${GIT_VERSION}.tar.bz2 $PLEX_OUTDIR}/.
+    mv PlexMediaServer-${RELEASE}-${GIT_VERSION}.tar.bz2 ${PLEX_OUTDIR}/.
 fi
