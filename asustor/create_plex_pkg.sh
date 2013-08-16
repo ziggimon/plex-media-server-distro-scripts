@@ -19,7 +19,7 @@ then
 	cat CONTROL/config.json.in | sed "s/#VERSION#/$PLEX_VERSION/g" | sed "s/#ARCH#/$ARCH/g" > build/CONTROL/config.json
 	mkdir build/plexmediaserver
 	cp -r $PLEX_SRCDIR/* build/plexmediaserver
-	bin/apkg-tools.py create --destination $PLEX_OUTDIR build
+	python2.7 bin/apkg-tools.py create --destination $PLEX_OUTDIR build
 	rm -rf build
 fi
 
