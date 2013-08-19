@@ -236,23 +236,23 @@ class Apkg:
 			return -1
 
 		# change file mode and owner
-		os.chmod(control_dir, 0755)
+		#os.chmod(control_dir, 0755)
 		#os.chown(control_dir, 0, 0)
 
 		all_files = glob.glob(control_dir + '/*')
 		sh_files  = glob.glob(control_dir + '/*.sh')
 		py_files  = glob.glob(control_dir + '/*.py')
 
-		for one_file in all_files:
-			os.chmod(one_file, 0644)
+#		for one_file in all_files:
+			#os.chmod(one_file, 0644)
 			#os.chown(one_file, 0, 0)
 
-		for one_file in sh_files:
-			os.chmod(one_file, 0755)
-			os.system('dos2unix %s > /dev/null 2>&1' % (one_file))
+#		for one_file in sh_files:
+			#os.chmod(one_file, 0755)
+#			os.system('dos2unix %s > /dev/null 2>&1' % (one_file))
 
-		for one_file in py_files:
-			os.chmod(one_file, 0755)
+#		for one_file in py_files:
+#			os.chmod(one_file, 0755)
 
 		app_info = self.__get_app_info(control_dir, self.apk_format['version'])
 
