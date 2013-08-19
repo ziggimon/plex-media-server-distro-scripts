@@ -11,7 +11,7 @@ then
   if [ $PLEX_CONFIG == "ubuntu-i686" ]; then
     ARCH="i386"
   else
-    ARCH="x86_64"
+    ARCH="x86-64"
   fi
 	
 	cp -r CONTROL build/
