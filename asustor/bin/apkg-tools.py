@@ -237,7 +237,7 @@ class Apkg:
 
 		# change file mode and owner
 		os.chmod(control_dir, 0755)
-		os.chown(control_dir, 0, 0)
+		#os.chown(control_dir, 0, 0)
 
 		all_files = glob.glob(control_dir + '/*')
 		sh_files  = glob.glob(control_dir + '/*.sh')
@@ -245,7 +245,7 @@ class Apkg:
 
 		for one_file in all_files:
 			os.chmod(one_file, 0644)
-			os.chown(one_file, 0, 0)
+			#os.chown(one_file, 0, 0)
 
 		for one_file in sh_files:
 			os.chmod(one_file, 0755)

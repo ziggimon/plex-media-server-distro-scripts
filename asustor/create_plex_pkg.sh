@@ -15,6 +15,9 @@ then
   fi
 	
 	cp -r CONTROL build/
+  chmod 644 build/CONTROL/*
+  chmod 755 build/CONTROL/*.sh
+  sudo chown -R root.root build/CONTROL
 	rm build/CONTROL/config.json.in
 	cat CONTROL/config.json.in | sed "s/#VERSION#/$PLEX_VERSION/g" | sed "s/#ARCH#/$ARCH/g" > build/CONTROL/config.json
 	mkdir build/plexmediaserver
