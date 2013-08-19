@@ -23,6 +23,6 @@ then
 	mkdir build/plexmediaserver
 	cp -r $PLEX_SRCDIR/* build/plexmediaserver
 	python2.7 bin/apkg-tools.py create --destination $PLEX_OUTDIR build
-	rm -rf build
+	sudo rm -rf build
 fi
 
