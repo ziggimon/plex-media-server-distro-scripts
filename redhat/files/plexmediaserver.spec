@@ -28,7 +28,7 @@ fi
 
 if [ "$1" = "2" ]; then
   if [ -f /etc/redhat-release ]; then
-    if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+    if [ `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]; then
       if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
         service plexmediaserver stop
       else
@@ -62,7 +62,7 @@ if [ -f /etc/SuSE-release ]; then
    fi
   [ -x /bin/systemctl ] && systemctl --system daemon-reload
 elif [ -f /etc/redhat-release ]; then
-  if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+  if [ `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]; then
       chkconfig --add plexmediaserver
   else
       if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
@@ -80,7 +80,7 @@ fi
 
 if [ "$1" = "0" ]; then
   if [ -f /etc/redhat-release ]; then
-    if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+    if [ `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]; then
       if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
         service plexmediaserver stop
       else
@@ -103,7 +103,7 @@ if [ "$1" = "0" ]; then
     fi
     [ -x /bin/systemctl ] && systemctl --system daemon-reload
   elif [ -f /etc/redhat-release ]; then
-    if [[ ! $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+    if [ `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]; then
       chkconfig --del plexmediaserver
     else
       if [ `systemctl list-unit-files|grep plex.service|wc -l` -eq 0 ]; then
@@ -123,7 +123,7 @@ else
    fi
     [ -x /bin/systemctl ] && systemctl --system daemon-reload
   elif [ -f /etc/redhat-release ]; then
-    if [[ $(cat /etc/redhat-release) =~ (^Fedora).*?1[5-9].*$ ]]; then
+    if [ `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]; then
       systemctl daemon-reload
     fi
   fi
