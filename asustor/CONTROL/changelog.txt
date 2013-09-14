@@ -1,0 +1,2 @@
+For more information about changes to Plex, see our release-notes
+online: http://forums.plexapp.com/index.php/topic/62832-plex-media-server/

@@ -2,5 +2,5 @@ package="Plex Media Server"
 description="The Plex Media Server is the ultimate media hub, providing rich metadata for your local media, as well as hundreds of channels of online content, and serving it up to iOS and Android mobile clients, Roku Media Streamers, 2011 LG Smart TVs, and the Plex Media Center."
 maintainer="Plex Team"
 adminport=32400
-adminurl=manage
+adminurl=web
 helpurl="http://www.plexapp.com/"
