@@ -39,6 +39,7 @@ case "$1" in
 	
 	if [ -f ${QPKG_DIR}/lock ]; then
 		echo "Plex Media Server is currently running or hasn't been shutdown properly. Please stop it before starting a new instance."
+		echo "If not so, then delete the file named ${QPKG_DIR}/lock and try again."
 		exit 0
 	fi
 	
@@ -56,6 +57,8 @@ case "$1" in
 	export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/root/Library"
 	export TMPDIR="/root/Library/tmp"
 	export LD_LIBRARY_PATH=${QPKG_DIR}
+	#Wait a little bit, since new firmware seems to casuse a race condition
+	sleep 3
 	ulimit -s 3000
 	cd ${QPKG_DIR}
 	echo "Starting Plex Media Server ..."
@@ -68,22 +71,18 @@ case "$1" in
 	if [ ! -f ${QPKG_DIR}/lock ]; then
 		echo "Plex Media Server hasn't been enabled or started ..."
 		exit 0
-	fi
-	# PLEX_PID=`${QPKG_DIR}/bin/pgrep Plex\ Media`
-        PLEX_PID="$(cat "${QPKG_DIR}/Library/Plex Media Server/plexmediaserver.pid")"
-	if [ -z "$PLEX_PID" ]; then
-		echo "Plex Media Server might not be running."
 	else 
 		echo "Stopping Plex Media Server ..."
-		kill $PLEX_PID
-	fi
-	
-	/bin/rm -f ${QPKG_DIR}/lock
-
-	echo "Removing Library link ..."
-	/bin/rm -rf /root/Library
-	/bin/rm -rf /root/.plex
-
+		for KILLPID in `ps ax | grep '[P]lex Media' | awk ' { print $1;}'`; do 
+			echo "Killing process $KILLPID"
+	  		kill -9 $KILLPID;
+		done
+		sleep 5
+		/bin/rm -f ${QPKG_DIR}/lock
+		echo "Removing Library link ..."
+		/bin/rm -rf /root/Library
+		/bin/rm -rf /root/.plex
+	fi		
     ;;
 
   restart)
