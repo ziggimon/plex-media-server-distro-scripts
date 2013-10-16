@@ -58,7 +58,7 @@ case "$1" in
 	export TMPDIR="/root/Library/tmp"
 	export LD_LIBRARY_PATH=${QPKG_DIR}
 	#Wait a little bit, since new firmware seems to casuse a race condition
-	sleep 3
+	sleep 5
 	ulimit -s 3000
 	cd ${QPKG_DIR}
 	echo "Starting Plex Media Server ..."
@@ -73,7 +73,7 @@ case "$1" in
 		exit 0
 	else 
 		echo "Stopping Plex Media Server ..."
-		for KILLPID in `ps ax | grep '[P]lex Media' | awk ' { print $1;}'`; do 
+		for KILLPID in `ps ax | grep '[P]lex Media Server' | awk ' { print $1;}'`; do 
 			echo "Killing process $KILLPID"
 	  		kill -9 $KILLPID;
 		done
