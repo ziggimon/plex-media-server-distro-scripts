@@ -75,7 +75,7 @@ case "$1" in
 		echo "Stopping Plex Media Server ..."
 		for KILLPID in `ps ax | grep '[P]lex Media Server' | awk ' { print $1;}'`; do 
 			echo "Killing process $KILLPID"
-	  		kill -9 $KILLPID;
+	  		kill $KILLPID;
 		done
 		sleep 5
 		/bin/rm -f ${QPKG_DIR}/lock
