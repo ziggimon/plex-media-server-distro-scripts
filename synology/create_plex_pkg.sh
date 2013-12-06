@@ -38,7 +38,7 @@ then
   fi
 
   # tar the Synology package
-  tar czf $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-$outarch.spk INFO PACKAGE_ICON.PNG package.tgz scripts
+  tar cf $PLEX_OUTDIR/PlexMediaServer-$PLEX_VERSION-$outarch.spk INFO PACKAGE_ICON.PNG package.tgz scripts
   rm -f package.tgz INFO
 fi
 

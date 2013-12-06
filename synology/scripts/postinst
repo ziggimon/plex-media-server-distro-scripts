@@ -9,15 +9,16 @@ fi
 
 # get available volume and create configuration file
 echo "`servicetool --get-alive-volume`/Plex/Library/Application Support" > "/var/packages/Plex Media Server/target/plex_library_path"
-export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
 
 # create the user home, and change it
 synoshare --get Plex
 if [ $? -ne 0 ]
 then
+    export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
     # create shared folder + temp transcoding folder inside
     synoshare -add Plex "Plex Media Library" $PLEX_LIBRARY_PATH "" "admin plex" "" 0 7
 else
+    export PLEX_LIBRARY_PATH=$(/usr/syno/sbin/synoshare --get Plex | grep Path | awk -F[ '{print $2}' | awk -F] '{print $1}')
     # set rights on existing folder for new user
     synoshare --setuser Plex RW = admin,plex
 fi
