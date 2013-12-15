@@ -14,7 +14,7 @@ fi
 start_plex ()
 {
     PLEX_PATH=$(/usr/syno/sbin/synoshare --get Plex | grep Path | awk -F[ '{print $2}' | awk -F] '{print $1}')
-    su plex -s /bin/sh -c "export LD_LIBRARY_PATH='$PLEX_DIR';export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=$PROCS; export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$PLEX_LIBRARY_PATH';export TMPDIR=$PLEX_PATH/Plex/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
+    su plex -s /bin/sh -c "export LD_LIBRARY_PATH='$PLEX_DIR';export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=$PROCS; export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR='$PLEX_LIBRARY_PATH';export TMPDIR=$PLEX_PATH/tmp_transcoding;ulimit -s 3000;/var/packages/Plex\ Media\ Server/target/Plex\ Media\ Server &"
 
     counter=20
     while [ $counter -gt 0 ]
