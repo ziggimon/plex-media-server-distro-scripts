@@ -33,7 +33,7 @@ then
     echo "arch=\"qoriq\"" >> INFO
     outarch="ppc_qoriq"
   else
-    echo "arch=\"x86 cedarview bromolow\"" >> INFO
+    echo "arch=\"x86 cedarview bromolow evansport\"" >> INFO
     outarch="x86"
   fi
 
