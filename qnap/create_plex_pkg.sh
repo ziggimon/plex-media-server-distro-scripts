@@ -23,6 +23,7 @@ then
     outarch=x86
   else
     outarch=arm-x19
+    LD_LIBRARY_PATH=/QNAP/lib
   fi
   /QNAP/QDK_2.2/bin/qbuild -q --build-arch $outarch
   popd
