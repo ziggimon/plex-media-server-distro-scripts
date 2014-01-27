@@ -17,10 +17,14 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-
 case "$1" in
     configure)
     chown -R admin:admin /apps/plexmediaserver
+    for file in config.xml plexmediaserver_environment pre-start.sh start.sh fvapp-plexmediaserver.service logo.png
+    do
+        dpkg-divert --add --package plexmediaserver-ros6 --rename --divert /apps/plexmediaserver/$file.orig /apps/plexmediaserver/$file
+        [ \! -e /apps/plexmediaserver/$file -o -L /apps/plexmediaserver/$file ] && ln -sf /apps/plexmediaserver/Binaries/$file /apps/plexmediaserver/$file
+    done
     if systemctl restart apache2.service; then
         event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="PlexMediaServer" success="1"/></add-s>' 0 0
     else

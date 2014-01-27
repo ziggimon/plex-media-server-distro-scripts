@@ -5,27 +5,23 @@ DIRECTORY_BIN=PlexMediaServer-$PLEX_VERSION/bin/apps/plexmediaserver
 
 if [ $PLEX_CONFIG == ubuntu-x86_64 ];
 then
-	echo "Building ReadyNAS 6 package"
-	rm -f *.deb *.changes
-	mkdir -p $DIRECTORY_META
-	mkdir -p $DIRECTORY_BIN
+    echo "Building ReadyNAS 6 package"
+    rm -f *.deb *.changes
+    mkdir -p $DIRECTORY_META
+    mkdir -p $DIRECTORY_BIN
     cp -r readynas-files/* $DIRECTORY_META
     cp -r debian PlexMediaServer-$PLEX_VERSION
     cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g > $DIRECTORY_META/config.xml
-
     # copy files to binary directory
-	cp -r $PLEX_SRCDIR $DIRECTORY_BIN/Binaries
-    cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g > $DIRECTORY_BIN/Binaries/config.xml
-    cp readynas-files/plexmediaserver_environment $DIRECTORY_BIN/Binaries
-    cp readynas-files/pre-start.sh $DIRECTORY_BIN/Binaries
-
+    find readynas-files/ -type f -prune ! -name config.xml ! -name start.sh -exec cp {} $DIRECTORY_BIN \;
+    cp -r $PLEX_SRCDIR $DIRECTORY_BIN/Binaries
+    cat readynas-files/config.xml | sed s/##VERSION##/$PLEX_VERSION/g | sed s/plexmediaserver-ros6/plexmediaserver-ros6-binaries/g > $DIRECTORY_BIN/Binaries/config.xml
     cd PlexMediaServer-$PLEX_VERSION
-	export EMAIL="jenkins@plexapp.com"
-	export NAME="Plex CI Team"
-	dch -b -v $PLEX_VERSION "Automatic build $BUILD_NUMBER"
-	fakeroot dpkg-buildpackage -us -uc -b
-	cd ..
-	mv *.deb *.changes $PLEX_OUTDIR
-	rm -rf PlexMediaServer-$PLEX_VERSION
+    export EMAIL="jenkins@plexapp.com"
+    export NAME="Plex CI Team"
+    dch -b -v $PLEX_VERSION "Automatic build $BUILD_NUMBER"
+    fakeroot dpkg-buildpackage -us -uc -b
+    cd ..
+    mv *.deb *.changes $PLEX_OUTDIR
+    rm -rf PlexMediaServer-$PLEX_VERSION
 fi
-
