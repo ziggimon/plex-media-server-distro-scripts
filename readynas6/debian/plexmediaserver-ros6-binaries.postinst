@@ -17,16 +17,30 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-
 case "$1" in
     configure)
+    cp --remove-destination -f /apps/plexmediaserver/Binaries/config.xml /apps/plexmediaserver/config.xml
     chown -R admin:admin /apps/plexmediaserver
     chattr +C /apps/plexmediaserver
-    for file in config.xml plexmediaserver_environment start.sh
-    do
+    for file in plexmediaserver_environment pre-start.sh fvapp-plexmediaserver.service logo.png
+      do
         dpkg-divert --add --package plexmediaserver-ros6-binaries --rename --divert /apps/plexmediaserver/$file.orig /apps/plexmediaserver/$file
         [ \! -e /apps/plexmediaserver/$file -o -L /apps/plexmediaserver/$file ] && ln -sf /apps/plexmediaserver/Binaries/$file /apps/plexmediaserver/$file
     done
+    rm -f /apps/plexmediaserver/*.orig
+    # Add application to ReadyNas if install invoked via gui
+    if systemctl restart apache2.service; then
+      event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="PlexMediaServer" success="1"/></add-s>' 0 0
+    else
+      event_push app readynasd '<add-s resource-type="LocalApp" resource-id="LocalApp"><LocalApp appname="PlexMediaServer" success="0"/></add-s>' 0 0
+    fi
+    # If service file not in /lib/systemd... Then copy and enable it
+    if [ ! -f /lib/systemd/system/fvapp-plexmediaserver.service ]; then
+       cp /apps/plexmediaserver/fvapp-plexmediaserver.service /lib/systemd/system
+       systemctl enable fvapp-plexmediaserver.service ; systemctl daemon-reload
+    else
+       systemctl enable fvapp-plexmediaserver.service ; systemctl daemon-reload
+    fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
@@ -44,4 +58,3 @@ esac
 #DEBHELPER#
 
 exit 0
-
