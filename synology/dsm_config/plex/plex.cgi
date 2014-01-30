@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ `ifconfig | grep -q bond0` ]
+if [ `ifconfig | grep bond0 | awk '{print $1}'` ]
 then
 IP_ADDR=`ifconfig bond0 | grep "inet addr" | awk '{print $2}' | awk -F: '{print $2}'`
 else
