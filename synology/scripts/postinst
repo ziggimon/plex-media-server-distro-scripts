@@ -32,4 +32,9 @@ then
     chown -R plex:users $PLEX_LIBRARY_PATH/*
 fi
 
+if [ "`ls -al $PLEX_LIBRARY_PATH/|grep "Library"|awk '{print $3}'`" != "plex" ]
+then
+    chown -R plex:users $PLEX_LIBRARY_PATH/*
+fi
+
 exit 0
