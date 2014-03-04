@@ -15,6 +15,10 @@ ExecStart=/bin/sh -c '/usr/lib/plexmediaserver/Plex\ Media\ Server'
 Type=simple
 User=plex
 Group=plex
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
 
 [Install]
 WantedBy=multi-user.target
