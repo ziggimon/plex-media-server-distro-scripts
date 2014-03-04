@@ -16,7 +16,8 @@ if [ $? -ne 0 ]
 then
     export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
     # create shared folder + temp transcoding folder inside
-    synoshare -add Plex "Plex Media Library" $PLEX_LIBRARY_PATH "" "admin plex" "" 0 7
+    synoshare -add Plex "Plex Media Library" $PLEX_LIBRARY_PATH "" "admin,plex" "" 0 7
+    synoshare --setuser Plex RW = admin,plex
 else
     export PLEX_LIBRARY_PATH=$(/usr/syno/sbin/synoshare --get Plex | grep Path | awk -F[ '{print $2}' | awk -F] '{print $1}')
     # set rights on existing folder for new user
@@ -28,7 +29,12 @@ then
     mkdir $PLEX_LIBRARY_PATH/tmp_transcoding
     mkdir $PLEX_LIBRARY_PATH/Library
     mkdir "$PLEX_LIBRARY_PATH/Application Support"
-    chown -R plex:users $PLEX_LIBRARY_PATH
+    chown -R plex:users $PLEX_LIBRARY_PATH/*
+fi
+
+if [ "`ls -al $PLEX_LIBRARY_PATH/|grep "Library"|awk '{print $3}'`" != "plex" ]
+then
+    chown -R plex:users $PLEX_LIBRARY_PATH/*
 fi
 
 exit 0
