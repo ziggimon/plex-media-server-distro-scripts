@@ -3,4 +3,4 @@ description="The Plex Media Server is the ultimate media hub, providing rich met
 maintainer="Plex Team"
 adminport=32400
 adminurl=web
-helpurl="http://www.plexapp.com/"
+helpurl="http://plex.tv/"
