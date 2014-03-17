@@ -57,10 +57,10 @@ fi
 if [ -f /etc/SuSE-release ]; then
    if [[ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]]; then
       systemctl enable plexmediaserver
-      systemctl --system daemon-reload
    else
       chkconfig --add plexmediaserver
    fi
+   [ -x /bin/systemctl ] && systemctl --system daemon-reload
 elif [ -f /etc/redhat-release ]; then
   if [[ ! -n `grep -i fedora /etc/redhat-release` && `cat /etc/redhat-release|sed 's/[^0-9]*//g'` -gt 14 ]]; then
       chkconfig --add plexmediaserver
@@ -117,9 +117,7 @@ if [ "$1" = "0" ]; then
 else
   if [ -f /etc/SuSE-release ]; then
    if [[ `grep VERSION /etc/SuSE-release| awk '{print $3}'` > 12.1 ]]; then
-        systemctl disable plexmediaserver
-   else
-      chkconfig --del plexmediaserver
+      systemctl --system daemon-reload
    fi
     [ -x /bin/systemctl ] && systemctl --system daemon-reload
   elif [ -f /etc/redhat-release ]; then
