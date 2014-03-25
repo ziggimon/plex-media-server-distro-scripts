@@ -28,6 +28,10 @@ then
   then
     echo "arch=\"88f6281 88f6282\"" >> INFO
     outarch="arm"
+  elif [ $PLEX_CONFIG == "synology-arm7" ]
+  then
+    echo "arch=\"armada370 armadaxp\"" >> INFO
+    outarch="arm7"
   elif [ $PLEX_CONFIG == "synology-ppc" ]
   then
     echo "arch=\"qoriq\"" >> INFO
