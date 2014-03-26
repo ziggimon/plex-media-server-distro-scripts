@@ -7,13 +7,13 @@ Standards-Version: 3.8.3
 Homepage: http://www.plexapp.com
 
 Package: plexmediaserver-ros6
-Architecture: amd64
+Architecture: amd64 armel
 Depends: ${misc:Depends}
 Description: Plex Media Server for ReadyNAS OS 6
   Stream media everywhere(tm)
 
 Package: plexmediaserver-ros6-binaries
-Architecture: amd64
+Architecture: amd64 armel
 Provides: plexmediaserver-ros6-binaries, plexmediaserver-ros6
 Breaks: plexmediaserver-ros6, plexmediaserver-ros6-binaries
 Conflicts: plexmediaserver-ros6, plexmediaserver-ros6-binaries
