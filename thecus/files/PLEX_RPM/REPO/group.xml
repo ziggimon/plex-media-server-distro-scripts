@@ -1,0 +1,14 @@
+<comps>
+    <group>
+        <id>Plex</id>
+        <name>Plex</name>
+        <default>true</default>
+        <description>Media server</description>
+        <uservisible>true</uservisible>
+        <removable>true</removable>
+        <packagelist>
+            <packagereq type="default">Plex</packagereq>
+        </packagelist>
+    </group>
+</comps>
+

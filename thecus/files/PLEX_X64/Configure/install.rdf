@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:md="http://localhost/module/schema#" 
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+	<md:Install>
+		<md:ModuleRDF>Install</md:ModuleRDF>
+		<md:ModuleRDFVer>1.00.00</md:ModuleRDFVer>
+		<md:Name>Plex</md:Name>
+		<md:Version><%module_version%></md:Version>
+		<md:Description>Plex Media Server</md:Description>
+		<md:Key>Plex</md:Key>
+		<md:Authors></md:Authors>
+		<md:Thanks></md:Thanks>
+		<md:WebUrl></md:WebUrl>
+		<md:UpdateUrl></md:UpdateUrl>
+		<md:Reboot>No</md:Reboot>
+		<md:Icon></md:Icon>
+		<md:Login></md:Login>
+		<md:Mode>System</md:Mode>
+		<md:HomePage>www/index.php</md:HomePage>
+                <md:MacStart></md:MacStart>
+                <md:MacEnd></md:MacEnd>
+		<md:UI>Plex</md:UI>
+	</md:Install>
+	<md:NAS>
+		<md:TargetNas>Thecus</md:TargetNas>
+		<md:NasType>N16000</md:NasType>
+		<md:NasProtol>N16000</md:NasProtol>
+		<md:NasVersion>1.00.00</md:NasVersion>
+	</md:NAS>
+	<md:NAS>
+		<md:TargetNas>Thecus</md:TargetNas>
+		<md:NasType>N12000</md:NasType>
+		<md:NasProtol>N12000</md:NasProtol>
+		<md:NasVersion>1.00.00</md:NasVersion>
+	</md:NAS>
+</rdf:RDF>

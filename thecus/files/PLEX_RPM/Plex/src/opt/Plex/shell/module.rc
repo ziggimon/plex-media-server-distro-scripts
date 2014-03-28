@@ -1,0 +1,83 @@
+#/bin/sh
+module_name="Plex"
+module_path="/opt/${module_name}"
+module_sys_path="/opt/${module_name}/sys"
+plex_bin="${module_sys_path}/Plex_Media_Server"
+
+check_raid(){
+    sys_path=`/bin/ls -l /raid/sys | awk -F' ' '{printf $11}'`
+    data_path=`/bin/ls -l /raid/data | awk -F' ' '{printf $11}'`
+    if [ "$sys_path" == "" ] || [ "$data_path" == "" ];then
+        echo "Your Master RAID link is not exist"
+        exit 1
+    fi
+}
+
+check(){
+    if [ ! -d "/var/tmp/modules" ];then
+        mkdir -p /var/tmp/modules
+    fi
+
+    if [ ! -L "/var/tmp/modules/${module_name}" ];then
+        ln -sf /opt/${module_name} /var/tmp/modules/${module_name}
+    fi
+
+    ## Check Plex execute binary link
+    if [ ! -d "${module_sys_path}/Plex Media Server" ];then
+        mkdir "${module_sys_path}/Plex Media Server"
+    fi
+
+    if [ ! -L "${module_sys_path}/Plex Media Scanner" ];then
+        ln -sf "${module_sys_path}/Plex_Media_Scanner" "${module_sys_path}/Plex Media Scanner"
+    fi
+
+    if [ ! -L "${module_sys_path}/Plex DLNA Server" ];then
+        ln -sf "${module_sys_path}/Plex_DLNA_Server" "${module_sys_path}/Plex DLNA Server"
+    fi
+
+}
+
+start(){
+    local retry_count=0
+    local is_run=`ps www | grep "${plex_bin}" | grep -v grep`
+    while [ -z "${is_run}" ] && [ "${retry_count}" -lt 3 ]
+    do
+        export LD_LIBRARY_PATH="${module_sys_path}"
+        export PLEX_MEDIA_SERVER_HOME="${module_sys_path}"
+        export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+        export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${module_sys_path}"
+        export LC_ALL="en_US.UTF-8"
+        export LANG=C"en_US.UTF-8"
+        export TMPDIR="/tmp"
+        ulimit -s 3000
+        "${plex_bin}" &
+
+        retry_count=$((${retry_count}+1))
+        sleep 5
+        is_run=`ps www | grep "${plex_bin}" | grep -v grep`
+    done
+
+    [ -z "${is_run}" ] && echo "Start Plex Server fail"
+}
+
+stop(){
+    PID=`ps w | grep "${module_path}" | grep -v grep | awk '{print $1}'`
+    kill -9 ${PID} >/dev/null 2>&1
+}
+
+case "$1" in
+    boot|start)
+        check_raid
+        check
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    *)
+        echo "Usage: $module_name {boot|start|stop}"
+        exit 1
+    ;;
+esac
+
+exit 0
