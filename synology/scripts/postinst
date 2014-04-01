@@ -9,32 +9,47 @@ fi
 
 # get available volume and create configuration file
 echo "`servicetool --get-alive-volume`/Plex/Library/Application Support" > "/var/packages/Plex Media Server/target/plex_library_path"
+export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
 
-# create the user home, and change it
+ #create the user home, and change it
 synoshare --get Plex
 if [ $? -ne 0 ]
 then
-    export PLEX_LIBRARY_PATH="`servicetool --get-alive-volume`/Plex"
     # create shared folder + temp transcoding folder inside
     synoshare -add Plex "Plex Media Library" $PLEX_LIBRARY_PATH "" "admin,plex" "" 0 7
     synoshare --setuser Plex RW = admin,plex
+    if [ "`synoacltool -get /volume1/Plex|grep \"user:plex\"`" ]
+    then
+      synoacltool -replace $PLEX_LIBRARY_PATH `synoacltool -get $PLEX_LIBRARY_PATH|grep "user:plex"|awk 'BEGIN { OFS=" "; } { gsub(/[^[:alnum:]]/, "", $1); print $1;}'|head -1` user:plex:allow:rwxpdDaARWcCo:fd--
+    else
+      synoacltool -add $PLEX_LIBRARY_PATH user:plex:allow:rwxpdDaARWcCo:fd--
+    fi
 else
-    export PLEX_LIBRARY_PATH=$(/usr/syno/sbin/synoshare --get Plex | grep Path | awk -F[ '{print $2}' | awk -F] '{print $1}')
     # set rights on existing folder for new user
     synoshare --setuser Plex RW = admin,plex
+    if [ "`synoacltool -get /volume1/Plex|grep \"user:plex\"`" ]
+    then
+      synoacltool -replace $PLEX_LIBRARY_PATH `synoacltool -get $PLEX_LIBRARY_PATH|grep "user:plex"|awk 'BEGIN { OFS=" "; } { gsub(/[^[:alnum:]]/, "", $1); print $1;}'|head -1` user:plex:allow:rwxpdDaARWcCo:fd--
+    else
+      synoacltool -add $PLEX_LIBRARY_PATH user:plex:allow:rwxpdDaARWcCo:fd--
+    fi
 fi
 
 if [ ! -d $PLEX_LIBRARY_PATH/tmp_transcoding ]
 then
     mkdir $PLEX_LIBRARY_PATH/tmp_transcoding
-    mkdir $PLEX_LIBRARY_PATH/Library
-    mkdir "$PLEX_LIBRARY_PATH/Application Support"
-    chown -R plex:users $PLEX_LIBRARY_PATH/*
+    mkdir -p "$PLEX_LIBRARY_PATH/Library/Application Support/Plex Media Server"
 fi
 
 if [ -d $PLEX_LIBRARY_PATH/Library ] && [ "`ls -al $PLEX_LIBRARY_PATH/|grep "Library"|awk '{print $3}'`" != "plex" ]
 then
     chown -R plex:users $PLEX_LIBRARY_PATH/*
+    if [ "`synoacltool -get /volume1/Plex|grep \"user:plex\"`" ]
+    then
+      synoacltool -replace $PLEX_LIBRARY_PATH `synoacltool -get $PLEX_LIBRARY_PATH|grep "user:plex"|awk 'BEGIN { OFS=" "; } { gsub(/[^[:alnum:]]/, "", $1); print $1;}'|head -1` user:plex:allow:rwxpdDaARWcCo:fd--
+    else
+      synoacltool -add $PLEX_LIBRARY_PATH user:plex:allow:rwxpdDaARWcCo:fd--
+    fi
 fi
 
 exit 0
