@@ -8,7 +8,6 @@ Homepage: http://www.plexapp.com
 
 Package: plexmediaserver-ros6
 Architecture: amd64 armel
-Depends: ${misc:Depends}
 Description: Plex Media Server for ReadyNAS OS 6
   Stream media everywhere(tm)
 
