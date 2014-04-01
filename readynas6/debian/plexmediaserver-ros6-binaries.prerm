@@ -20,6 +20,7 @@ case "$1" in
         systemctl stop fvapp-plexmediaserver.service || true
         systemctl disable fvapp-plexmediaserver.service || true
         find /apps/plexmediaserver -name *.pyc -delete || true
+	mv /apps/plexmediaserver/config.xml /apps/plexmediaserver/config.xml.orig
         ;;
     failed-upgrade)
         ;;
