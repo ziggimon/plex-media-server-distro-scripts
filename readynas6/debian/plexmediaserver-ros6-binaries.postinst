@@ -20,6 +20,9 @@ set -e
 case "$1" in
     configure)
     cp --remove-destination -f /apps/plexmediaserver/Binaries/config.xml /apps/plexmediaserver/config.xml
+    if [ ! -d /apps/plexmediaserver/MediaLibrary ]; then
+    	mkdir /apps/plexmediaserver/MediaLibrary
+    fi
     chown -R admin:admin /apps/plexmediaserver
     chattr +C /apps/plexmediaserver
     for file in plexmediaserver_environment pre-start.sh fvapp-plexmediaserver.service logo.png
