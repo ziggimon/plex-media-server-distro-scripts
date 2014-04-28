@@ -62,7 +62,7 @@ if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-x86_64 -o $PLEX_CONFI
     sed -i "s/<%git_version%>/${GIT_VERSION}/g" Plex.spec
     sed -i "s/<%module_arch%>/${ARCH}/g" Plex.spec
     cd ${TARGET_FOLDER}
-    rpmbuild -bb --buildroot=${PWD_PATH}/${TMP_FOLDER}/${TARGET_FOLDER} --target ${ARCH} ../Plex.spec
+    rpmbuild --quiet -bb --buildroot=${PWD_PATH}/${TMP_FOLDER}/${TARGET_FOLDER} --target ${ARCH} ../Plex.spec
 
     cd ${PWD_PATH}/${TMP_FOLDER}
     cp Plex-${VERSION}-${GIT_VERSION}.${ARCH}.rpm REPO
