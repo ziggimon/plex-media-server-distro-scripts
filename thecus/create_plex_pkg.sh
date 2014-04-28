@@ -71,7 +71,7 @@ if [ $PLEX_CONFIG == ubuntu-i686 -o $PLEX_CONFIG == ubuntu-x86_64 -o $PLEX_CONFI
     cd REPO
     tar zcf Plex.tar.gz ./*
     des -k AppModule -E Plex.tar.gz ${MODULE_NAME}.app
-    md5sum ${MODULE_STORE}/${MODULE_NAME}.app > ${MODULE_NAME}.app.md5
+    md5sum ${MODULE_NAME}.app > ${MODULE_NAME}.app.md5
     cp -f ${MODULE_NAME}.app ${MODULE_NAME}.app.md5 "${PLEX_OUTDIR}"
 
     cd ${PWD_PATH}

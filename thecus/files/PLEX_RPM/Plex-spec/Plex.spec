@@ -40,5 +40,4 @@ fi
 %defattr(-,root,root)
 "/opt"
 "/var"
-"/www"
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
