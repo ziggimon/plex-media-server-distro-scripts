@@ -38,6 +38,8 @@ fi
 
 %files
 %defattr(-,root,root)
-"/opt"
-"/var"
+/opt/%{name}/*
+/var/www/html/webinfo/theme/images/shortcut/15x15/*
+/var/www/html/webinfo/theme/images/shortcut/80x80/*
+/var/www/html/language/rawdata/*
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
