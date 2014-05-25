@@ -5,6 +5,7 @@ After=network.target
 [Service]
 EnvironmentFile=/apps/plexmediaserver/plexmediaserver_environment
 ExecStartPre=/apps/plexmediaserver/pre-start.sh
+ExecStartPre=/bin/sh -c '/usr/bin/test -d "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}" || /bin/mkdir -p "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}"'
 ExecStart=/bin/sh -c '/apps/plexmediaserver/Binaries/Plex\ Media\ Server'
 Type=simple
 
